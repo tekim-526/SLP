@@ -7,15 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9325E6722918E55300E94098 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6712918E55300E94098 /* OnBoardingViewController.swift */; };
+		9325E6772918EA1600E94098 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6762918EA1600E94098 /* FirstOnboardingViewController.swift */; };
+		9325E6792918F16800E94098 /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6782918F16800E94098 /* CustomPageViewController.swift */; };
 		93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35D2918AEAC0014908C /* AppDelegate.swift */; };
 		93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35F2918AEAC0014908C /* SceneDelegate.swift */; };
 		93CFB3622918AEAC0014908C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* ViewController.swift */; };
 		93CFB3652918AEAC0014908C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3632918AEAC0014908C /* Main.storyboard */; };
 		93CFB3672918AEAE0014908C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3662918AEAE0014908C /* Assets.xcassets */; };
 		93CFB36A2918AEAE0014908C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3682918AEAE0014908C /* LaunchScreen.storyboard */; };
+		93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3742918B38E0014908C /* BaseViewController.swift */; };
+		93CFB3772918B3950014908C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3762918B3950014908C /* BaseView.swift */; };
+		93CFB37A2918C16A0014908C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3792918C16A0014908C /* Color.swift */; };
+		93CFB38B2918D3BE0014908C /* Dongle-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3812918D3BE0014908C /* Dongle-Regular.ttf */; };
+		93CFB38C2918D3BE0014908C /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3822918D3BE0014908C /* NotoSansKR-Light.otf */; };
+		93CFB38D2918D3BE0014908C /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3832918D3BE0014908C /* NotoSansKR-Bold.otf */; };
+		93CFB38E2918D3BE0014908C /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3842918D3BE0014908C /* NotoSansKR-Thin.otf */; };
+		93CFB38F2918D3BE0014908C /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3852918D3BE0014908C /* OFL.txt */; };
+		93CFB3902918D3BE0014908C /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3862918D3BE0014908C /* NotoSansKR-Black.otf */; };
+		93CFB3912918D3BE0014908C /* Dongle-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3872918D3BE0014908C /* Dongle-Light.ttf */; };
+		93CFB3922918D3BE0014908C /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3882918D3BE0014908C /* NotoSansKR-Medium.otf */; };
+		93CFB3932918D3BE0014908C /* Dongle-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */; };
+		93CFB3942918D3BE0014908C /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */; };
+		93CFB3972918D6C00014908C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 93CFB3962918D6C00014908C /* SnapKit */; };
+		93CFB3992918D6D80014908C /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3982918D6D80014908C /* OnBoardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9325E6712918E55300E94098 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		9325E6762918EA1600E94098 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
+		9325E6782918F16800E94098 /* CustomPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
 		93CFB35A2918AEAC0014908C /* SeSACStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSACStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CFB35D2918AEAC0014908C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93CFB35F2918AEAC0014908C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +45,20 @@
 		93CFB3662918AEAE0014908C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93CFB3692918AEAE0014908C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93CFB36B2918AEAE0014908C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93CFB3742918B38E0014908C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		93CFB3762918B3950014908C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		93CFB3792918C16A0014908C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		93CFB3812918D3BE0014908C /* Dongle-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dongle-Regular.ttf"; sourceTree = "<group>"; };
+		93CFB3822918D3BE0014908C /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
+		93CFB3832918D3BE0014908C /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
+		93CFB3842918D3BE0014908C /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
+		93CFB3852918D3BE0014908C /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		93CFB3862918D3BE0014908C /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
+		93CFB3872918D3BE0014908C /* Dongle-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dongle-Light.ttf"; sourceTree = "<group>"; };
+		93CFB3882918D3BE0014908C /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
+		93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dongle-Bold.ttf"; sourceTree = "<group>"; };
+		93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		93CFB3982918D6D80014908C /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CFB3972918D6C00014908C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,12 +95,77 @@
 				93CFB35D2918AEAC0014908C /* AppDelegate.swift */,
 				93CFB35F2918AEAC0014908C /* SceneDelegate.swift */,
 				93CFB3612918AEAC0014908C /* ViewController.swift */,
+				93CFB3782918C1620014908C /* Color */,
+				93CFB3722918B2A00014908C /* Scene - SignUp */,
+				93CFB3712918B2900014908C /* Scene - OnBoarding  */,
+				93CFB3732918B3690014908C /* Scene - Base */,
+				93CFB37D2918CE5B0014908C /* Resources */,
 				93CFB3632918AEAC0014908C /* Main.storyboard */,
 				93CFB3662918AEAE0014908C /* Assets.xcassets */,
 				93CFB3682918AEAE0014908C /* LaunchScreen.storyboard */,
 				93CFB36B2918AEAE0014908C /* Info.plist */,
 			);
 			path = SeSACStudy;
+			sourceTree = "<group>";
+		};
+		93CFB3712918B2900014908C /* Scene - OnBoarding  */ = {
+			isa = PBXGroup;
+			children = (
+				93CFB3982918D6D80014908C /* OnBoardingView.swift */,
+				9325E6712918E55300E94098 /* OnBoardingViewController.swift */,
+				9325E6782918F16800E94098 /* CustomPageViewController.swift */,
+				9325E6762918EA1600E94098 /* FirstOnboardingViewController.swift */,
+			);
+			path = "Scene - OnBoarding ";
+			sourceTree = "<group>";
+		};
+		93CFB3722918B2A00014908C /* Scene - SignUp */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Scene - SignUp";
+			sourceTree = "<group>";
+		};
+		93CFB3732918B3690014908C /* Scene - Base */ = {
+			isa = PBXGroup;
+			children = (
+				93CFB3742918B38E0014908C /* BaseViewController.swift */,
+				93CFB3762918B3950014908C /* BaseView.swift */,
+			);
+			path = "Scene - Base";
+			sourceTree = "<group>";
+		};
+		93CFB3782918C1620014908C /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				93CFB3792918C16A0014908C /* Color.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		93CFB37D2918CE5B0014908C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				93CFB3802918D3BE0014908C /* Font */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		93CFB3802918D3BE0014908C /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				93CFB3812918D3BE0014908C /* Dongle-Regular.ttf */,
+				93CFB3822918D3BE0014908C /* NotoSansKR-Light.otf */,
+				93CFB3832918D3BE0014908C /* NotoSansKR-Bold.otf */,
+				93CFB3842918D3BE0014908C /* NotoSansKR-Thin.otf */,
+				93CFB3852918D3BE0014908C /* OFL.txt */,
+				93CFB3862918D3BE0014908C /* NotoSansKR-Black.otf */,
+				93CFB3872918D3BE0014908C /* Dongle-Light.ttf */,
+				93CFB3882918D3BE0014908C /* NotoSansKR-Medium.otf */,
+				93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */,
+				93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +184,9 @@
 			dependencies = (
 			);
 			name = SeSACStudy;
+			packageProductDependencies = (
+				93CFB3962918D6C00014908C /* SnapKit */,
+			);
 			productName = SeSACStudy;
 			productReference = 93CFB35A2918AEAC0014908C /* SeSACStudy.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +215,9 @@
 				Base,
 			);
 			mainGroup = 93CFB3512918AEAC0014908C;
+			packageReferences = (
+				93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 93CFB35B2918AEAC0014908C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,8 +232,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93CFB3902918D3BE0014908C /* NotoSansKR-Black.otf in Resources */,
+				93CFB3942918D3BE0014908C /* NotoSansKR-Regular.otf in Resources */,
 				93CFB36A2918AEAE0014908C /* LaunchScreen.storyboard in Resources */,
+				93CFB3932918D3BE0014908C /* Dongle-Bold.ttf in Resources */,
+				93CFB3912918D3BE0014908C /* Dongle-Light.ttf in Resources */,
+				93CFB38E2918D3BE0014908C /* NotoSansKR-Thin.otf in Resources */,
+				93CFB38C2918D3BE0014908C /* NotoSansKR-Light.otf in Resources */,
 				93CFB3672918AEAE0014908C /* Assets.xcassets in Resources */,
+				93CFB38B2918D3BE0014908C /* Dongle-Regular.ttf in Resources */,
+				93CFB38D2918D3BE0014908C /* NotoSansKR-Bold.otf in Resources */,
+				93CFB38F2918D3BE0014908C /* OFL.txt in Resources */,
+				93CFB3922918D3BE0014908C /* NotoSansKR-Medium.otf in Resources */,
 				93CFB3652918AEAC0014908C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,9 +255,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9325E6772918EA1600E94098 /* FirstOnboardingViewController.swift in Sources */,
 				93CFB3622918AEAC0014908C /* ViewController.swift in Sources */,
+				93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */,
+				93CFB3992918D6D80014908C /* OnBoardingView.swift in Sources */,
+				9325E6722918E55300E94098 /* OnBoardingViewController.swift in Sources */,
+				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
 				93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */,
 				93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */,
+				9325E6792918F16800E94098 /* CustomPageViewController.swift in Sources */,
+				93CFB37A2918C16A0014908C /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +482,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		93CFB3962918D6C00014908C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 93CFB3522918AEAC0014908C /* Project object */;
 }
