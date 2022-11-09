@@ -7,9 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9325E6722918E55300E94098 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6712918E55300E94098 /* OnBoardingViewController.swift */; };
-		9325E6772918EA1600E94098 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6762918EA1600E94098 /* FirstOnboardingViewController.swift */; };
-		9325E6792918F16800E94098 /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6782918F16800E94098 /* CustomPageViewController.swift */; };
+		9325E689291A447100E94098 /* SignUpAndAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E688291A447000E94098 /* SignUpAndAuthView.swift */; };
+		9325E68B291A448E00E94098 /* PhoneNumberValidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68A291A448E00E94098 /* PhoneNumberValidViewController.swift */; };
+		9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68C291A471000E94098 /* OnBoardingViewController.swift */; };
+		9325E691291A471000E94098 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68D291A471000E94098 /* OnBoardingView.swift */; };
+		9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */; };
+		9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68F291A471000E94098 /* CustomPageViewController.swift */; };
+		9325E698291A737B00E94098 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E697291A737B00E94098 /* TextFieldEffects */; };
+		9325E69B291A7A7F00E94098 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69A291A7A7F00E94098 /* RxCocoa */; };
+		9325E69D291A7A7F00E94098 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69C291A7A7F00E94098 /* RxSwift */; };
+		9325E69F291A856400E94098 /* AuthNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E69E291A856400E94098 /* AuthNumberViewController.swift */; };
+		9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6A0291B487E00E94098 /* UIView+Extensions.swift */; };
+		9325E6A3291B6B9D00E94098 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6A2291B6B9D00E94098 /* NicknameViewController.swift */; };
+		937A1611291B73F600656882 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A1610291B73F600656882 /* BirthViewController.swift */; };
+		937A1613291B740500656882 /* BirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A1612291B740500656882 /* BirthView.swift */; };
+		937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A1614291B839D00656882 /* UITextField+Extensions.swift */; };
+		937A1618291BA61000656882 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A1617291BA61000656882 /* EmailViewController.swift */; };
+		937A161B291BA74B00656882 /* AttributeString+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A161A291BA74B00656882 /* AttributeString+Protocol.swift */; };
+		937A161E291BAE5E00656882 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A161D291BAE5E00656882 /* GenderViewController.swift */; };
 		93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35D2918AEAC0014908C /* AppDelegate.swift */; };
 		93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35F2918AEAC0014908C /* SceneDelegate.swift */; };
 		93CFB3622918AEAC0014908C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* ViewController.swift */; };
@@ -18,7 +33,7 @@
 		93CFB36A2918AEAE0014908C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3682918AEAE0014908C /* LaunchScreen.storyboard */; };
 		93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3742918B38E0014908C /* BaseViewController.swift */; };
 		93CFB3772918B3950014908C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3762918B3950014908C /* BaseView.swift */; };
-		93CFB37A2918C16A0014908C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3792918C16A0014908C /* Color.swift */; };
+		93CFB37A2918C16A0014908C /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3792918C16A0014908C /* UIColor+Extensions.swift */; };
 		93CFB38B2918D3BE0014908C /* Dongle-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3812918D3BE0014908C /* Dongle-Regular.ttf */; };
 		93CFB38C2918D3BE0014908C /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3822918D3BE0014908C /* NotoSansKR-Light.otf */; };
 		93CFB38D2918D3BE0014908C /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3832918D3BE0014908C /* NotoSansKR-Bold.otf */; };
@@ -30,13 +45,24 @@
 		93CFB3932918D3BE0014908C /* Dongle-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */; };
 		93CFB3942918D3BE0014908C /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */; };
 		93CFB3972918D6C00014908C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 93CFB3962918D6C00014908C /* SnapKit */; };
-		93CFB3992918D6D80014908C /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3982918D6D80014908C /* OnBoardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9325E6712918E55300E94098 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
-		9325E6762918EA1600E94098 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
-		9325E6782918F16800E94098 /* CustomPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
+		9325E688291A447000E94098 /* SignUpAndAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAndAuthView.swift; sourceTree = "<group>"; };
+		9325E68A291A448E00E94098 /* PhoneNumberValidViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberValidViewController.swift; sourceTree = "<group>"; };
+		9325E68C291A471000E94098 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		9325E68D291A471000E94098 /* OnBoardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
+		9325E68F291A471000E94098 /* CustomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
+		9325E69E291A856400E94098 /* AuthNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumberViewController.swift; sourceTree = "<group>"; };
+		9325E6A0291B487E00E94098 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		9325E6A2291B6B9D00E94098 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		937A1610291B73F600656882 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
+		937A1612291B740500656882 /* BirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthView.swift; sourceTree = "<group>"; };
+		937A1614291B839D00656882 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
+		937A1617291BA61000656882 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		937A161A291BA74B00656882 /* AttributeString+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttributeString+Protocol.swift"; sourceTree = "<group>"; };
+		937A161D291BAE5E00656882 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		93CFB35A2918AEAC0014908C /* SeSACStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSACStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CFB35D2918AEAC0014908C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93CFB35F2918AEAC0014908C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,7 +73,7 @@
 		93CFB36B2918AEAE0014908C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93CFB3742918B38E0014908C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		93CFB3762918B3950014908C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		93CFB3792918C16A0014908C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		93CFB3792918C16A0014908C /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		93CFB3812918D3BE0014908C /* Dongle-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dongle-Regular.ttf"; sourceTree = "<group>"; };
 		93CFB3822918D3BE0014908C /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
 		93CFB3832918D3BE0014908C /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
@@ -58,7 +84,6 @@
 		93CFB3882918D3BE0014908C /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dongle-Bold.ttf"; sourceTree = "<group>"; };
 		93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
-		93CFB3982918D6D80014908C /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,13 +91,79 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9325E69B291A7A7F00E94098 /* RxCocoa in Frameworks */,
 				93CFB3972918D6C00014908C /* SnapKit in Frameworks */,
+				9325E69D291A7A7F00E94098 /* RxSwift in Frameworks */,
+				9325E698291A737B00E94098 /* TextFieldEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9325E687291A440500E94098 /* ValidCheck  2-1 */ = {
+			isa = PBXGroup;
+			children = (
+				9325E68A291A448E00E94098 /* PhoneNumberValidViewController.swift */,
+			);
+			path = "ValidCheck  2-1";
+			sourceTree = "<group>";
+		};
+		9325E6A4291B6D4F00E94098 /* Scene - Login&SignUp - 2 */ = {
+			isa = PBXGroup;
+			children = (
+				9325E688291A447000E94098 /* SignUpAndAuthView.swift */,
+				9325E687291A440500E94098 /* ValidCheck  2-1 */,
+				93CFB3722918B2A00014908C /* PhoneNumberAuth 2-2 */,
+				937A160E291B6E6C00656882 /* Nickname 2-3 */,
+				937A160F291B73D700656882 /* Birth 2-4 */,
+				937A1616291BA5F000656882 /* Email 2-5 */,
+				937A161C291BAE0100656882 /* Gender 2-6 */,
+			);
+			path = "Scene - Login&SignUp - 2";
+			sourceTree = "<group>";
+		};
+		937A160E291B6E6C00656882 /* Nickname 2-3 */ = {
+			isa = PBXGroup;
+			children = (
+				9325E6A2291B6B9D00E94098 /* NicknameViewController.swift */,
+			);
+			path = "Nickname 2-3";
+			sourceTree = "<group>";
+		};
+		937A160F291B73D700656882 /* Birth 2-4 */ = {
+			isa = PBXGroup;
+			children = (
+				937A1612291B740500656882 /* BirthView.swift */,
+				937A1610291B73F600656882 /* BirthViewController.swift */,
+			);
+			path = "Birth 2-4";
+			sourceTree = "<group>";
+		};
+		937A1616291BA5F000656882 /* Email 2-5 */ = {
+			isa = PBXGroup;
+			children = (
+				937A1617291BA61000656882 /* EmailViewController.swift */,
+			);
+			path = "Email 2-5";
+			sourceTree = "<group>";
+		};
+		937A1619291BA72E00656882 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				937A161A291BA74B00656882 /* AttributeString+Protocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		937A161C291BAE0100656882 /* Gender 2-6 */ = {
+			isa = PBXGroup;
+			children = (
+				937A161D291BAE5E00656882 /* GenderViewController.swift */,
+			);
+			path = "Gender 2-6";
+			sourceTree = "<group>";
+		};
 		93CFB3512918AEAC0014908C = {
 			isa = PBXGroup;
 			children = (
@@ -95,9 +186,10 @@
 				93CFB35D2918AEAC0014908C /* AppDelegate.swift */,
 				93CFB35F2918AEAC0014908C /* SceneDelegate.swift */,
 				93CFB3612918AEAC0014908C /* ViewController.swift */,
-				93CFB3782918C1620014908C /* Color */,
-				93CFB3722918B2A00014908C /* Scene - SignUp */,
-				93CFB3712918B2900014908C /* Scene - OnBoarding  */,
+				937A1619291BA72E00656882 /* Protocol */,
+				93CFB3782918C1620014908C /* Extensions */,
+				93CFB3712918B2900014908C /* Scene - OnBoarding - 1 */,
+				9325E6A4291B6D4F00E94098 /* Scene - Login&SignUp - 2 */,
 				93CFB3732918B3690014908C /* Scene - Base */,
 				93CFB37D2918CE5B0014908C /* Resources */,
 				93CFB3632918AEAC0014908C /* Main.storyboard */,
@@ -108,22 +200,23 @@
 			path = SeSACStudy;
 			sourceTree = "<group>";
 		};
-		93CFB3712918B2900014908C /* Scene - OnBoarding  */ = {
+		93CFB3712918B2900014908C /* Scene - OnBoarding - 1 */ = {
 			isa = PBXGroup;
 			children = (
-				93CFB3982918D6D80014908C /* OnBoardingView.swift */,
-				9325E6712918E55300E94098 /* OnBoardingViewController.swift */,
-				9325E6782918F16800E94098 /* CustomPageViewController.swift */,
-				9325E6762918EA1600E94098 /* FirstOnboardingViewController.swift */,
+				9325E68F291A471000E94098 /* CustomPageViewController.swift */,
+				9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */,
+				9325E68D291A471000E94098 /* OnBoardingView.swift */,
+				9325E68C291A471000E94098 /* OnBoardingViewController.swift */,
 			);
-			path = "Scene - OnBoarding ";
+			path = "Scene - OnBoarding - 1";
 			sourceTree = "<group>";
 		};
-		93CFB3722918B2A00014908C /* Scene - SignUp */ = {
+		93CFB3722918B2A00014908C /* PhoneNumberAuth 2-2 */ = {
 			isa = PBXGroup;
 			children = (
+				9325E69E291A856400E94098 /* AuthNumberViewController.swift */,
 			);
-			path = "Scene - SignUp";
+			path = "PhoneNumberAuth 2-2";
 			sourceTree = "<group>";
 		};
 		93CFB3732918B3690014908C /* Scene - Base */ = {
@@ -135,12 +228,14 @@
 			path = "Scene - Base";
 			sourceTree = "<group>";
 		};
-		93CFB3782918C1620014908C /* Color */ = {
+		93CFB3782918C1620014908C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				93CFB3792918C16A0014908C /* Color.swift */,
+				93CFB3792918C16A0014908C /* UIColor+Extensions.swift */,
+				9325E6A0291B487E00E94098 /* UIView+Extensions.swift */,
+				937A1614291B839D00656882 /* UITextField+Extensions.swift */,
 			);
-			path = Color;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		93CFB37D2918CE5B0014908C /* Resources */ = {
@@ -186,6 +281,9 @@
 			name = SeSACStudy;
 			packageProductDependencies = (
 				93CFB3962918D6C00014908C /* SnapKit */,
+				9325E697291A737B00E94098 /* TextFieldEffects */,
+				9325E69A291A7A7F00E94098 /* RxCocoa */,
+				9325E69C291A7A7F00E94098 /* RxSwift */,
 			);
 			productName = SeSACStudy;
 			productReference = 93CFB35A2918AEAC0014908C /* SeSACStudy.app */;
@@ -217,6 +315,8 @@
 			mainGroup = 93CFB3512918AEAC0014908C;
 			packageReferences = (
 				93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */,
+				9325E696291A737B00E94098 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
+				9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 93CFB35B2918AEAC0014908C /* Products */;
 			projectDirPath = "";
@@ -255,16 +355,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9325E6772918EA1600E94098 /* FirstOnboardingViewController.swift in Sources */,
+				9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */,
 				93CFB3622918AEAC0014908C /* ViewController.swift in Sources */,
+				9325E69F291A856400E94098 /* AuthNumberViewController.swift in Sources */,
+				937A1613291B740500656882 /* BirthView.swift in Sources */,
 				93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */,
-				93CFB3992918D6D80014908C /* OnBoardingView.swift in Sources */,
-				9325E6722918E55300E94098 /* OnBoardingViewController.swift in Sources */,
 				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
+				937A161E291BAE5E00656882 /* GenderViewController.swift in Sources */,
+				9325E691291A471000E94098 /* OnBoardingView.swift in Sources */,
+				9325E68B291A448E00E94098 /* PhoneNumberValidViewController.swift in Sources */,
+				9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */,
 				93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */,
+				9325E6A3291B6B9D00E94098 /* NicknameViewController.swift in Sources */,
+				9325E689291A447100E94098 /* SignUpAndAuthView.swift in Sources */,
+				9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */,
+				937A1618291BA61000656882 /* EmailViewController.swift in Sources */,
+				937A1611291B73F600656882 /* BirthViewController.swift in Sources */,
+				9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */,
+				937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */,
+				937A161B291BA74B00656882 /* AttributeString+Protocol.swift in Sources */,
 				93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */,
-				9325E6792918F16800E94098 /* CustomPageViewController.swift in Sources */,
-				93CFB37A2918C16A0014908C /* Color.swift in Sources */,
+				93CFB37A2918C16A0014908C /* UIColor+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +535,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tekim.SeSACStudy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tekim.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -452,7 +563,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tekim.SeSACStudy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tekim.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -484,6 +595,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9325E696291A737B00E94098 /* XCRemoteSwiftPackageReference "TextFieldEffects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raulriera/TextFieldEffects.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -495,6 +622,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9325E697291A737B00E94098 /* TextFieldEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9325E696291A737B00E94098 /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
+			productName = TextFieldEffects;
+		};
+		9325E69A291A7A7F00E94098 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		9325E69C291A7A7F00E94098 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
 		93CFB3962918D6C00014908C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */;

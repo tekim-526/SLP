@@ -9,10 +9,10 @@ import UIKit
 import SnapKit
 
 class FirstOnboardingViewController: BaseViewController {
-    let first = FirstOnboardingView()
+    let onboardingView = FirstOnboardingView()
     
     override func loadView() {
-        view = first
+        view = onboardingView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,7 @@ class FirstOnboardingView: BaseView {
         
         attributedTitle.append(NSAttributedString(string: "으로 빠르게 주위 친구를 확인", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font: UIFont(name: "NotoSansKR-Regular", size: 24)!]))
         label.attributedText = attributedTitle
+        label.textAlignment = .center
         return label
     }()
     
@@ -52,9 +53,8 @@ class FirstOnboardingView: BaseView {
     
     override func makeConstraints() {
         label.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(116)
-            make.leading.equalTo(self.safeAreaLayoutGuide).offset(85)
-            make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-85)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(72)
+            make.centerX.equalTo(self.snp.centerX)
         }
         image.snp.makeConstraints { make in
             make.top.equalTo(label.snp.bottom).offset(56)

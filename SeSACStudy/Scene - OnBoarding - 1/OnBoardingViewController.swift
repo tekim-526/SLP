@@ -8,7 +8,6 @@
 import UIKit
 
 
-
 class OnBoardingViewController: BaseViewController {
     
     let onboardingView = OnboardingView()
@@ -17,22 +16,30 @@ class OnBoardingViewController: BaseViewController {
     
     override func loadView() {
         view = onboardingView
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addChild(customPageVC)
         customPageVC.didMove(toParent: self)
+        onboardingView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
-    
+    @objc func startButtonTapped() {
+        print("start")
+    }
     override func setupUI() {
         customPageVC = CustomPageViewController()
         onboardingView.addSubview(customPageVC.view)
+        onboardingView.addSubview(onboardingView.startButton)
     }
     
     override func makeConstraints() {
         customPageVC.view.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(onboardingView.startButton.snp.top).offset(-40)
         }
     }
 }
