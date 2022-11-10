@@ -14,7 +14,7 @@ class EmailViewController: BaseViewController, AttributeString {
     
     let emailView = SignUpAndAuthView()
     let disposeBag = DisposeBag()
-    
+    let genderView = GenderViewController()
     override func loadView() {
         view = emailView
     }
@@ -30,13 +30,17 @@ class EmailViewController: BaseViewController, AttributeString {
             .map { self.checkEmailValid(str: $0) }
             .withUnretained(self)
             .bind { vc, bool in
+                print(bool)
                 vc.emailView.button.isEnabled = bool
                 vc.emailView.button.backgroundColor = bool ? .brandGreen : .gray6
                 vc.emailView.button.tintColor = bool ? .white : .gray3
             }.disposed(by: disposeBag)
+        
         emailView.button.rx.tap
-            .bind { _ in
-                print("email next tapped")
+            .withUnretained(self)
+            .bind { vc, _ in
+                UserDefaults.standard.set(vc.emailView.textField.text!, forKey: "email")
+                vc.navigationController?.pushViewController(vc.genderView, animated: true)
             }.disposed(by: disposeBag)
     }
     override func setupUI() {
@@ -45,6 +49,7 @@ class EmailViewController: BaseViewController, AttributeString {
         
         emailView.button.setTitle("다음", for: .normal)
         emailView.textField.placeholder = "SeSAC@email.com"
+        emailView.textField.keyboardType = .default
     }
     
     func setupAttributeString() -> NSAttributedString {

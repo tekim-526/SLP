@@ -13,6 +13,9 @@ import RxSwift
 class NicknameViewController: BaseViewController {
     let nicknameView = SignUpAndAuthView()
     let disposeBag = DisposeBag()
+    
+    let birthVC = BirthViewController()
+    
     override func loadView() {
         view = nicknameView
     }
@@ -25,7 +28,6 @@ class NicknameViewController: BaseViewController {
     }
     
     func bind() {
-        
         nicknameView.textField.rx.text
             .orEmpty
             .map { $0.count > 0 }
@@ -47,10 +49,22 @@ class NicknameViewController: BaseViewController {
                 vc.nicknameView.button.backgroundColor = bool ? .brandGreen : .gray6
                 vc.nicknameView.button.tintColor = bool ? .white : .gray3
             }.disposed(by: disposeBag)
+        
+        nicknameView.button.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                // tapEvent
+                // 유효한 닉네임
+                if true {
+                    UserDefaults.standard.set(vc.nicknameView.textField.text!, forKey: "nick")
+                    vc.navigationController?.pushViewController(vc.birthVC, animated: true)
+                }
+        }.disposed(by: disposeBag)
     }
     
     override func setupUI() {
         nicknameView.label.text = "닉네임을 입력해 주세요"
         nicknameView.textField.placeholder = "10자 이내로 입력"
+        nicknameView.button.setTitle("다음", for: .normal)
     }
 }

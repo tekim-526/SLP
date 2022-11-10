@@ -11,12 +11,14 @@ import RxCocoa
 import RxSwift
 
 import SnapKit
+import FirebaseMessaging
 
 class AuthNumberViewController: BaseViewController {
     let authView = SignUpAndAuthView()
     
     let disposeBag = DisposeBag()
     
+    let nickNameVC = NicknameViewController()
     let resendButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .brandGreen
@@ -47,12 +49,27 @@ class AuthNumberViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        authView.button.rx.tap.bind {
-            // tapEvent
-            // 회원일때 -> 회원가입
-            // 회원 아닐때 -> 홈 화면
-            print(123)
-        }.disposed(by: disposeBag)
+        authView.button.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                // tapEvent
+                // 회원일때 -> 회원가입
+                if true {
+                    AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
+                        guard success else { return }
+                        DispatchQueue.main.async {
+                            vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
+                            TokenManager.shared.getFCMToken { fcm in
+                                UserDefaults.standard.set(fcm, forKey: "FCMtoken")
+                            }
+                            TokenManager.shared.getIdToken { id in
+                                UserDefaults.standard.set(id, forKey: "idtoken")
+                            }
+                        }
+                    }
+                }
+                // 회원 아닐때 -> 홈 화면
+            }.disposed(by: disposeBag)
     }
     override func setupUI() {
         view.addSubview(resendButton)
