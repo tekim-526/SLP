@@ -25,6 +25,8 @@ class PhoneNumberValidViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        APIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "")
+        APIManager.shared.signup(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "")
         bind()
     }
     
@@ -91,9 +93,10 @@ class PhoneNumberValidViewController: BaseViewController {
                     var removeDash = number.split(separator: "-").reduce(into: "") { $0 += $1 }
                     removeDash.removeFirst()
                     let realPhoneNumber = "+82\(removeDash)"
-                    
+                    print(realPhoneNumber)
                     AuthManager.shared.startAuth(phoneNumber: realPhoneNumber) { success in
                         guard success else { return }
+                        print("success")
                         DispatchQueue.main.async {
                             UserDefaults.standard.set(realPhoneNumber, forKey: "phoneNumber")
                             vc.navigationController?.pushViewController(vc.authVC, animated: true)

@@ -58,13 +58,16 @@ class AuthNumberViewController: BaseViewController {
                     AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
                         guard success else { return }
                         DispatchQueue.main.async {
-                            vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
                             TokenManager.shared.getFCMToken { fcm in
                                 UserDefaults.standard.set(fcm, forKey: "FCMtoken")
                             }
+                            
                             TokenManager.shared.getIdToken { id in
+                                APIManager.shared.login(idtoken: id)
                                 UserDefaults.standard.set(id, forKey: "idtoken")
                             }
+                            
+                            vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
                         }
                     }
                 }
