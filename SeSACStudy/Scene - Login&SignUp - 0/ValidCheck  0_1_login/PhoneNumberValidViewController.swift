@@ -25,8 +25,9 @@ class PhoneNumberValidViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        APIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "")
-        APIManager.shared.signup(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "")
+        //APIManager.shared.login(idtoken: "")
+        navigationController?.navigationBar.isHidden = true
+        makeNavigationUI()
         bind()
     }
     

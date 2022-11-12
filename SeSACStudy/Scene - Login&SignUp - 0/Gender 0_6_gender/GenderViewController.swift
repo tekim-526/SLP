@@ -80,14 +80,6 @@ class GenderViewController: BaseViewController, AttributeString {
                 vc.womanButton.configuration?.baseBackgroundColor = .clear
                 vc.gender = 1
                 vc.commonTapEvent()
-                print("phoneNumber: \(UserDefaults.standard.string(forKey: "phoneNumber") ?? "")",
-                      "FCMtoken: \(UserDefaults.standard.string(forKey: "FCMtoken") ?? "")",
-                      "idtoken: \(UserDefaults.standard.string(forKey: "idtoken") ?? "")",
-                      "nick: \(UserDefaults.standard.string(forKey: "nick") ?? "")",
-                      "birth: \(UserDefaults.standard.string(forKey: "birth") ?? "")",
-                      "email: \(UserDefaults.standard.string(forKey: "email") ?? "")",
-                      "gender: \(UserDefaults.standard.integer(forKey: "gender"))",
-                      separator: "\n")
             }.disposed(by: disposeBag)
         
         womanButton.rx.tap
@@ -105,6 +97,26 @@ class GenderViewController: BaseViewController, AttributeString {
             .bind { vc, _ in
                 UserDefaults.standard.set(vc.gender, forKey: "gender")
                 //POST Method Needed
+                APIManager.shared.signup(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { statuscode in
+                    guard let statuscode else { return }
+                    switch statuscode {
+                    case 200:
+                        vc.navigationController?.pushViewController(MainViewController(), animated: true)
+                    case 201:
+                        Toast.makeToast(view: vc.genderView, message: "이미 가입한 회원입니다")
+                    case 202:
+                        Toast.makeToast(view: vc.genderView, message: "유효하지않은 닉네임 입니다.")
+                    case 401: // Firebase Token Error
+                        Toast.makeToast(view: vc.genderView, message: "401 Firebase Token Error")
+                    case 500: // Server Error
+                        Toast.makeToast(view: vc.genderView, message: "500 Server Error")
+                    case 501: // Client Error
+                        Toast.makeToast(view: vc.genderView, message: "501 Client Error")
+                    default:  // Undefied Error
+                        Toast.makeToast(view: vc.genderView, message: "Unidentified Error")
+                    }
+                    
+                }
             }.disposed(by: disposeBag)
     }
     

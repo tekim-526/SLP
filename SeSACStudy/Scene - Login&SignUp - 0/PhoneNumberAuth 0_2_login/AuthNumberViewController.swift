@@ -53,24 +53,46 @@ class AuthNumberViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 // tapEvent
-                // 회원일때 -> 회원가입
-                if true {
-                    AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
-                        guard success else { return }
-                        DispatchQueue.main.async {
-                            TokenManager.shared.getFCMToken { fcm in
-                                UserDefaults.standard.set(fcm, forKey: "FCMtoken")
+                // 회원아닐 때 -> 회원가입
+                TokenManager.shared.getIdToken { id in
+                    UserDefaults.standard.set(id, forKey: "idtoken")
+                }
+                
+                TokenManager.shared.getFCMToken { fcm in
+                    UserDefaults.standard.set(fcm, forKey: "FCMtoken")
+                }
+                
+                APIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { success, error in
+                    if success { // 로그인 성공
+                        print("login success", success)
+                        AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
+                            guard success else { return }
+                            DispatchQueue.main.async {
+                                vc.changeSceneToMain()
                             }
-                            
-                            TokenManager.shared.getIdToken { id in
-                                APIManager.shared.login(idtoken: id)
-                                UserDefaults.standard.set(id, forKey: "idtoken")
+                        }
+                    } else { // 로그인 실패 -> 회원가입
+                        switch error?.responseCode {
+                        case 401: // Firebase Token Error
+                            Toast.makeToast(view: vc.authView, message: "401 Firebase Token Error")
+                        case 406: // 미가입 회원
+                            // 회원가입 로직
+                            AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
+                                guard success else { return }
+                                DispatchQueue.main.async {
+                                    vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
+                                }
                             }
-                            
-                            vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
+                        case 500: // Server Error
+                            Toast.makeToast(view: vc.authView, message: "500 Server Error")
+                        case 501: // Client Error
+                            Toast.makeToast(view: vc.authView, message: "501 Client Error")
+                        default:  // Undefied Error
+                            Toast.makeToast(view: vc.authView, message: "Unidentified Error")
                         }
                     }
                 }
+                
                 // 회원 아닐때 -> 홈 화면
             }.disposed(by: disposeBag)
     }
@@ -95,6 +117,18 @@ class AuthNumberViewController: BaseViewController {
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-96)
         }
     }
+    
+    func changeSceneToMain() {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let vc = MainViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        
+        sceneDelegate?.window?.rootViewController = nav
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
+    
 }
 
 extension AuthNumberViewController: UITextFieldDelegate {

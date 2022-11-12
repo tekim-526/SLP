@@ -17,12 +17,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let vc = PhoneNumberValidViewController()
+        
+        let vc = OnBoardingViewController()
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         
-        window?.makeKeyAndVisible()
+        /*if !UserDefaults.standard.bool(forKey: "OnboardingStartButtonTapped") {
+            let vc = OnBoardingViewController()
+            let nav = UINavigationController(rootViewController: vc)
+            window?.rootViewController = nav
+        } else {
+            let vc = PhoneNumberValidViewController()
+            let nav = UINavigationController(rootViewController: vc)
+            window?.rootViewController = nav
+        }*/
         
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

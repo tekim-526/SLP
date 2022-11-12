@@ -20,17 +20,15 @@ class BaseViewController: UIViewController {
         alert.addAction(ok)
         self.present(alert, animated: true)
     }
-    func makeNavigationUI(title: String ,rightBarButtonItem: UIBarButtonItem?) {
-        navigationItem.title = title
-        navigationItem.rightBarButtonItem = rightBarButtonItem
-        navigationController?.navigationBar.tintColor = .white
+    func makeNavigationUI(title: String? = nil ,rightBarButtonItem: UIBarButtonItem? = nil) {
+        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "arrow")
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "arrow")
+        navigationController?.navigationBar.backIndicatorImage?.withTintColor(.gray3)
+        navigationController?.navigationBar.barTintColor = .gray3
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: nil)
         
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = .mainColor
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-        
+    }
+    @objc func backButtonTapped() {
+        self.navigationController?.popToViewController(self, animated: true)
     }
 }
