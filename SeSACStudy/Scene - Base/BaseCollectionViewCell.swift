@@ -1,18 +1,18 @@
 //
-//  BaseView.swift
+//  BaseCollectionViewCell.swift
 //  SeSACStudy
 //
-//  Created by Kim TaeSoo on 2022/11/07.
+//  Created by Kim TaeSoo on 2022/11/14.
 //
 
 import UIKit
 
-class BaseView: UIView {
+class BaseCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         makeConstraints()
-        self.backgroundColor = .systemBackground
+        
     }
     
     @available(*, unavailable)
@@ -21,6 +21,6 @@ class BaseView: UIView {
     }
     
     func setupUI() { }
-    func makeConstraints() { }
+    func makeConstraints() {}
 }
 

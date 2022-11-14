@@ -25,13 +25,13 @@ class APIManager {
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
+                print(response.response?.statusCode)
                 completion(true, nil)
             case .failure(let error):
                 print("login error", error)
                 completion(false, error)
                 print(error.responseCode)
             }
-            print("outside closure")
         }
     }
     
@@ -53,13 +53,10 @@ class APIManager {
             
             case .success(let data):
                 let json = JSON(data)
-                print("sign up json", json)
                 completion(response.response?.statusCode)
             case .failure(_):
-                print("sign up fail")
                 completion(response.response?.statusCode)
             }
-            print("sign up outside closure")
         }
     }
     

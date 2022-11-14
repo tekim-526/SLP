@@ -12,13 +12,13 @@ class ProfileViewController: BaseViewController {
     let profileView = ProfileView()
     var datasource: UICollectionViewDiffableDataSource<Int, MyInfoList>!
     let list = [
-        MyInfoList(title: UserDefaults.standard.string(forKey: "nick") ?? "", image: UIImage(named: "sesac_face_1-1")!),
         MyInfoList(title: "공지사항", image: UIImage(named: "notice")),
         MyInfoList(title: "자주 묻는 질문", image: UIImage(named: "faq")),
         MyInfoList(title: "1:1 문의", image: UIImage(named: "qna")),
         MyInfoList(title: "알림 설정", image: UIImage(named: "setting_alarm")),
         MyInfoList(title: "이용약관", image: UIImage(named: "permit"))
     ]
+    
     override func loadView() {
         view = profileView
     }
@@ -26,28 +26,35 @@ class ProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "내정보"
-        
+        profileView.collectionView.delegate = self
+            
         setDataSource()
         
     }
     
     private func setDataSource() {
-        let cellRegisteration = UICollectionView.CellRegistration<UICollectionViewListCell, MyInfoList> { cell, indexPath, item in
-            var content = UIListContentConfiguration.valueCell()
-            DispatchQueue.main.async {
-                content.attributedText = NSAttributedString(string: item.title, attributes: [NSAttributedString.Key.font : UIFont(name: "NotoSansKR-Regular", size: 16)!])
-                content.image = item.image
-                content.imageProperties.cornerRadius = 24
-                content.imageProperties.maximumSize = CGSize(width: 48, height: 48)
-                
-                cell.contentConfiguration = content
-            }
+        let cellRegisteration = UICollectionView.CellRegistration<ProfileViewCell, MyInfoList> { cell, indexPath, item in
+
+            cell.imageView.image = item.image
+            cell.label.text = item.title
+            
             
         }
         datasource = UICollectionViewDiffableDataSource(collectionView: profileView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegisteration, for: indexPath, item: itemIdentifier)
-        
+            
             return cell
+        })
+        
+        let header = UICollectionView.SupplementaryRegistration<ProfileHeaderView>(elementKind: "header") { [weak self] supplementaryView, elementKind, indexPath in
+            supplementaryView.label.text = UserDefaults.standard.string(forKey: "nick")
+            supplementaryView.imageView.image = UIImage(named: "sesac_face_1-1")
+            supplementaryView.button.addTarget(self, action: #selector(self?.headerTapped), for: .touchUpInside)
+        }
+        
+        datasource.supplementaryViewProvider = .some({ collectionView, elementKind, indexPath in
+            let header = collectionView.dequeueConfiguredReusableSupplementary(using: header, for: indexPath)
+            return header
         })
         
         var snapshot = NSDiffableDataSourceSnapshot<Int, MyInfoList>()
@@ -56,8 +63,21 @@ class ProfileViewController: BaseViewController {
         snapshot.appendItems(list)
         datasource.apply(snapshot, animatingDifferences: true)
     }
-    
+    @objc func headerTapped() {
+        self.navigationController?.pushViewController(ManageInfoViewController(), animated: true)
+    }
 }
+
+extension ProfileViewController: UICollectionViewDelegate {
+  
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("indexpath: \(indexPath)")
+    }
+
+}
+
+
+
 struct MyInfoList: Hashable {
     let uuid = UUID()
     let title: String

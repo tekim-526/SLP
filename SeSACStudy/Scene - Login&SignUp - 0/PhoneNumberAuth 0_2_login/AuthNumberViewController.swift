@@ -90,7 +90,6 @@ class AuthNumberViewController: BaseViewController {
                         }
                     }
                 }
-                
                 // 회원 아닐때 -> 홈 화면
             }.disposed(by: disposeBag)
     }

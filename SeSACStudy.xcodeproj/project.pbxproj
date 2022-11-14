@@ -58,6 +58,13 @@
 		93CFB3932918D3BE0014908C /* Dongle-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */; };
 		93CFB3942918D3BE0014908C /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */; };
 		93CFB3972918D6C00014908C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 93CFB3962918D6C00014908C /* SnapKit */; };
+		93E2164129223C560039A57A /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164029223C560039A57A /* ProfileViewCell.swift */; };
+		93E2164329224F940039A57A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164229224F940039A57A /* ProfileHeaderView.swift */; };
+		93E21647292252070039A57A /* ManageInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E21646292252070039A57A /* ManageInfoViewController.swift */; };
+		93E21649292252910039A57A /* ManageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E21648292252910039A57A /* ManageInfoView.swift */; };
+		93E2164B292258080039A57A /* ManageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164A292258070039A57A /* ManageHeaderView.swift */; };
+		93E2164D29225B640039A57A /* ExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164C29225B640039A57A /* ExpandableCell.swift */; };
+		93E2164F29225BBF0039A57A /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164E29225BBF0039A57A /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +114,13 @@
 		93CFB3882918D3BE0014908C /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		93CFB3892918D3BE0014908C /* Dongle-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dongle-Bold.ttf"; sourceTree = "<group>"; };
 		93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		93E2164029223C560039A57A /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
+		93E2164229224F940039A57A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		93E21646292252070039A57A /* ManageInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageInfoViewController.swift; sourceTree = "<group>"; };
+		93E21648292252910039A57A /* ManageInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageInfoView.swift; sourceTree = "<group>"; };
+		93E2164A292258070039A57A /* ManageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageHeaderView.swift; sourceTree = "<group>"; };
+		93E2164C29225B640039A57A /* ExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCell.swift; sourceTree = "<group>"; };
+		93E2164E29225BBF0039A57A /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,8 +244,8 @@
 		938ADFF82921FDEE00ED799C /* Scene - Profile */ = {
 			isa = PBXGroup;
 			children = (
-				938ADFFA2921FFE500ED799C /* ProfileViewController.swift */,
-				938ADFFC2921FFEB00ED799C /* ProfileView.swift */,
+				93E21644292251B10039A57A /* 4.my_info */,
+				93E21645292251CC0039A57A /* 4_1.my_info */,
 			);
 			path = "Scene - Profile";
 			sourceTree = "<group>";
@@ -294,6 +308,7 @@
 			children = (
 				93CFB3742918B38E0014908C /* BaseViewController.swift */,
 				93CFB3762918B3950014908C /* BaseView.swift */,
+				93E2164E29225BBF0039A57A /* BaseCollectionViewCell.swift */,
 			);
 			path = "Scene - Base";
 			sourceTree = "<group>";
@@ -331,6 +346,28 @@
 				93CFB38A2918D3BE0014908C /* NotoSansKR-Regular.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		93E21644292251B10039A57A /* 4.my_info */ = {
+			isa = PBXGroup;
+			children = (
+				938ADFFA2921FFE500ED799C /* ProfileViewController.swift */,
+				93E2164229224F940039A57A /* ProfileHeaderView.swift */,
+				938ADFFC2921FFEB00ED799C /* ProfileView.swift */,
+				93E2164029223C560039A57A /* ProfileViewCell.swift */,
+			);
+			path = 4.my_info;
+			sourceTree = "<group>";
+		};
+		93E21645292251CC0039A57A /* 4_1.my_info */ = {
+			isa = PBXGroup;
+			children = (
+				93E21646292252070039A57A /* ManageInfoViewController.swift */,
+				93E21648292252910039A57A /* ManageInfoView.swift */,
+				93E2164A292258070039A57A /* ManageHeaderView.swift */,
+				93E2164C29225B640039A57A /* ExpandableCell.swift */,
+			);
+			path = 4_1.my_info;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -433,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93E2164B292258080039A57A /* ManageHeaderView.swift in Sources */,
 				9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */,
 				938ADFC6291CEA0600ED799C /* TokenManager.swift in Sources */,
 				938ADFBE291CD0F200ED799C /* AuthManager.swift in Sources */,
@@ -442,12 +480,15 @@
 				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
 				9325E691291A471000E94098 /* OnBoardingView.swift in Sources */,
 				9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */,
+				93E2164329224F940039A57A /* ProfileHeaderView.swift in Sources */,
 				938ADFDE291CF99B00ED799C /* LoginViewModel.swift in Sources */,
 				938ADFEE291D031200ED799C /* APIManager.swift in Sources */,
 				938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */,
+				93E21647292252070039A57A /* ManageInfoViewController.swift in Sources */,
 				93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */,
 				938ADFE3291CF99B00ED799C /* NicknameViewController.swift in Sources */,
 				938ADFE4291CF99B00ED799C /* PhoneNumberValidViewController.swift in Sources */,
+				93E21649292252910039A57A /* ManageInfoView.swift in Sources */,
 				938ADFE5291CF99B00ED799C /* AuthNumberViewController.swift in Sources */,
 				938ADFE9291CFAE000ED799C /* MainViewController.swift in Sources */,
 				938ADFF7291E20FC00ED799C /* Toast.swift in Sources */,
@@ -457,11 +498,14 @@
 				938ADFDF291CF99B00ED799C /* EmailViewController.swift in Sources */,
 				9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */,
 				937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */,
+				93E2164129223C560039A57A /* ProfileViewCell.swift in Sources */,
+				93E2164F29225BBF0039A57A /* BaseCollectionViewCell.swift in Sources */,
 				937A161B291BA74B00656882 /* AttributeString+Protocol.swift in Sources */,
 				938ADFE1291CF99B00ED799C /* BirthViewController.swift in Sources */,
 				93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */,
 				93CFB37A2918C16A0014908C /* UIColor+Extensions.swift in Sources */,
 				938ADFE0291CF99B00ED799C /* BirthView.swift in Sources */,
+				93E2164D29225B640039A57A /* ExpandableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
