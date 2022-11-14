@@ -25,7 +25,6 @@ class PhoneNumberValidViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //APIManager.shared.login(idtoken: "")
         navigationController?.navigationBar.isHidden = true
         makeNavigationUI()
         bind()
@@ -83,7 +82,6 @@ class PhoneNumberValidViewController: BaseViewController {
                 vc.validView.button.backgroundColor = bool ? .brandGreen : .gray6
                 vc.validView.button.tintColor = bool ? .white : .gray3
             }.disposed(by: disposeBag)
-        
         
         validView.button.rx.tap
             .withUnretained(self)

@@ -72,7 +72,7 @@ class APIManager {
         AF.request(url, method: .post, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(_):
-                print("withdraw succes")
+                print("withdraw success")
             case .failure(let error):
                 print("withdraw fail")
                 print("error", error)
@@ -80,25 +80,5 @@ class APIManager {
             print("withdraw outside closure")
         }
     }
-    private func makeSignupQueryItems() -> [URLQueryItem] {
-        UserDefaults.standard.set("TaeSu Kim", forKey: "nick")
-        print(UserDefaults.standard.string(forKey: "phoneNumber"),
-              UserDefaults.standard.string(forKey: "FCMtoken"),
-              UserDefaults.standard.string(forKey: "nick"),
-              UserDefaults.standard.string(forKey: "birth"),
-              UserDefaults.standard.string(forKey: "email"),
-              UserDefaults.standard.integer(forKey: "gender"),
-              "\(UserDefaults.standard.string(forKey: "idtoken") ?? "")",
-              
-              separator: "\n")
-        let phoneNumber = URLQueryItem(name: "phoneNumber", value: UserDefaults.standard.string(forKey: "phoneNumber") ?? "")
-        let FCMtoken = URLQueryItem(name: "FCMtoken", value: UserDefaults.standard.string(forKey: "FCMtoken") ?? "")
-        let nick = URLQueryItem(name: "nick", value: UserDefaults.standard.string(forKey: "nick") ?? "")
-        let birth = URLQueryItem(name: "birth", value: UserDefaults.standard.string(forKey: "birth") ?? "")
-        let email = URLQueryItem(name: "email", value: UserDefaults.standard.string(forKey: "email") ?? "")
-        let gender = URLQueryItem(name: "gender", value: "\(UserDefaults.standard.integer(forKey: "gender"))")
-        
-        return [phoneNumber, FCMtoken, nick, birth, email, gender]
-    }
-    
+  
 }

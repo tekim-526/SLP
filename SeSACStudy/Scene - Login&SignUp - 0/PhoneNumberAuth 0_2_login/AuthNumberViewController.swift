@@ -65,16 +65,14 @@ class AuthNumberViewController: BaseViewController {
                 APIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { success, error in
                     if success { // 로그인 성공
                         print("login success", success)
-                        AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
-                            guard success else { return }
-                            DispatchQueue.main.async {
-                                vc.changeSceneToMain()
-                            }
-                        }
-                    } else { // 로그인 실패 -> 회원가입
+                        vc.verifySMS()
+                    } else {
                         switch error?.responseCode {
                         case 401: // Firebase Token Error
-                            Toast.makeToast(view: vc.authView, message: "401 Firebase Token Error")
+                            TokenManager.shared.getIdToken { id in
+                                UserDefaults.standard.set(id, forKey: "idtoken")
+                                vc.verifySMS()
+                            }
                         case 406: // 미가입 회원
                             // 회원가입 로직
                             AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
@@ -102,7 +100,7 @@ class AuthNumberViewController: BaseViewController {
         authView.textField.placeholder = "인증번호 입력"
         authView.button.setTitle("인증하고 시작하기", for: .normal)
     }
-    
+ 
     override func makeConstraints() {
         resendButton.snp.makeConstraints { make in
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-16)
@@ -118,11 +116,20 @@ class AuthNumberViewController: BaseViewController {
         }
     }
     
+    func verifySMS() {
+        AuthManager.shared.verifySMS(sms: self.authView.textField.text!) { success in
+            guard success else { return }
+            DispatchQueue.main.async {
+                self.changeSceneToMain()
+            }
+        }
+    }
+    
     func changeSceneToMain() {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         
-        let vc = MainViewController()
+        let vc = TabBarController()
         let nav = UINavigationController(rootViewController: vc)
         
         sceneDelegate?.window?.rootViewController = nav

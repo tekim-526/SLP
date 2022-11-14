@@ -101,13 +101,16 @@ class GenderViewController: BaseViewController, AttributeString {
                     guard let statuscode else { return }
                     switch statuscode {
                     case 200:
-                        vc.navigationController?.pushViewController(MainViewController(), animated: true)
+                        vc.navigationController?.pushViewController(TabBarController(), animated: true)
                     case 201:
                         Toast.makeToast(view: vc.genderView, message: "이미 가입한 회원입니다")
-                    case 202:
+                    case 202: // 유효하지 않은 닉네임
                         Toast.makeToast(view: vc.genderView, message: "유효하지않은 닉네임 입니다.")
                     case 401: // Firebase Token Error
-                        Toast.makeToast(view: vc.genderView, message: "401 Firebase Token Error")
+                        TokenManager.shared.getIdToken { id in
+                            UserDefaults.standard.set(id, forKey: "idtoken")
+                        }
+                        Toast.makeToast(view: vc.genderView, message: "다시 시도해보세요.")
                     case 500: // Server Error
                         Toast.makeToast(view: vc.genderView, message: "500 Server Error")
                     case 501: // Client Error

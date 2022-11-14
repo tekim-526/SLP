@@ -14,8 +14,8 @@ class AuthManager {
     private let auth = Auth.auth()
     
     private var verificationId: String?
+    
     func startAuth(phoneNumber: String, completion: @escaping (Bool) -> Void) {
-        auth.languageCode = "kr"
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationId, error in
             guard let verificationId = verificationId, error == nil else { return }
             self?.verificationId = verificationId
@@ -29,6 +29,7 @@ class AuthManager {
             return
         }
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: sms)
+        auth.languageCode = "kr"
         auth.signIn(with: credential) { result, error in
             guard result != nil, error == nil else {
                 completion(false)

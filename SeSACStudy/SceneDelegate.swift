@@ -18,19 +18,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let vc = OnBoardingViewController()
-        let nav = UINavigationController(rootViewController: vc)
-        window?.rootViewController = nav
         
-        /*if !UserDefaults.standard.bool(forKey: "OnboardingStartButtonTapped") {
+        if !UserDefaults.standard.bool(forKey: "OnboardingStartButtonTapped") {
             let vc = OnBoardingViewController()
             let nav = UINavigationController(rootViewController: vc)
             window?.rootViewController = nav
         } else {
-            let vc = PhoneNumberValidViewController()
-            let nav = UINavigationController(rootViewController: vc)
-            window?.rootViewController = nav
-        }*/
+//            let vc = PhoneNumberValidViewController()
+            let vc = TabBarController()
+            window?.rootViewController = vc
+        }
         
         window?.makeKeyAndVisible()
     }

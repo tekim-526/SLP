@@ -24,13 +24,13 @@ class OnBoardingViewController: BaseViewController {
         customPageVC.didMove(toParent: self)
         onboardingView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         UserDefaults.standard.set(false, forKey: "OnboardingStartButtonTapped")
-        
     }
     @objc func startButtonTapped() {
         let phoneNumberVC = PhoneNumberValidViewController()
         UserDefaults.standard.set(true, forKey: "OnboardingStartButtonTapped")
         self.navigationController?.pushViewController(phoneNumberVC, animated: true)
     }
+    
     override func setupUI() {
         customPageVC = CustomPageViewController()
         onboardingView.addSubview(customPageVC.view)

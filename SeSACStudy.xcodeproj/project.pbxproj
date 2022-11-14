@@ -11,7 +11,6 @@
 		9325E691291A471000E94098 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68D291A471000E94098 /* OnBoardingView.swift */; };
 		9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */; };
 		9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68F291A471000E94098 /* CustomPageViewController.swift */; };
-		9325E698291A737B00E94098 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E697291A737B00E94098 /* TextFieldEffects */; };
 		9325E69B291A7A7F00E94098 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69A291A7A7F00E94098 /* RxCocoa */; };
 		9325E69D291A7A7F00E94098 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69C291A7A7F00E94098 /* RxSwift */; };
 		9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6A0291B487E00E94098 /* UIView+Extensions.swift */; };
@@ -37,9 +36,11 @@
 		938ADFF1291D03A100ED799C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 938ADFF0291D03A100ED799C /* SwiftyJSON */; };
 		938ADFF4291E201200ED799C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 938ADFF3291E201200ED799C /* Toast */; };
 		938ADFF7291E20FC00ED799C /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFF6291E20FC00ED799C /* Toast.swift */; };
+		938ADFFB2921FFE500ED799C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFFA2921FFE500ED799C /* ProfileViewController.swift */; };
+		938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFFC2921FFEB00ED799C /* ProfileView.swift */; };
 		93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35D2918AEAC0014908C /* AppDelegate.swift */; };
 		93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35F2918AEAC0014908C /* SceneDelegate.swift */; };
-		93CFB3622918AEAC0014908C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* ViewController.swift */; };
+		93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* TabBarController.swift */; };
 		93CFB3652918AEAC0014908C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3632918AEAC0014908C /* Main.storyboard */; };
 		93CFB3672918AEAE0014908C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3662918AEAE0014908C /* Assets.xcassets */; };
 		93CFB36A2918AEAE0014908C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93CFB3682918AEAE0014908C /* LaunchScreen.storyboard */; };
@@ -83,10 +84,12 @@
 		938ADFE8291CFAE000ED799C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		938ADFED291D031200ED799C /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		938ADFF6291E20FC00ED799C /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		938ADFFA2921FFE500ED799C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		938ADFFC2921FFEB00ED799C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		93CFB35A2918AEAC0014908C /* SeSACStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSACStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CFB35D2918AEAC0014908C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93CFB35F2918AEAC0014908C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		93CFB3612918AEAC0014908C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		93CFB3612918AEAC0014908C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		93CFB3642918AEAC0014908C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		93CFB3662918AEAE0014908C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93CFB3692918AEAE0014908C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -119,7 +122,6 @@
 				938ADFC9291CED0500ED799C /* FirebaseAuth in Frameworks */,
 				93CFB3972918D6C00014908C /* SnapKit in Frameworks */,
 				9325E69D291A7A7F00E94098 /* RxSwift in Frameworks */,
-				9325E698291A737B00E94098 /* TextFieldEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +227,15 @@
 			path = Toast;
 			sourceTree = "<group>";
 		};
+		938ADFF82921FDEE00ED799C /* Scene - Profile */ = {
+			isa = PBXGroup;
+			children = (
+				938ADFFA2921FFE500ED799C /* ProfileViewController.swift */,
+				938ADFFC2921FFEB00ED799C /* ProfileView.swift */,
+			);
+			path = "Scene - Profile";
+			sourceTree = "<group>";
+		};
 		93CFB3512918AEAC0014908C = {
 			isa = PBXGroup;
 			children = (
@@ -248,15 +259,16 @@
 				938ADFCC291CF6B000ED799C /* GoogleService-Info.plist */,
 				93CFB35D2918AEAC0014908C /* AppDelegate.swift */,
 				93CFB35F2918AEAC0014908C /* SceneDelegate.swift */,
-				93CFB3612918AEAC0014908C /* ViewController.swift */,
+				93CFB3612918AEAC0014908C /* TabBarController.swift */,
 				938ADFF5291E20F100ED799C /* Toast */,
 				938ADFBC291CCC5900ED799C /* Network */,
 				937A1619291BA72E00656882 /* Protocol */,
 				93CFB3782918C1620014908C /* Extensions */,
+				93CFB3732918B3690014908C /* Scene - Base */,
 				93CFB3712918B2900014908C /* Scene - OnBoarding */,
 				938ADFCE291CF99B00ED799C /* Scene - Login&SignUp - 0 */,
 				938ADFE7291CFAB200ED799C /* Scene - Main */,
-				93CFB3732918B3690014908C /* Scene - Base */,
+				938ADFF82921FDEE00ED799C /* Scene - Profile */,
 				93CFB37D2918CE5B0014908C /* Resources */,
 				93CFB3632918AEAC0014908C /* Main.storyboard */,
 				93CFB3662918AEAE0014908C /* Assets.xcassets */,
@@ -339,7 +351,6 @@
 			name = SeSACStudy;
 			packageProductDependencies = (
 				93CFB3962918D6C00014908C /* SnapKit */,
-				9325E697291A737B00E94098 /* TextFieldEffects */,
 				9325E69A291A7A7F00E94098 /* RxCocoa */,
 				9325E69C291A7A7F00E94098 /* RxSwift */,
 				938ADFC8291CED0500ED799C /* FirebaseAuth */,
@@ -378,7 +389,6 @@
 			mainGroup = 93CFB3512918AEAC0014908C;
 			packageReferences = (
 				93CFB3952918D6C00014908C /* XCRemoteSwiftPackageReference "SnapKit" */,
-				9325E696291A737B00E94098 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 				9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				938ADFC7291CED0500ED799C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				938ADFEA291D028000ED799C /* XCRemoteSwiftPackageReference "Alamofire" */,
@@ -426,7 +436,7 @@
 				9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */,
 				938ADFC6291CEA0600ED799C /* TokenManager.swift in Sources */,
 				938ADFBE291CD0F200ED799C /* AuthManager.swift in Sources */,
-				93CFB3622918AEAC0014908C /* ViewController.swift in Sources */,
+				93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */,
 				938ADFE6291CF99B00ED799C /* GenderViewController.swift in Sources */,
 				93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */,
 				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
@@ -434,6 +444,7 @@
 				9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */,
 				938ADFDE291CF99B00ED799C /* LoginViewModel.swift in Sources */,
 				938ADFEE291D031200ED799C /* APIManager.swift in Sources */,
+				938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */,
 				93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */,
 				938ADFE3291CF99B00ED799C /* NicknameViewController.swift in Sources */,
 				938ADFE4291CF99B00ED799C /* PhoneNumberValidViewController.swift in Sources */,
@@ -441,6 +452,7 @@
 				938ADFE9291CFAE000ED799C /* MainViewController.swift in Sources */,
 				938ADFF7291E20FC00ED799C /* Toast.swift in Sources */,
 				9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */,
+				938ADFFB2921FFE500ED799C /* ProfileViewController.swift in Sources */,
 				938ADFE2291CF99B00ED799C /* SignUpAndAuthView.swift in Sources */,
 				938ADFDF291CF99B00ED799C /* EmailViewController.swift in Sources */,
 				9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */,
@@ -671,14 +683,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9325E696291A737B00E94098 /* XCRemoteSwiftPackageReference "TextFieldEffects" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/raulriera/TextFieldEffects.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -730,11 +734,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9325E697291A737B00E94098 /* TextFieldEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9325E696291A737B00E94098 /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
-			productName = TextFieldEffects;
-		};
 		9325E69A291A7A7F00E94098 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */;
