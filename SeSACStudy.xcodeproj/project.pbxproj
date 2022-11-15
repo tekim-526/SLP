@@ -38,6 +38,9 @@
 		938ADFF7291E20FC00ED799C /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFF6291E20FC00ED799C /* Toast.swift */; };
 		938ADFFB2921FFE500ED799C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFFA2921FFE500ED799C /* ProfileViewController.swift */; };
 		938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFFC2921FFEB00ED799C /* ProfileView.swift */; };
+		93931A9029234E9900FAF099 /* GenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A8F29234E9900FAF099 /* GenderCell.swift */; };
+		93931A922923868500FAF099 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A912923868500FAF099 /* UIButton+Extensions.swift */; };
+		93931A94292389E300FAF099 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A93292389E300FAF099 /* UIStackView+Extensions.swift */; };
 		93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35D2918AEAC0014908C /* AppDelegate.swift */; };
 		93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35F2918AEAC0014908C /* SceneDelegate.swift */; };
 		93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* TabBarController.swift */; };
@@ -93,6 +96,9 @@
 		938ADFF6291E20FC00ED799C /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		938ADFFA2921FFE500ED799C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		938ADFFC2921FFEB00ED799C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		93931A8F29234E9900FAF099 /* GenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCell.swift; sourceTree = "<group>"; };
+		93931A912923868500FAF099 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		93931A93292389E300FAF099 /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
 		93CFB35A2918AEAC0014908C /* SeSACStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSACStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CFB35D2918AEAC0014908C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93CFB35F2918AEAC0014908C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -319,6 +325,8 @@
 				93CFB3792918C16A0014908C /* UIColor+Extensions.swift */,
 				9325E6A0291B487E00E94098 /* UIView+Extensions.swift */,
 				937A1614291B839D00656882 /* UITextField+Extensions.swift */,
+				93931A912923868500FAF099 /* UIButton+Extensions.swift */,
+				93931A93292389E300FAF099 /* UIStackView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -366,6 +374,7 @@
 				93E21648292252910039A57A /* ManageInfoView.swift */,
 				93E2164A292258070039A57A /* ManageHeaderView.swift */,
 				93E2164C29225B640039A57A /* ExpandableCell.swift */,
+				93931A8F29234E9900FAF099 /* GenderCell.swift */,
 			);
 			path = 4_1.my_info;
 			sourceTree = "<group>";
@@ -485,10 +494,12 @@
 				938ADFEE291D031200ED799C /* APIManager.swift in Sources */,
 				938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */,
 				93E21647292252070039A57A /* ManageInfoViewController.swift in Sources */,
+				93931A94292389E300FAF099 /* UIStackView+Extensions.swift in Sources */,
 				93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */,
 				938ADFE3291CF99B00ED799C /* NicknameViewController.swift in Sources */,
 				938ADFE4291CF99B00ED799C /* PhoneNumberValidViewController.swift in Sources */,
 				93E21649292252910039A57A /* ManageInfoView.swift in Sources */,
+				93931A922923868500FAF099 /* UIButton+Extensions.swift in Sources */,
 				938ADFE5291CF99B00ED799C /* AuthNumberViewController.swift in Sources */,
 				938ADFE9291CFAE000ED799C /* MainViewController.swift in Sources */,
 				938ADFF7291E20FC00ED799C /* Toast.swift in Sources */,
@@ -502,6 +513,7 @@
 				93E2164F29225BBF0039A57A /* BaseCollectionViewCell.swift in Sources */,
 				937A161B291BA74B00656882 /* AttributeString+Protocol.swift in Sources */,
 				938ADFE1291CF99B00ED799C /* BirthViewController.swift in Sources */,
+				93931A9029234E9900FAF099 /* GenderCell.swift in Sources */,
 				93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */,
 				93CFB37A2918C16A0014908C /* UIColor+Extensions.swift in Sources */,
 				938ADFE0291CF99B00ED799C /* BirthView.swift in Sources */,

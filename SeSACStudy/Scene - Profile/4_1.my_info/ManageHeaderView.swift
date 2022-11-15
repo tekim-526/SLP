@@ -35,7 +35,7 @@ class ManageHeaderView: UICollectionReusableView {
             make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
             make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
             make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
-            make.trailing.equalTo(self.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.safeAreaLayoutGuide)
         }
        
     }

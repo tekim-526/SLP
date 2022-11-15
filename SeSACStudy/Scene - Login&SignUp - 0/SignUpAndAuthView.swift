@@ -8,7 +8,6 @@
 import UIKit
 
 import SnapKit
-import TextFieldEffects
 
 class SignUpAndAuthView: BaseView {
     let label: UILabel = {

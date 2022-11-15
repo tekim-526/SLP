@@ -9,43 +9,91 @@ import UIKit
 
 import SnapKit
 
+enum Section: Int, CaseIterable {
+  case top
+  case bottom
+  var columnCount: Int {
+    switch self {
+    case .top:
+      return 0
+    case .bottom:
+      return 1
+    }
+  }
+}
+
 class ManageInfoView: BaseView {
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "sesac_background_1")
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
+        return imageView
+    }()
+    
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout(height: 58))
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(collectionView)
+    }
+    
+    override func setupUI() {
+        [imageView, collectionView].forEach { self.addSubview($0) }
+//        collectionView.backgroundColor = .systemMint
+    }
+    
+    override func makeConstraints() {
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
+            make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
+            make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
+            make.height.equalTo(194)
+        }
         collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(imageView.snp.bottom)
+            make.bottom.equalTo(self.safeAreaLayoutGuide)
+            make.leading.equalTo(self.safeAreaLayoutGuide)
+            make.trailing.equalTo(self.safeAreaLayoutGuide)
         }
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func createLayout() -> UICollectionViewLayout {
+    func createLayout(height: CGFloat) -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let sectionType = Section(rawValue: sectionIndex) else {
+                  return nil
+            }
+            let sectionNum = sectionType.rawValue
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupHeight = sectionIndex == 0 ? NSCollectionLayoutDimension.absolute(height) : NSCollectionLayoutDimension.absolute(58)
 
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                             heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight)
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
 
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .absolute(74))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-                                                         subitems: [item])
-
-        let footerHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                      heightDimension: .fractionalHeight(0.305))
+            return section
+          }
         
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: footerHeaderSize,
-            elementKind: "header",
-            alignment: .top)
-        let section = NSCollectionLayoutSection(group: group)
-        section.boundarySupplementaryItems = [header]
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
         
         return layout
+//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+//                                              heightDimension: .fractionalHeight(1.0))
+//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//
+//        let groupHeight = section == 0 ? NSCollectionLayoutDimension.absolute(310) : NSCollectionLayoutDimension.absolute(58)
+//
+//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight)
+//        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+//
+//        let section = NSCollectionLayoutSection(group: group)
+//
+//        let layout = UICollectionViewCompositionalLayout(section: section)
+            
     }
+    
+    
+
 }
