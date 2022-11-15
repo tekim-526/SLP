@@ -41,6 +41,9 @@
 		93931A9029234E9900FAF099 /* GenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A8F29234E9900FAF099 /* GenderCell.swift */; };
 		93931A922923868500FAF099 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A912923868500FAF099 /* UIButton+Extensions.swift */; };
 		93931A94292389E300FAF099 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A93292389E300FAF099 /* UIStackView+Extensions.swift */; };
+		93931A962923C44400FAF099 /* StudyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A952923C44400FAF099 /* StudyCell.swift */; };
+		93931A982923C65000FAF099 /* PhoneNumberPermitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A972923C65000FAF099 /* PhoneNumberPermitCell.swift */; };
+		93931A9A2923C7CA00FAF099 /* AgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93931A992923C7CA00FAF099 /* AgeCell.swift */; };
 		93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35D2918AEAC0014908C /* AppDelegate.swift */; };
 		93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35F2918AEAC0014908C /* SceneDelegate.swift */; };
 		93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* TabBarController.swift */; };
@@ -99,6 +102,9 @@
 		93931A8F29234E9900FAF099 /* GenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCell.swift; sourceTree = "<group>"; };
 		93931A912923868500FAF099 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		93931A93292389E300FAF099 /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		93931A952923C44400FAF099 /* StudyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyCell.swift; sourceTree = "<group>"; };
+		93931A972923C65000FAF099 /* PhoneNumberPermitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberPermitCell.swift; sourceTree = "<group>"; };
+		93931A992923C7CA00FAF099 /* AgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCell.swift; sourceTree = "<group>"; };
 		93CFB35A2918AEAC0014908C /* SeSACStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSACStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CFB35D2918AEAC0014908C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93CFB35F2918AEAC0014908C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -375,6 +381,9 @@
 				93E2164A292258070039A57A /* ManageHeaderView.swift */,
 				93E2164C29225B640039A57A /* ExpandableCell.swift */,
 				93931A8F29234E9900FAF099 /* GenderCell.swift */,
+				93931A952923C44400FAF099 /* StudyCell.swift */,
+				93931A972923C65000FAF099 /* PhoneNumberPermitCell.swift */,
+				93931A992923C7CA00FAF099 /* AgeCell.swift */,
 			);
 			path = 4_1.my_info;
 			sourceTree = "<group>";
@@ -488,6 +497,7 @@
 				93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */,
 				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
 				9325E691291A471000E94098 /* OnBoardingView.swift in Sources */,
+				93931A982923C65000FAF099 /* PhoneNumberPermitCell.swift in Sources */,
 				9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */,
 				93E2164329224F940039A57A /* ProfileHeaderView.swift in Sources */,
 				938ADFDE291CF99B00ED799C /* LoginViewModel.swift in Sources */,
@@ -506,6 +516,7 @@
 				9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */,
 				938ADFFB2921FFE500ED799C /* ProfileViewController.swift in Sources */,
 				938ADFE2291CF99B00ED799C /* SignUpAndAuthView.swift in Sources */,
+				93931A962923C44400FAF099 /* StudyCell.swift in Sources */,
 				938ADFDF291CF99B00ED799C /* EmailViewController.swift in Sources */,
 				9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */,
 				937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */,
@@ -516,6 +527,7 @@
 				93931A9029234E9900FAF099 /* GenderCell.swift in Sources */,
 				93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */,
 				93CFB37A2918C16A0014908C /* UIColor+Extensions.swift in Sources */,
+				93931A9A2923C7CA00FAF099 /* AgeCell.swift in Sources */,
 				938ADFE0291CF99B00ED799C /* BirthView.swift in Sources */,
 				93E2164D29225B640039A57A /* ExpandableCell.swift in Sources */,
 			);

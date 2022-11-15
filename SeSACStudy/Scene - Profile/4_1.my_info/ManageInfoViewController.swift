@@ -31,12 +31,34 @@ class ManageInfoViewController: BaseViewController {
         let genderCellRegisteration = UICollectionView.CellRegistration<GenderCell, String> { cell, indexPath, item in
             cell.label.text = item
         }
+        let studyCellRegisteration = UICollectionView.CellRegistration<StudyCell, String> { cell, indexPath, item in
+            cell.label.text = item
+        }
+        let phoneNumberPermitCellRegisteration = UICollectionView.CellRegistration<PhoneNumberPermitCell, String> { cell, indexPath, item in
+            cell.label.text = item
+        }
+        let ageCellRegisteration = UICollectionView.CellRegistration<AgeCell, String> { cell, indexPath, item in
+            cell.label.text = item
+        }
         datasource = UICollectionViewDiffableDataSource(collectionView: manageInfoView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            if indexPath == [0, 0] {
+            if indexPath.section == 0 {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: expandableCellRegisteration, for: indexPath, item: itemIdentifier)
+                return cell
+            } else if indexPath.section == 1 {
+                let cell = collectionView.dequeueConfiguredReusableCell(using: genderCellRegisteration, for: indexPath, item: itemIdentifier)
+                return cell
+            } else if indexPath.section == 2 {
+                let cell = collectionView.dequeueConfiguredReusableCell(using: studyCellRegisteration, for: indexPath, item: itemIdentifier)
+                return cell
+            } else if indexPath.section == 3 {
+                let cell = collectionView.dequeueConfiguredReusableCell(using: phoneNumberPermitCellRegisteration, for: indexPath, item: itemIdentifier)
+                return cell
+            } else if indexPath.section == 4{
+                let cell = collectionView.dequeueConfiguredReusableCell(using: ageCellRegisteration, for: indexPath, item: itemIdentifier)
                 return cell
             } else {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: genderCellRegisteration, for: indexPath, item: itemIdentifier)
+                cell.stackView.isHidden = true
                 return cell
             }
         })
@@ -44,10 +66,13 @@ class ManageInfoViewController: BaseViewController {
                 
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
         
-        snapshot.appendSections([0])
-        snapshot.appendItems([UserDefaults.standard.string(forKey: "nick")!])
-        snapshot.appendSections([1])
-        snapshot.appendItems(["내 성별"])
+        snapshot.appendSections([0, 1, 2, 3, 4, 5])
+        snapshot.appendItems([UserDefaults.standard.string(forKey: "nick")!], toSection: 0)
+        snapshot.appendItems(["내 성별"], toSection: 1)
+        snapshot.appendItems(["자주하는 스터디"], toSection: 2)
+        snapshot.appendItems(["내 번호 검색 허용"], toSection: 3)
+        snapshot.appendItems(["상대방 연령대"], toSection: 4)
+        snapshot.appendItems(["회원탈퇴"], toSection: 5)
         datasource.apply(snapshot)
     }
     
@@ -76,6 +101,7 @@ extension ManageInfoViewController: UICollectionViewDelegate {
             }
             isExpanded.toggle()
         }
+        print(indexPath)
     }
     
 }

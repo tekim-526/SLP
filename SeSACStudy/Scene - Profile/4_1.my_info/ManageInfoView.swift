@@ -9,18 +9,6 @@ import UIKit
 
 import SnapKit
 
-enum Section: Int, CaseIterable {
-  case top
-  case bottom
-  var columnCount: Int {
-    switch self {
-    case .top:
-      return 0
-    case .bottom:
-      return 1
-    }
-  }
-}
 
 class ManageInfoView: BaseView {
     let imageView: UIImageView = {
@@ -59,16 +47,13 @@ class ManageInfoView: BaseView {
     }
     func createLayout(height: CGFloat) -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let sectionType = Section(rawValue: sectionIndex) else {
-                  return nil
-            }
-            let sectionNum = sectionType.rawValue
+           
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                   heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupHeight = sectionIndex == 0 ? NSCollectionLayoutDimension.absolute(height) : NSCollectionLayoutDimension.absolute(58)
-
+            let groupHeight = sectionIndex == 0 ? NSCollectionLayoutDimension.absolute(height) : sectionIndex == 4 ? NSCollectionLayoutDimension.absolute(80) : NSCollectionLayoutDimension.absolute(58)
+            
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight)
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
@@ -79,19 +64,7 @@ class ManageInfoView: BaseView {
         
         
         return layout
-//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                              heightDimension: .fractionalHeight(1.0))
-//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//
-//        let groupHeight = section == 0 ? NSCollectionLayoutDimension.absolute(310) : NSCollectionLayoutDimension.absolute(58)
-//
-//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: groupHeight)
-//        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-//
-//        let section = NSCollectionLayoutSection(group: group)
-//
-//        let layout = UICollectionViewCompositionalLayout(section: section)
-            
+
     }
     
     
