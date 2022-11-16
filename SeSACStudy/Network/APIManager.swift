@@ -26,21 +26,18 @@ class APIManager {
         AF.request(url, method: .get, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
-                let json = JSON(data)
-                let background = json["background"].intValue
-                let sesac = json["sesac"].intValue
-                let nick = json["nick"].stringValue
-                let reputation = json["reputation"].arrayObject as! [Int]
-                let gender = json["gender"].intValue
-                let study = json["study"].stringValue
-                let searchable = json["searchable"].intValue
-                let ageMin = json["ageMin"].intValue
-                let ageMax = json["ageMax"].intValue
+                
+                let decoder = JSONDecoder()
+                do {
+                    let data = try decoder.decode(MyInFoData.self, from: data)
+                    print("login")
+                    completion(data, true, nil)
+                    dump(data)
+                } catch {
+                    print(error)
+                }
             
-                let myInfoData = MyInFoData(background: background, sesac: sesac, nick: nick, reputation: reputation, gender: gender, study: study, searchable: searchable, ageMin: ageMin, ageMax: ageMax)
-                print(myInfoData)
                 print(response.response?.statusCode ?? 0)
-                completion(myInfoData, true, nil)
             case .failure(let error):
                 print("login error", error)
                 completion(nil, false, error)
@@ -74,6 +71,32 @@ class APIManager {
         }
     }
     
+
+    func searchNearPeople(idtoken: String, lat: Double, long: Double, completion: @escaping (GetNearPeopleData?, Int?) -> Void) {
+        let components = URLComponents(string: "http://api.sesac.co.kr:1207/v1/queue/search")
+
+        let headers: HTTPHeaders = ["idtoken": idtoken, "Content-Type": "application/x-www-form-urlencoded"]
+        
+        let json: [String: Any] = ["lat": lat,
+                                   "long": long]
+
+        guard let url = components?.url else { return }
+        AF.request(url, method: .post, parameters: json, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                do {
+                    let data = try decoder.decode(GetNearPeopleData.self, from: data)
+                    completion(data, response.response?.statusCode)
+                    dump(data)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            case .failure(_):
+                completion(nil, response.response?.statusCode)
+            }
+        }
+    }
     func myPage(idtoken: String, searchable: Int = 0, ageMin: Int = 0, ageMax: Int = 0, gender: Int = 0, study: String?, completion: @escaping (Int?) -> Void) {
         let components = URLComponents(string: "http://api.sesac.co.kr:1207/v1/user/mypage")
 
@@ -99,7 +122,7 @@ class APIManager {
         }
     }
     
-    func withdraw(idtoken: String) {
+    func withdraw(idtoken: String, completion: @escaping () -> Void) {
         let components = URLComponents(string: "http://api.sesac.co.kr:1207/v1/user/withdraw")
 
         let headers: HTTPHeaders = ["idtoken": idtoken]
@@ -109,6 +132,7 @@ class APIManager {
             switch response.result {
             case .success(_):
                 print("withdraw success")
+                completion()
             case .failure(let error):
                 print("withdraw fail")
                 print("error", error)

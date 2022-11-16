@@ -21,12 +21,14 @@ class AgeCell: BaseCollectionViewCell {
         slider.minimumValue = 18
         slider.maximumValue = 65
         slider.snapStepSize = 1
+        slider.outerTrackColor = .gray2
+        slider.trackWidth = 4
         slider.isHapticSnap = true
         slider.tintColor = .brandGreen
         slider.thumbCount = 2
         slider.thumbImage = UIImage(named: "filter_control")
         slider.keepsDistanceBetweenThumbs = true
-        
+        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
         return slider
     }()
     let rangeLabel: UILabel = {
@@ -58,6 +60,9 @@ class AgeCell: BaseCollectionViewCell {
             make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
             make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
         }
+    }
+    @objc func sliderValueChanged(sender: MultiSlider) {
+        rangeLabel.text = "\(Int(sender.value[0]))-\(Int(sender.value[1]))"
     }
     
 }

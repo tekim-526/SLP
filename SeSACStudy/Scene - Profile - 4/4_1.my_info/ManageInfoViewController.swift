@@ -81,19 +81,11 @@ class ManageInfoViewController: BaseViewController {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: genderCellRegisteration, for: indexPath, item: itemIdentifier)
                 cell.maleButton.rx.tap
                     .bind { _ in
-                        cell.maleButton.setTitleColor(.white, for: .normal)
-                        cell.maleButton.backgroundColor = .brandGreen
-                        cell.femaleButton.setTitleColor(.black, for: .normal)
-                        cell.femaleButton.backgroundColor = .white
                         self?.data.gender = 1
                     }.disposed(by: self?.disposeBag ?? DisposeBag())
                 
                 cell.femaleButton.rx.tap
                     .bind { _ in
-                        cell.femaleButton.setTitleColor(.white, for: .normal)
-                        cell.femaleButton.backgroundColor = .brandGreen
-                        cell.maleButton.setTitleColor(.black, for: .normal)
-                        cell.maleButton.backgroundColor = .white
                         self?.data.gender = 0
                     }.disposed(by: self?.disposeBag ?? DisposeBag())
                 return cell
@@ -113,11 +105,10 @@ class ManageInfoViewController: BaseViewController {
                 return cell
             } else if indexPath.section == 4{
                 let cell = collectionView.dequeueConfiguredReusableCell(using: ageCellRegisteration, for: indexPath, item: itemIdentifier)
-                cell.slider.rx.controlEvent(.valueChanged)
+                cell.slider.rx.controlEvent(.touchUpInside)
                     .subscribe { value in
                         self?.data.ageMax = Int(cell.slider.value[1])
                         self?.data.ageMin = Int(cell.slider.value[0])
-                        cell.rangeLabel.text = "\(Int(cell.slider.value[0]))-\(Int(cell.slider.value[1]))"
                     }.disposed(by: self?.disposeBag ?? DisposeBag())
                 return cell
             } else {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93168ADA2924FBC200AAFE82 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93168AD92924FBC200AAFE82 /* CustomAnnotationView.swift */; };
 		9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68C291A471000E94098 /* OnBoardingViewController.swift */; };
 		9325E691291A471000E94098 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68D291A471000E94098 /* OnBoardingView.swift */; };
 		9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */; };
@@ -80,6 +81,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		93168AD92924FBC200AAFE82 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		9325E68C291A471000E94098 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		9325E68D291A471000E94098 /* OnBoardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		93168AD82924FBB500AAFE82 /* CustomAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				93168AD92924FBC200AAFE82 /* CustomAnnotationView.swift */,
+			);
+			path = CustomAnnotation;
+			sourceTree = "<group>";
+		};
 		9371046829247F920024DA4C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +208,7 @@
 		937104782924D1950024DA4C /* 1_1_main_default */ = {
 			isa = PBXGroup;
 			children = (
+				93168AD82924FBB500AAFE82 /* CustomAnnotation */,
 				938ADFE8291CFAE000ED799C /* MainViewController.swift */,
 				937104762924D1610024DA4C /* MainView.swift */,
 			);
@@ -561,6 +572,7 @@
 				938ADFE3291CF99B00ED799C /* NicknameViewController.swift in Sources */,
 				938ADFE4291CF99B00ED799C /* PhoneNumberValidViewController.swift in Sources */,
 				93E21649292252910039A57A /* ManageInfoView.swift in Sources */,
+				93168ADA2924FBC200AAFE82 /* CustomAnnotationView.swift in Sources */,
 				93931A922923868500FAF099 /* UIButton+Extensions.swift in Sources */,
 				938ADFE5291CF99B00ED799C /* AuthNumberViewController.swift in Sources */,
 				938ADFE9291CFAE000ED799C /* MainViewController.swift in Sources */,

@@ -43,10 +43,23 @@ class WithdrawPopUpViewController: BaseViewController {
             //못지우는 토스트
             return
         }
-        APIManager.shared.withdraw(idtoken: idtoken)
+        APIManager.shared.withdraw(idtoken: idtoken) {
+            UserDefaults.standard.set(false, forKey: "OnboardingStartButtonTapped")
+            self.changeSceneToMain(vc: OnBoardingViewController())
+        }
         // onboarding으로 이동하는 메서드 및 유저디폴트 초기화
     }
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
+    }
+    func changeSceneToMain(vc: UIViewController) {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let vc = vc
+        let nav = UINavigationController(rootViewController: vc)
+        
+        sceneDelegate?.window?.rootViewController = nav
+        sceneDelegate?.window?.makeKeyAndVisible()
     }
 }

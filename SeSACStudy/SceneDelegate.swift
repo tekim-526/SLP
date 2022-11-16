@@ -20,9 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let vc = LaunchScreenViewController()
         window?.rootViewController = vc
-        
-        
-        
         window?.makeKeyAndVisible()
     }
 

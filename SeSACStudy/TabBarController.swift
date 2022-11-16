@@ -14,7 +14,6 @@ class TabBarController: UITabBarController {
         
         view.backgroundColor = .systemBackground
         let mainVC = MainViewController()
-//        let mapVC = MapViewController()
         
         let profileVC = ProfileViewController()
     
@@ -23,12 +22,10 @@ class TabBarController: UITabBarController {
         mainVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "NotoSansKR-Regular", size: 12)!], for: .normal)
         profileVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "NotoSansKR-Regular", size: 12)!], for: .normal)
         
-//        mapVC.tabBarItem = UITabBarItem(title: "주변 박스", image: UIImage(systemName: "mappin.and.ellipse"), selectedImage: nil)
-        let mainNav = UINavigationController(rootViewController: mainVC)
         let profileNav = UINavigationController(rootViewController: profileVC)
         self.tabBar.tintColor = .brandGreen
         self.tabBar.backgroundColor = .systemBackground
-        viewControllers = [mainNav, profileNav/*, mapVC*/]
+        viewControllers = [mainVC, profileNav/*, mapVC*/]
     }
 }
 

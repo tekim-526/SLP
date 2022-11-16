@@ -21,7 +21,8 @@ class GenderCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        maleButton.addTarget(self, action: #selector(maleButtonTapped), for: .touchUpInside)
+        femaleButton.addTarget(self, action: #selector(femaleButtonTapped), for: .touchUpInside)
     }
     override func setupUI() {
         [label, stackView].forEach { self.contentView.addSubview($0) }
@@ -38,6 +39,19 @@ class GenderCell: BaseCollectionViewCell {
             make.width.equalTo(120)
 
         }
+    }
+    
+    @objc func maleButtonTapped() {
+        maleButton.setTitleColor(.white, for: .normal)
+        maleButton.backgroundColor = .brandGreen
+        femaleButton.setTitleColor(.black, for: .normal)
+        femaleButton.backgroundColor = .white
+    }
+    @objc func femaleButtonTapped() {
+        femaleButton.setTitleColor(.white, for: .normal)
+        femaleButton.backgroundColor = .brandGreen
+        maleButton.setTitleColor(.black, for: .normal)
+        maleButton.backgroundColor = .white
     }
 }
 
