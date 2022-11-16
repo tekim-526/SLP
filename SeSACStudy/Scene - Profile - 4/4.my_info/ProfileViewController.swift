@@ -8,7 +8,6 @@
 import UIKit
 
 class ProfileViewController: BaseViewController {
-    
     let profileView = ProfileView()
     var datasource: UICollectionViewDiffableDataSource<Int, MyInfoList>!
     let list = [
@@ -25,9 +24,9 @@ class ProfileViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        makeNavigationUI()
         navigationItem.title = "내정보"
         profileView.collectionView.delegate = self
-            
         setDataSource()
         
     }
@@ -64,7 +63,16 @@ class ProfileViewController: BaseViewController {
         datasource.apply(snapshot, animatingDifferences: true)
     }
     @objc func headerTapped() {
-        self.navigationController?.pushViewController(ManageInfoViewController(), animated: true)
+        let manageInfoVC = ManageInfoViewController()
+        view.isUserInteractionEnabled = false
+        TokenManager.shared.getIdToken { id in
+            APIManager.shared.login(idtoken: id) { [weak self] data, bool, error in
+                guard let data = data else { return }
+                manageInfoVC.data = data
+                self?.navigationController?.pushViewController(manageInfoVC, animated: true)
+                self?.view.isUserInteractionEnabled = true
+            }
+        }
     }
 }
 

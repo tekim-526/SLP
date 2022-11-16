@@ -11,24 +11,29 @@ import SnapKit
 
 
 class ManageInfoView: BaseView {
-    let imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        
         imageView.image = UIImage(named: "sesac_background_1")
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
         return imageView
     }()
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout(height: 58))
+    let sesacImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "sesac_face_1")
+        return imageView
+    }()
     
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout(height: 58))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func setupUI() {
-        [imageView, collectionView].forEach { self.addSubview($0) }
-//        collectionView.backgroundColor = .systemMint
+        [imageView, collectionView, sesacImageView].forEach { self.addSubview($0) }
     }
     
     override func makeConstraints() {
@@ -38,12 +43,17 @@ class ManageInfoView: BaseView {
             make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
             make.height.equalTo(194)
         }
+        sesacImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(imageView.snp.centerX)
+            make.centerY.equalTo(imageView.snp.centerY)
+        }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)
             make.bottom.equalTo(self.safeAreaLayoutGuide)
             make.leading.equalTo(self.safeAreaLayoutGuide)
             make.trailing.equalTo(self.safeAreaLayoutGuide)
         }
+        
     }
     func createLayout(height: CGFloat) -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
@@ -61,8 +71,6 @@ class ManageInfoView: BaseView {
 
             return section
           }
-        
-        
         return layout
 
     }

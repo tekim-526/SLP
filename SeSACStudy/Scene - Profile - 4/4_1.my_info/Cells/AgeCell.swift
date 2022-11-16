@@ -7,24 +7,32 @@
 
 import UIKit
 import SnapKit
-
+import MultiSlider
 class AgeCell: BaseCollectionViewCell {
     let label: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "NotoSansKR-Regular", size: 14)
         return label
     }()
-    let slider: UISlider = {
-        let slider = UISlider()
+    
+    let slider: MultiSlider = {
+        let slider = MultiSlider()
+        slider.orientation = .horizontal
+        slider.minimumValue = 18
+        slider.maximumValue = 65
+        slider.snapStepSize = 1
+        slider.isHapticSnap = true
         slider.tintColor = .brandGreen
-        slider.thumbTintColor = .brandGreen
+        slider.thumbCount = 2
+        slider.thumbImage = UIImage(named: "filter_control")
+        slider.keepsDistanceBetweenThumbs = true
         
         return slider
     }()
     let rangeLabel: UILabel = {
         let label = UILabel()
-        label.text = "18-25"
-        label.font = UIFont(name: "NotoSansKR-Regular", size: 14)
+        label.text = "18-65"
+        label.font = UIFont(name: "NotoSansKR-Medium", size: 14)
         label.textColor = .brandGreen
         return label
     }()
@@ -46,9 +54,10 @@ class AgeCell: BaseCollectionViewCell {
             make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
         }
         slider.snp.makeConstraints { make in
-            make.top.equalTo(label.snp.bottom).offset(14)
+            make.top.equalTo(label.snp.bottom)
             make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
             make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
         }
     }
+    
 }

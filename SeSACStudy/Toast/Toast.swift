@@ -9,7 +9,8 @@ import UIKit
 import Toast
 
 struct Toast {
-    static func makeToast(view: UIView, message: String, duration: Double = 0.7) {
+    static func makeToast(view: UIView?, message: String, duration: Double = 0.7) {
+        guard let view = view else { return }
         view.makeToast(message, duration: duration, position: .bottom)
     }
 }

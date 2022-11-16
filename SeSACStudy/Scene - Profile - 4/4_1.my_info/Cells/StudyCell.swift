@@ -22,6 +22,7 @@ class StudyCell: BaseCollectionViewCell {
     let textField: UITextField = {
         let tf = UITextField()
         tf.font = UIFont(name: "NotoSansKR-Regular", size: 14)
+        tf.placeholder = "스터디를 입력해 주세요"
         return tf
     }()
     

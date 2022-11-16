@@ -21,6 +21,7 @@ class GenderCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
     }
     override func setupUI() {
         [label, stackView].forEach { self.contentView.addSubview($0) }
@@ -31,7 +32,8 @@ class GenderCell: BaseCollectionViewCell {
             make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
         }
         stackView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(self.safeAreaLayoutGuide)
+            make.centerY.equalTo(self.snp.centerY)
+            make.height.equalTo(42)
             make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
             make.width.equalTo(120)
 

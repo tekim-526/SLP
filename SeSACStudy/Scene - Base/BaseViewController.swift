@@ -21,11 +21,14 @@ class BaseViewController: UIViewController {
         self.present(alert, animated: true)
     }
     func makeNavigationUI(title: String? = nil ,rightBarButtonItem: UIBarButtonItem? = nil) {
+        navigationItem.title = title
+        navigationItem.titleView?.tintColor = .black
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "arrow")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "arrow")
         navigationController?.navigationBar.backIndicatorImage?.withTintColor(.gray3)
         navigationController?.navigationBar.barTintColor = .gray3
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         
     }
     @objc func backButtonTapped() {

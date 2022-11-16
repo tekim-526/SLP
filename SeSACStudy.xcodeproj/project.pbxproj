@@ -14,6 +14,13 @@
 		9325E69B291A7A7F00E94098 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69A291A7A7F00E94098 /* RxCocoa */; };
 		9325E69D291A7A7F00E94098 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69C291A7A7F00E94098 /* RxSwift */; };
 		9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6A0291B487E00E94098 /* UIView+Extensions.swift */; };
+		9371046729247F8A0024DA4C /* WithdrawPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371046629247F8A0024DA4C /* WithdrawPopUpViewController.swift */; };
+		9371046A292480290024DA4C /* WithdrawPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93710469292480290024DA4C /* WithdrawPopUpView.swift */; };
+		9371046D29249C110024DA4C /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 9371046C29249C110024DA4C /* MultiSlider */; };
+		9371046F2924A5D90024DA4C /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371046E2924A5D90024DA4C /* LaunchScreenViewController.swift */; };
+		937104722924A61F0024DA4C /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937104712924A61F0024DA4C /* LaunchScreenView.swift */; };
+		937104752924B5DB0024DA4C /* NetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937104742924B5DB0024DA4C /* NetworkModel.swift */; };
+		937104772924D1610024DA4C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937104762924D1610024DA4C /* MainView.swift */; };
 		937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A1614291B839D00656882 /* UITextField+Extensions.swift */; };
 		937A161B291BA74B00656882 /* AttributeString+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937A161A291BA74B00656882 /* AttributeString+Protocol.swift */; };
 		938ADFBE291CD0F200ED799C /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938ADFBD291CD0F200ED799C /* AuthManager.swift */; };
@@ -68,7 +75,6 @@
 		93E2164329224F940039A57A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164229224F940039A57A /* ProfileHeaderView.swift */; };
 		93E21647292252070039A57A /* ManageInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E21646292252070039A57A /* ManageInfoViewController.swift */; };
 		93E21649292252910039A57A /* ManageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E21648292252910039A57A /* ManageInfoView.swift */; };
-		93E2164B292258080039A57A /* ManageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164A292258070039A57A /* ManageHeaderView.swift */; };
 		93E2164D29225B640039A57A /* ExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164C29225B640039A57A /* ExpandableCell.swift */; };
 		93E2164F29225BBF0039A57A /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E2164E29225BBF0039A57A /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +85,12 @@
 		9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
 		9325E68F291A471000E94098 /* CustomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
 		9325E6A0291B487E00E94098 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		9371046629247F8A0024DA4C /* WithdrawPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawPopUpViewController.swift; sourceTree = "<group>"; };
+		93710469292480290024DA4C /* WithdrawPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawPopUpView.swift; sourceTree = "<group>"; };
+		9371046E2924A5D90024DA4C /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		937104712924A61F0024DA4C /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		937104742924B5DB0024DA4C /* NetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModel.swift; sourceTree = "<group>"; };
+		937104762924D1610024DA4C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		937A1614291B839D00656882 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		937A161A291BA74B00656882 /* AttributeString+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttributeString+Protocol.swift"; sourceTree = "<group>"; };
 		938ADFBD291CD0F200ED799C /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -130,7 +142,6 @@
 		93E2164229224F940039A57A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		93E21646292252070039A57A /* ManageInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageInfoViewController.swift; sourceTree = "<group>"; };
 		93E21648292252910039A57A /* ManageInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageInfoView.swift; sourceTree = "<group>"; };
-		93E2164A292258070039A57A /* ManageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageHeaderView.swift; sourceTree = "<group>"; };
 		93E2164C29225B640039A57A /* ExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCell.swift; sourceTree = "<group>"; };
 		93E2164E29225BBF0039A57A /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938ADFCB291CED0500ED799C /* FirebaseMessaging in Frameworks */,
+				9371046D29249C110024DA4C /* MultiSlider in Frameworks */,
 				938ADFEC291D028000ED799C /* Alamofire in Frameworks */,
 				938ADFF1291D03A100ED799C /* SwiftyJSON in Frameworks */,
 				938ADFF4291E201200ED799C /* Toast in Frameworks */,
@@ -154,6 +166,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9371046829247F920024DA4C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				93E2164C29225B640039A57A /* ExpandableCell.swift */,
+				93931A8F29234E9900FAF099 /* GenderCell.swift */,
+				93931A952923C44400FAF099 /* StudyCell.swift */,
+				93931A972923C65000FAF099 /* PhoneNumberPermitCell.swift */,
+				93931A992923C7CA00FAF099 /* AgeCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		937104702924A6030024DA4C /* Scene - LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9371046E2924A5D90024DA4C /* LaunchScreenViewController.swift */,
+				937104712924A61F0024DA4C /* LaunchScreenView.swift */,
+			);
+			path = "Scene - LaunchScreen";
+			sourceTree = "<group>";
+		};
+		937104732924B5C90024DA4C /* NetworkModel */ = {
+			isa = PBXGroup;
+			children = (
+				937104742924B5DB0024DA4C /* NetworkModel.swift */,
+			);
+			path = NetworkModel;
+			sourceTree = "<group>";
+		};
+		937104782924D1950024DA4C /* 1_1_main_default */ = {
+			isa = PBXGroup;
+			children = (
+				938ADFE8291CFAE000ED799C /* MainViewController.swift */,
+				937104762924D1610024DA4C /* MainView.swift */,
+			);
+			path = 1_1_main_default;
+			sourceTree = "<group>";
+		};
 		937A1619291BA72E00656882 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +215,7 @@
 		938ADFBC291CCC5900ED799C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				937104732924B5C90024DA4C /* NetworkModel */,
 				938ADFBD291CD0F200ED799C /* AuthManager.swift */,
 				938ADFC5291CEA0600ED799C /* TokenManager.swift */,
 				938ADFED291D031200ED799C /* APIManager.swift */,
@@ -177,72 +228,72 @@
 			children = (
 				938ADFCF291CF99B00ED799C /* LoginViewModel.swift */,
 				938ADFD5291CF99B00ED799C /* SignUpAndAuthView.swift */,
-				938ADFD8291CF99B00ED799C /* ValidCheck  0_1_login */,
-				938ADFDA291CF99B00ED799C /* PhoneNumberAuth 0_2_login */,
-				938ADFD6291CF99B00ED799C /* Nickname 0_3_nickname */,
-				938ADFD2291CF99B00ED799C /* Birth 0_4_birth */,
-				938ADFD0291CF99B00ED799C /* Email 0_5_email */,
-				938ADFDC291CF99B00ED799C /* Gender 0_6_gender */,
+				938ADFD8291CF99B00ED799C /* 0_1_login */,
+				938ADFDA291CF99B00ED799C /* 0_2_login */,
+				938ADFD6291CF99B00ED799C /* 0_3_nickname */,
+				938ADFD2291CF99B00ED799C /* 0_4_birth */,
+				938ADFD0291CF99B00ED799C /* 0_5_email */,
+				938ADFDC291CF99B00ED799C /* 0_6_gender */,
 			);
 			name = "Scene - Login&SignUp - 0";
 			path = "SeSACStudy/Scene - Login&SignUp - 0";
 			sourceTree = SOURCE_ROOT;
 		};
-		938ADFD0291CF99B00ED799C /* Email 0_5_email */ = {
+		938ADFD0291CF99B00ED799C /* 0_5_email */ = {
 			isa = PBXGroup;
 			children = (
 				938ADFD1291CF99B00ED799C /* EmailViewController.swift */,
 			);
-			path = "Email 0_5_email";
+			path = 0_5_email;
 			sourceTree = "<group>";
 		};
-		938ADFD2291CF99B00ED799C /* Birth 0_4_birth */ = {
+		938ADFD2291CF99B00ED799C /* 0_4_birth */ = {
 			isa = PBXGroup;
 			children = (
 				938ADFD3291CF99B00ED799C /* BirthView.swift */,
 				938ADFD4291CF99B00ED799C /* BirthViewController.swift */,
 			);
-			path = "Birth 0_4_birth";
+			path = 0_4_birth;
 			sourceTree = "<group>";
 		};
-		938ADFD6291CF99B00ED799C /* Nickname 0_3_nickname */ = {
+		938ADFD6291CF99B00ED799C /* 0_3_nickname */ = {
 			isa = PBXGroup;
 			children = (
 				938ADFD7291CF99B00ED799C /* NicknameViewController.swift */,
 			);
-			path = "Nickname 0_3_nickname";
+			path = 0_3_nickname;
 			sourceTree = "<group>";
 		};
-		938ADFD8291CF99B00ED799C /* ValidCheck  0_1_login */ = {
+		938ADFD8291CF99B00ED799C /* 0_1_login */ = {
 			isa = PBXGroup;
 			children = (
 				938ADFD9291CF99B00ED799C /* PhoneNumberValidViewController.swift */,
 			);
-			path = "ValidCheck  0_1_login";
+			path = 0_1_login;
 			sourceTree = "<group>";
 		};
-		938ADFDA291CF99B00ED799C /* PhoneNumberAuth 0_2_login */ = {
+		938ADFDA291CF99B00ED799C /* 0_2_login */ = {
 			isa = PBXGroup;
 			children = (
 				938ADFDB291CF99B00ED799C /* AuthNumberViewController.swift */,
 			);
-			path = "PhoneNumberAuth 0_2_login";
+			path = 0_2_login;
 			sourceTree = "<group>";
 		};
-		938ADFDC291CF99B00ED799C /* Gender 0_6_gender */ = {
+		938ADFDC291CF99B00ED799C /* 0_6_gender */ = {
 			isa = PBXGroup;
 			children = (
 				938ADFDD291CF99B00ED799C /* GenderViewController.swift */,
 			);
-			path = "Gender 0_6_gender";
+			path = 0_6_gender;
 			sourceTree = "<group>";
 		};
-		938ADFE7291CFAB200ED799C /* Scene - Main */ = {
+		938ADFE7291CFAB200ED799C /* Scene - Main - 1 */ = {
 			isa = PBXGroup;
 			children = (
-				938ADFE8291CFAE000ED799C /* MainViewController.swift */,
+				937104782924D1950024DA4C /* 1_1_main_default */,
 			);
-			path = "Scene - Main";
+			path = "Scene - Main - 1";
 			sourceTree = "<group>";
 		};
 		938ADFF5291E20F100ED799C /* Toast */ = {
@@ -253,13 +304,13 @@
 			path = Toast;
 			sourceTree = "<group>";
 		};
-		938ADFF82921FDEE00ED799C /* Scene - Profile */ = {
+		938ADFF82921FDEE00ED799C /* Scene - Profile - 4 */ = {
 			isa = PBXGroup;
 			children = (
 				93E21644292251B10039A57A /* 4.my_info */,
 				93E21645292251CC0039A57A /* 4_1.my_info */,
 			);
-			path = "Scene - Profile";
+			path = "Scene - Profile - 4";
 			sourceTree = "<group>";
 		};
 		93CFB3512918AEAC0014908C = {
@@ -291,10 +342,11 @@
 				937A1619291BA72E00656882 /* Protocol */,
 				93CFB3782918C1620014908C /* Extensions */,
 				93CFB3732918B3690014908C /* Scene - Base */,
+				937104702924A6030024DA4C /* Scene - LaunchScreen */,
 				93CFB3712918B2900014908C /* Scene - OnBoarding */,
 				938ADFCE291CF99B00ED799C /* Scene - Login&SignUp - 0 */,
-				938ADFE7291CFAB200ED799C /* Scene - Main */,
-				938ADFF82921FDEE00ED799C /* Scene - Profile */,
+				938ADFE7291CFAB200ED799C /* Scene - Main - 1 */,
+				938ADFF82921FDEE00ED799C /* Scene - Profile - 4 */,
 				93CFB37D2918CE5B0014908C /* Resources */,
 				93CFB3632918AEAC0014908C /* Main.storyboard */,
 				93CFB3662918AEAE0014908C /* Assets.xcassets */,
@@ -376,14 +428,11 @@
 		93E21645292251CC0039A57A /* 4_1.my_info */ = {
 			isa = PBXGroup;
 			children = (
+				9371046829247F920024DA4C /* Cells */,
 				93E21646292252070039A57A /* ManageInfoViewController.swift */,
 				93E21648292252910039A57A /* ManageInfoView.swift */,
-				93E2164A292258070039A57A /* ManageHeaderView.swift */,
-				93E2164C29225B640039A57A /* ExpandableCell.swift */,
-				93931A8F29234E9900FAF099 /* GenderCell.swift */,
-				93931A952923C44400FAF099 /* StudyCell.swift */,
-				93931A972923C65000FAF099 /* PhoneNumberPermitCell.swift */,
-				93931A992923C7CA00FAF099 /* AgeCell.swift */,
+				9371046629247F8A0024DA4C /* WithdrawPopUpViewController.swift */,
+				93710469292480290024DA4C /* WithdrawPopUpView.swift */,
 			);
 			path = 4_1.my_info;
 			sourceTree = "<group>";
@@ -413,6 +462,7 @@
 				938ADFEB291D028000ED799C /* Alamofire */,
 				938ADFF0291D03A100ED799C /* SwiftyJSON */,
 				938ADFF3291E201200ED799C /* Toast */,
+				9371046C29249C110024DA4C /* MultiSlider */,
 			);
 			productName = SeSACStudy;
 			productReference = 93CFB35A2918AEAC0014908C /* SeSACStudy.app */;
@@ -449,6 +499,7 @@
 				938ADFEA291D028000ED799C /* XCRemoteSwiftPackageReference "Alamofire" */,
 				938ADFEF291D03A100ED799C /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				938ADFF2291E201200ED799C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				9371046B29249C110024DA4C /* XCRemoteSwiftPackageReference "MultiSlider" */,
 			);
 			productRefGroup = 93CFB35B2918AEAC0014908C /* Products */;
 			projectDirPath = "";
@@ -488,17 +539,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93E2164B292258080039A57A /* ManageHeaderView.swift in Sources */,
 				9325E692291A471000E94098 /* FirstOnboardingViewController.swift in Sources */,
 				938ADFC6291CEA0600ED799C /* TokenManager.swift in Sources */,
 				938ADFBE291CD0F200ED799C /* AuthManager.swift in Sources */,
 				93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */,
 				938ADFE6291CF99B00ED799C /* GenderViewController.swift in Sources */,
 				93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */,
+				937104772924D1610024DA4C /* MainView.swift in Sources */,
 				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
 				9325E691291A471000E94098 /* OnBoardingView.swift in Sources */,
 				93931A982923C65000FAF099 /* PhoneNumberPermitCell.swift in Sources */,
 				9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */,
+				9371046A292480290024DA4C /* WithdrawPopUpView.swift in Sources */,
 				93E2164329224F940039A57A /* ProfileHeaderView.swift in Sources */,
 				938ADFDE291CF99B00ED799C /* LoginViewModel.swift in Sources */,
 				938ADFEE291D031200ED799C /* APIManager.swift in Sources */,
@@ -512,6 +564,7 @@
 				93931A922923868500FAF099 /* UIButton+Extensions.swift in Sources */,
 				938ADFE5291CF99B00ED799C /* AuthNumberViewController.swift in Sources */,
 				938ADFE9291CFAE000ED799C /* MainViewController.swift in Sources */,
+				9371046F2924A5D90024DA4C /* LaunchScreenViewController.swift in Sources */,
 				938ADFF7291E20FC00ED799C /* Toast.swift in Sources */,
 				9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */,
 				938ADFFB2921FFE500ED799C /* ProfileViewController.swift in Sources */,
@@ -522,9 +575,12 @@
 				937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */,
 				93E2164129223C560039A57A /* ProfileViewCell.swift in Sources */,
 				93E2164F29225BBF0039A57A /* BaseCollectionViewCell.swift in Sources */,
+				937104722924A61F0024DA4C /* LaunchScreenView.swift in Sources */,
+				9371046729247F8A0024DA4C /* WithdrawPopUpViewController.swift in Sources */,
 				937A161B291BA74B00656882 /* AttributeString+Protocol.swift in Sources */,
 				938ADFE1291CF99B00ED799C /* BirthViewController.swift in Sources */,
 				93931A9029234E9900FAF099 /* GenderCell.swift in Sources */,
+				937104752924B5DB0024DA4C /* NetworkModel.swift in Sources */,
 				93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */,
 				93CFB37A2918C16A0014908C /* UIColor+Extensions.swift in Sources */,
 				93931A9A2923C7CA00FAF099 /* AgeCell.swift in Sources */,
@@ -759,6 +815,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		9371046B29249C110024DA4C /* XCRemoteSwiftPackageReference "MultiSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yonat/MultiSlider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		938ADFC7291CED0500ED799C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -811,6 +875,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9325E699291A7A7F00E94098 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		9371046C29249C110024DA4C /* MultiSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9371046B29249C110024DA4C /* XCRemoteSwiftPackageReference "MultiSlider" */;
+			productName = MultiSlider;
 		};
 		938ADFC8291CED0500ED799C /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

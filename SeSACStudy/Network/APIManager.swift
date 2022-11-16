@@ -10,6 +10,8 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+
+
 class APIManager {
     let url = "http://api.sesac.co.kr:1207/v1/user"
     
@@ -18,19 +20,31 @@ class APIManager {
     private init() {}
 
     
-    func login(idtoken: String, completion: @escaping (Bool, AFError?) -> Void) {
+    func login(idtoken: String, completion: @escaping (MyInFoData? ,Bool, AFError?) -> Void) {
         let headers: HTTPHeaders = ["idtoken": idtoken]
         
         AF.request(url, method: .get, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
-                print(response.response?.statusCode)
-                completion(true, nil)
+                let background = json["background"].intValue
+                let sesac = json["sesac"].intValue
+                let nick = json["nick"].stringValue
+                let reputation = json["reputation"].arrayObject as! [Int]
+                let gender = json["gender"].intValue
+                let study = json["study"].stringValue
+                let searchable = json["searchable"].intValue
+                let ageMin = json["ageMin"].intValue
+                let ageMax = json["ageMax"].intValue
+            
+                let myInfoData = MyInFoData(background: background, sesac: sesac, nick: nick, reputation: reputation, gender: gender, study: study, searchable: searchable, ageMin: ageMin, ageMax: ageMax)
+                print(myInfoData)
+                print(response.response?.statusCode ?? 0)
+                completion(myInfoData, true, nil)
             case .failure(let error):
                 print("login error", error)
-                completion(false, error)
-                print(error.responseCode)
+                completion(nil, false, error)
+                print(error.responseCode ?? 0)
             }
         }
     }
@@ -53,6 +67,31 @@ class APIManager {
             
             case .success(let data):
                 let json = JSON(data)
+                completion(response.response?.statusCode)
+            case .failure(_):
+                completion(response.response?.statusCode)
+            }
+        }
+    }
+    
+    func myPage(idtoken: String, searchable: Int = 0, ageMin: Int = 0, ageMax: Int = 0, gender: Int = 0, study: String?, completion: @escaping (Int?) -> Void) {
+        let components = URLComponents(string: "http://api.sesac.co.kr:1207/v1/user/mypage")
+
+        let headers: HTTPHeaders = ["idtoken": idtoken, "Content-Type": "application/x-www-form-urlencoded"]
+        
+        let json: [String: Any] = [
+            "searchable": searchable,
+            "ageMin": ageMin,
+            "ageMax": ageMax,
+            "gender": gender,
+            "study": study ?? ""
+        ]
+
+        guard let url = components?.url else { return }
+        AF.request(url, method: .put, parameters: json, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(_):
+//                let json = JSON(data)
                 completion(response.response?.statusCode)
             case .failure(_):
                 completion(response.response?.statusCode)

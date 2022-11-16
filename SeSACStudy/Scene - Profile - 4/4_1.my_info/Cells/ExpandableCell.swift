@@ -27,7 +27,6 @@ class ExpandableCell: BaseCollectionViewCell {
     
     let lineView: UIView = {
         let button = UIView()
-        //view 를 addSubview해서 펼치기?
         button.layer.borderColor = UIColor.gray2.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 8
@@ -51,6 +50,8 @@ class ExpandableCell: BaseCollectionViewCell {
     let skilButton = UIButton().customButtonInMyInfo(title: "능숙한 실력")
     let haveAGoodTimeButton = UIButton().customButtonInMyInfo(title: "유익한 시간")
     
+    lazy var buttons: [UIButton] = [mannerButton, timeButton, responseButton, personalityButton,
+    skilButton, haveAGoodTimeButton]
     
     lazy var stackView1 = UIStackView().makeStackView(axis: .horizontal, mannerButton, timeButton)
     lazy var stackView2 = UIStackView().makeStackView(axis: .horizontal, responseButton, personalityButton)
