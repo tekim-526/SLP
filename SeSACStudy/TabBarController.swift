@@ -22,10 +22,11 @@ class TabBarController: UITabBarController {
         mainVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "NotoSansKR-Regular", size: 12)!], for: .normal)
         profileVC.tabBarItem.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "NotoSansKR-Regular", size: 12)!], for: .normal)
         
+        let mainNav = UINavigationController(rootViewController: mainVC)
         let profileNav = UINavigationController(rootViewController: profileVC)
         self.tabBar.tintColor = .brandGreen
         self.tabBar.backgroundColor = .systemBackground
-        viewControllers = [mainVC, profileNav/*, mapVC*/]
+        viewControllers = [mainNav, profileNav/*, mapVC*/]
     }
 }
 

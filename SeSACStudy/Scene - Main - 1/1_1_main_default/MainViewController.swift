@@ -11,21 +11,13 @@ import CoreLocation
 import MapKit
 import SnapKit
 
-enum ImageName: String {
-    case sesac_face_1
-    case sesac_face_2
-    case sesac_face_3
-    case sesac_face_4
-    case sesac_face_5
-    
-}
-
 class MainViewController: BaseViewController, CLLocationManagerDelegate {
     var mapView = MainView()
     
     var locationManager = CLLocationManager()
     var authStatus: CLAuthorizationStatus!
     
+    var pinLocation: CLLocationCoordinate2D?
     override func loadView() {
         view = mapView
     }
@@ -34,19 +26,45 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         mapView.map.delegate = self
         locationManager.delegate = self
+        
         checkDeviceLocationAuth()
+        mapView.button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
         mapView.map.showsUserLocation = true
         mapView.map.setUserTrackingMode(.follow, animated: true)
         mapView.map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc func buttonTapped() {
+        
+        let writeStudyVC = WriteStudyViewController()
+        
+        guard let pinLocation else { return }
+        
+        mapViewRefresh(center: pinLocation) { [weak self] data, status in
+            guard let data = data else {
+                Toast.makeToast(view: self?.view, message: "데이터가 비어있어요")
+                return
+            }
+            writeStudyVC.peopleData = data
+            self?.navigationController?.pushViewController(writeStudyVC, animated: true)
+        }
+    }
+    
+    
     
     // MARK: - Methods
+    
     func mapViewSetUp(center: CLLocationCoordinate2D) {
-
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 300, longitudinalMeters: 300)
         mapView.map.setRegion(region, animated: false)
         TokenManager.shared.getIdToken { id in
-            APIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] data ,statusCode  in
+            QueueAPIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] data ,statusCode  in
                 // 어노테이션 만들기
                 guard let vc = self, let data = data else { return }
                 vc.mapView.map.removeAnnotations(vc.mapView.map.annotations)
@@ -54,10 +72,25 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
                     let location = CLLocationCoordinate2D(latitude: data.fromQueueDB[i].lat, longitude: data.fromQueueDB[i].long)
                     vc.addCustomPin(sesac_image: data.fromQueueDB[i].sesac + 1, coordinate: location)
                 }
-                print(statusCode ?? 0)
             }
         }
     }
+    
+    func mapViewRefresh(center: CLLocationCoordinate2D, completion: @escaping (GetNearPeopleData?, Int?) -> Void) {
+        TokenManager.shared.getIdToken { id in
+            QueueAPIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] data ,statusCode  in
+
+                guard let vc = self, let data = data else { return }
+                vc.mapView.map.removeAnnotations(vc.mapView.map.annotations)
+                for i in data.fromQueueDB.indices {
+                    let location = CLLocationCoordinate2D(latitude: data.fromQueueDB[i].lat, longitude: data.fromQueueDB[i].long)
+                    vc.addCustomPin(sesac_image: data.fromQueueDB[i].sesac + 1, coordinate: location)
+                }
+                completion(data, statusCode)
+            }
+        }
+    }
+    
     
     func addCustomPin(sesac_image: Int, coordinate: CLLocationCoordinate2D) {
        let pin = CustomAnnotation(sesac_image: sesac_image, coordinate: coordinate)
@@ -95,12 +128,21 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         default: print("DEFAULT")
         }
     }
+    
+  
+    
 }
 
 extension MainViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print(mapView.centerCoordinate)
-        //       locationManager.stopUpdatingLocation()
+        mapViewRefresh(center: mapView.centerCoordinate) { [weak self] data, status in
+            guard let status else { return }
+            if status != 200 {
+                Toast.makeToast(view: self?.view, message: "네크워크가 불안정합니다")
+            }
+        }
+        pinLocation = mapView.centerCoordinate
+        locationManager.stopUpdatingLocation()
     }
 }
 
@@ -109,7 +151,6 @@ extension MainViewController {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate {
             mapViewSetUp(center: coordinate)
-            
         }
         locationManager.stopUpdatingLocation()
     }
@@ -137,7 +178,7 @@ extension MainViewController {
         let sesacImage: UIImage!
         let size = CGSize(width: 85, height: 85)
         UIGraphicsBeginImageContext(size)
-        // switch statement using image name
+
         switch annotation.sesac_image {
         case 0:
             sesacImage = UIImage(named: "sesac_face_1")

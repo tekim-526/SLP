@@ -132,7 +132,7 @@ class ManageInfoViewController: BaseViewController {
     @objc func saveBarButtonTapped() {
         TokenManager.shared.getIdToken { [weak self] id in
             guard let vc = self else {return}
-            APIManager.shared.myPage(idtoken: id, searchable: vc.data.searchable, ageMin: vc.data.ageMin, ageMax: vc.data.ageMax, gender: vc.data.gender, study: vc.data.study) { responseCode in
+            UserAPIManager.shared.myPage(idtoken: id, searchable: vc.data.searchable, ageMin: vc.data.ageMin, ageMax: vc.data.ageMax, gender: vc.data.gender, study: vc.data.study) { responseCode in
                 switch responseCode {
                 case 200:
                     vc.navigationController?.popViewController(animated: true)

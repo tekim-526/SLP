@@ -26,4 +26,13 @@ extension UIButton {
         button.layer.borderColor = UIColor.gray2.cgColor
         return button
     }
+    
+    func makeFloatingButton(title: String? = nil, image: UIImage? = nil) -> UIButton {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        button.setImage(image, for: .normal)
+        button.layer.cornerRadius = 8
+        button.backgroundColor = .white
+        return button
+    }
 }

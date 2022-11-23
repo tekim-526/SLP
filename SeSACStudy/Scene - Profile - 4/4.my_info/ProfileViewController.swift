@@ -66,7 +66,7 @@ class ProfileViewController: BaseViewController {
         let manageInfoVC = ManageInfoViewController()
         view.isUserInteractionEnabled = false
         TokenManager.shared.getIdToken { id in
-            APIManager.shared.login(idtoken: id) { [weak self] data, bool, error in
+            UserAPIManager.shared.login(idtoken: id) { [weak self] data, bool, error in
                 guard let data = data else { return }
                 manageInfoVC.data = data
                 self?.navigationController?.pushViewController(manageInfoVC, animated: true)

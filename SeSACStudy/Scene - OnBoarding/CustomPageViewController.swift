@@ -9,11 +9,8 @@ import UIKit
 
 import SnapKit
 
-// example Page View Controller
 class CustomPageViewController: BaseViewController, AttributeString {
    
-    
-
     var pages: [UIViewController] = [UIViewController]()
     
     let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -23,8 +20,6 @@ class CustomPageViewController: BaseViewController, AttributeString {
     var currentIndex = 0 {                  // currentIndex가 변할때마다 pageControll.currentPage 값을 변경
         didSet{
             pageControl.currentPage = currentIndex
-            print("pageControl.currentPage :", pageControl.currentPage)
-            print("currentIndex :", currentIndex)
         }
     }
     
@@ -37,8 +32,8 @@ class CustomPageViewController: BaseViewController, AttributeString {
         
         pageVC.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
         setPageControl()
-        
     }
+    
     override func setupUI() {
         view.addSubview(pageVC.view)
     }
@@ -110,7 +105,5 @@ extension CustomPageViewController: UIPageViewControllerDelegate {
         guard let first = pageViewController.viewControllers?.first, let index = pages.firstIndex(of: first) else {return 0 }
         return index
     }
-    
-    
-    
+        
 }

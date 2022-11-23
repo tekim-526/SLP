@@ -20,7 +20,7 @@ class LaunchScreenViewController: BaseViewController {
             changeSceneToMain(vc: OnBoardingViewController())
         }
         // 네트워크 통신
-        APIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { [weak self] data, success, error in
+        UserAPIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { [weak self] data, success, error in
             if success { // 로그인 성공
                 print("login success", success)
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene

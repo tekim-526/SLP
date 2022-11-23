@@ -43,7 +43,7 @@ class WithdrawPopUpViewController: BaseViewController {
             //못지우는 토스트
             return
         }
-        APIManager.shared.withdraw(idtoken: idtoken) {
+        UserAPIManager.shared.withdraw(idtoken: idtoken) {
             UserDefaults.standard.set(false, forKey: "OnboardingStartButtonTapped")
             self.changeSceneToMain(vc: OnBoardingViewController())
         }

@@ -62,7 +62,7 @@ class AuthNumberViewController: BaseViewController {
                     UserDefaults.standard.set(fcm, forKey: "FCMtoken")
                 }
                 
-                APIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { data, success, error in
+                UserAPIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { data, success, error in
                     if success { // 로그인 성공
                         print("login success", success)
                         vc.verifySMS()
