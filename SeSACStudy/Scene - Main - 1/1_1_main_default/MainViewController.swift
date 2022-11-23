@@ -38,6 +38,7 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
+        mapView.button.isUserInteractionEnabled = true
     }
     
     @objc func buttonTapped() {
@@ -52,6 +53,10 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
                 return
             }
             writeStudyVC.peopleData = data
+            writeStudyVC.long = pinLocation.longitude
+            writeStudyVC.lat = pinLocation.latitude
+            self?.mapView.button.isUserInteractionEnabled = false
+            Toast.makeToast(view: self?.view, message: "데이터를 받아오는중이에요")
             self?.navigationController?.pushViewController(writeStudyVC, animated: true)
         }
     }

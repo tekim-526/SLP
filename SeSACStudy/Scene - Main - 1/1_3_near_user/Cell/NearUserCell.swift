@@ -1,16 +1,33 @@
 //
-//  ExpandableCell.swift
+//  NearUserCell.swift
 //  SeSACStudy
 //
-//  Created by Kim TaeSoo on 2022/11/14.
+//  Created by Kim TaeSoo on 2022/11/23.
 //
 
 import UIKit
 
-import SnapKit
-
-
-class ExpandableCell: BaseCollectionViewCell {
+class NearUserCell: BaseCollectionViewCell {
+    
+    lazy var image: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "sesac_background_1")
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 8
+        image.addSubview(characterImage)
+        image.addSubview(button)
+        return image
+    }()
+    let characterImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "sesac_face_1")
+        return image
+    }()
+    let button: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "Property 1=propose"), for: .normal)
+        return button
+    }()
     let label: UILabel = {
         let label = UILabel()
         label.text = UserDefaults.standard.string(forKey: "nick")
@@ -37,7 +54,7 @@ class ExpandableCell: BaseCollectionViewCell {
         let label = UILabel()
         label.text = "새싹 타이틀"
         label.font = UIFont(name: "NotoSansKR-Regular", size: 12)
-        label.isHidden = true
+        label.isHidden = false
         return label
     }()
     
@@ -56,13 +73,15 @@ class ExpandableCell: BaseCollectionViewCell {
     lazy var stackView1 = UIStackView().makeStackView(axis: .horizontal, mannerButton, timeButton)
     lazy var stackView2 = UIStackView().makeStackView(axis: .horizontal, responseButton, personalityButton)
     lazy var stackView3 = UIStackView().makeStackView(axis: .horizontal, skilButton, haveAGoodTimeButton)
-    lazy var stackView4 = UIStackView().makeStackView(axis: .vertical, isHidden: true, stackView1, stackView2, stackView3)
+    lazy var stackView4 = UIStackView().makeStackView(axis: .vertical, isHidden: false, stackView1, stackView2, stackView3)
+    
+    lazy var stackView5 = UIStackView().makeStackView(axis: .vertical, isHidden: true, spacing: 16, distribution: .fillProportionally, sesacTitleLabel, stackView4, sesacReviewLabel, sesacTextField)
     
     let sesacReviewLabel: UILabel = {
         let label = UILabel()
         label.text = "새싹 리뷰"
         label.font = UIFont(name: "NotoSansKR-Regular", size: 12)
-        label.isHidden = true
+        label.isHidden = false
         return label
     }()
     
@@ -71,9 +90,11 @@ class ExpandableCell: BaseCollectionViewCell {
         tf.font = UIFont(name: "NotoSansKR-Regular", size: 14)
         tf.placeholder = "첫 리뷰를 기다리는 중이에요"
         tf.isUserInteractionEnabled = false
-        tf.isHidden = true
+        tf.isHidden = false
         return tf
     }()
+    
+    let clearView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,44 +102,48 @@ class ExpandableCell: BaseCollectionViewCell {
     
   
     override func setupUI() {
-        [label, foldButton, lineView, sesacTitleLabel, stackView4, sesacReviewLabel, sesacTextField].forEach {self.contentView.addSubview($0)}
+        [image, button, clearView, label, foldButton, lineView, stackView5].forEach {self.contentView.addSubview($0)}
     }
     
     override func makeConstraints() {
+        image.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(194)
+        }
+        characterImage.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        button.snp.makeConstraints { make in
+            make.top.equalTo(image.snp.top).offset(12)
+            make.trailing.equalTo(image.snp.trailing).inset(12)
+        }
         lineView.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide)
-            make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
-            make.trailing.equalTo(self.safeAreaLayoutGuide).offset(-16)
-            make.bottom.equalTo(self.safeAreaLayoutGuide)
+            make.top.equalTo(image.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview()
         }
         foldButton.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
-            make.trailing.equalTo(lineView.snp.trailing).offset(-18)
+            make.top.equalTo(lineView.snp.top).offset(16)
+            make.trailing.equalToSuperview().inset(34)
         }
+
         label.snp.makeConstraints { make in
-            make.leading.equalTo(lineView.snp.leading).offset(16)
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
+            make.top.equalTo(lineView.snp.top).offset(16)
+            make.leading.equalToSuperview().inset(32)
         }
-        sesacTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(label.snp.bottom).offset(24)
-            make.leading.equalTo(lineView.snp.leading).offset(16)
+        clearView.snp.makeConstraints { make in
+            make.top.equalTo(label.snp.bottom)
+            make.trailing.equalToSuperview().inset(34)
+            make.height.equalTo(16)
         }
-        stackView4.snp.makeConstraints { make in
-            make.top.equalTo(sesacTitleLabel.snp.bottom).offset(16)
-            make.height.equalTo(112)
-            make.leading.equalTo(lineView.snp.leading).offset(16)
-            make.trailing.equalTo(lineView.snp.trailing).offset(-16)
+        stackView5.snp.makeConstraints { make in
+            make.top.equalTo(clearView.snp.bottom)
+            make.horizontalEdges.equalToSuperview().inset(32)
+            make.height.equalTo(0)
+            make.bottom.equalToSuperview()
         }
-        sesacReviewLabel.snp.makeConstraints { make in
-            make.top.equalTo(stackView4.snp.bottom).offset(24)
-            make.leading.equalTo(lineView.snp.leading).offset(16)
-        }
-        sesacTextField.snp.makeConstraints { make in
-            make.top.equalTo(sesacReviewLabel.snp.bottom).offset(16)
-            make.leading.equalTo(lineView.snp.leading).offset(16)
-            make.trailing.equalTo(lineView.snp.trailing).offset(-16)
-        }
+        
     }
     
 }
-

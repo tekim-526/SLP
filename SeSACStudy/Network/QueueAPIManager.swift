@@ -42,4 +42,28 @@ class QueueAPIManager {
             }
         }
     }
+    
+    func searchNearPeopleWithMyStudy(idtoken: String, lat: Double, long: Double, studylist: [String], completion: @escaping (Int?) -> Void) {
+        let url = BaseURL.baseURL + "v1/queue"
+
+        let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
+        let encoder = URLEncoding(arrayEncoding: .noBrackets)
+       
+        let json: [String: Any] = [
+            "long": long,
+            "lat": lat,
+            "studylist": studylist
+        ]
+        
+        AF.request(url, method: .post, parameters: json, encoding: encoder, headers: headers).validate().response { response in
+            switch response.result {
+            case .success(_):
+                completion(response.response?.statusCode)
+             
+            case .failure(_):
+                completion(response.response?.statusCode)
+            }
+            print("STATUS CODE :", response.response?.statusCode ?? -1)
+        }
+    }
 }

@@ -16,6 +16,8 @@ class WriteStudyViewController: BaseViewController {
     
     var peopleData: GetNearPeopleData!
     
+    var long: Double!
+    var lat: Double!
     var list: [StudyModel] = []
     
     override func loadView() {
@@ -117,6 +119,14 @@ class WriteStudyViewController: BaseViewController {
     }
     
     @objc func searchButtonTapped() {
+        // Post Method Needed
+        
+//        datasource.snapshot(for: 0).items[0].count
+        TokenManager.shared.getIdToken { token in
+            QueueAPIManager.shared.searchNearPeopleWithMyStudy(idtoken: token, lat: self.lat, long: self.long, studylist: ["회", "고기"]) { statuscode in
+                print(statuscode ?? 0)
+            }
+        }
         self.navigationController?.pushViewController(NearUserViewController(), animated: true)
     }
 }

@@ -64,7 +64,10 @@
 		93AC19CC292B4CE5000FB3BC /* KeyboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19CB292B4CE5000FB3BC /* KeyboardHeaderView.swift */; };
 		93AC19CF292B5C48000FB3BC /* NearUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19CE292B5C48000FB3BC /* NearUserViewController.swift */; };
 		93AC19D1292B5C51000FB3BC /* NearUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19D0292B5C51000FB3BC /* NearUserView.swift */; };
-		93AC19D3292B65FB000FB3BC /* NearUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19D2292B65FB000FB3BC /* NearUserHeaderView.swift */; };
+		93AC19D8292DF470000FB3BC /* NearUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19D7292DF470000FB3BC /* NearUserCell.swift */; };
+		93AC19DA292E0113000FB3BC /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19D9292E0113000FB3BC /* UnderlineSegmentedControl.swift */; };
+		93AC19DC292E0A9B000FB3BC /* ReceivedRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19DB292E0A9B000FB3BC /* ReceivedRequestViewController.swift */; };
+		93AC19DE292E0C5F000FB3BC /* NearRequsetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AC19DD292E0C5F000FB3BC /* NearRequsetViewController.swift */; };
 		93CFB35E2918AEAC0014908C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35D2918AEAC0014908C /* AppDelegate.swift */; };
 		93CFB3602918AEAC0014908C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB35F2918AEAC0014908C /* SceneDelegate.swift */; };
 		93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CFB3612918AEAC0014908C /* TabBarController.swift */; };
@@ -144,7 +147,10 @@
 		93AC19CB292B4CE5000FB3BC /* KeyboardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeaderView.swift; sourceTree = "<group>"; };
 		93AC19CE292B5C48000FB3BC /* NearUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewController.swift; sourceTree = "<group>"; };
 		93AC19D0292B5C51000FB3BC /* NearUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserView.swift; sourceTree = "<group>"; };
-		93AC19D2292B65FB000FB3BC /* NearUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserHeaderView.swift; sourceTree = "<group>"; };
+		93AC19D7292DF470000FB3BC /* NearUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserCell.swift; sourceTree = "<group>"; };
+		93AC19D9292E0113000FB3BC /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
+		93AC19DB292E0A9B000FB3BC /* ReceivedRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceivedRequestViewController.swift; sourceTree = "<group>"; };
+		93AC19DD292E0C5F000FB3BC /* NearRequsetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearRequsetViewController.swift; sourceTree = "<group>"; };
 		93CFB35A2918AEAC0014908C /* SeSACStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSACStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CFB35D2918AEAC0014908C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93CFB35F2918AEAC0014908C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -388,11 +394,21 @@
 		93AC19CD292B5BEC000FB3BC /* 1_3_near_user */ = {
 			isa = PBXGroup;
 			children = (
+				93AC19D6292DF462000FB3BC /* Cell */,
 				93AC19CE292B5C48000FB3BC /* NearUserViewController.swift */,
+				93AC19DB292E0A9B000FB3BC /* ReceivedRequestViewController.swift */,
 				93AC19D0292B5C51000FB3BC /* NearUserView.swift */,
-				93AC19D2292B65FB000FB3BC /* NearUserHeaderView.swift */,
+				93AC19DD292E0C5F000FB3BC /* NearRequsetViewController.swift */,
 			);
 			path = 1_3_near_user;
+			sourceTree = "<group>";
+		};
+		93AC19D6292DF462000FB3BC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				93AC19D7292DF470000FB3BC /* NearUserCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		93CFB3512918AEAC0014908C = {
@@ -467,6 +483,7 @@
 				937A1614291B839D00656882 /* UITextField+Extensions.swift */,
 				93931A912923868500FAF099 /* UIButton+Extensions.swift */,
 				93931A93292389E300FAF099 /* UIStackView+Extensions.swift */,
+				93AC19D9292E0113000FB3BC /* UnderlineSegmentedControl.swift */,
 			);
 			path = "Custom&Extensions";
 			sourceTree = "<group>";
@@ -639,7 +656,6 @@
 				938ADFDE291CF99B00ED799C /* LoginViewModel.swift in Sources */,
 				938ADFEE291D031200ED799C /* UserAPIManager.swift in Sources */,
 				938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */,
-				93AC19D3292B65FB000FB3BC /* NearUserHeaderView.swift in Sources */,
 				93E21647292252070039A57A /* ManageInfoViewController.swift in Sources */,
 				93931A94292389E300FAF099 /* UIStackView+Extensions.swift in Sources */,
 				93AC19CC292B4CE5000FB3BC /* KeyboardHeaderView.swift in Sources */,
@@ -648,6 +664,7 @@
 				938ADFE4291CF99B00ED799C /* PhoneNumberValidViewController.swift in Sources */,
 				93E21649292252910039A57A /* ManageInfoView.swift in Sources */,
 				93AC19BD29267048000FB3BC /* WriteStudyHeader.swift in Sources */,
+				93AC19DC292E0A9B000FB3BC /* ReceivedRequestViewController.swift in Sources */,
 				93AC19CF292B5C48000FB3BC /* NearUserViewController.swift in Sources */,
 				93AC19C429276C73000FB3BC /* NearPeopleSearchModel.swift in Sources */,
 				93168ADA2924FBC200AAFE82 /* CustomAnnotationView.swift in Sources */,
@@ -659,7 +676,9 @@
 				93AC19CA29277260000FB3BC /* MainViewModel.swift in Sources */,
 				9371046F2924A5D90024DA4C /* LaunchScreenViewController.swift in Sources */,
 				938ADFF7291E20FC00ED799C /* Toast.swift in Sources */,
+				93AC19D8292DF470000FB3BC /* NearUserCell.swift in Sources */,
 				93AC19D1292B5C51000FB3BC /* NearUserView.swift in Sources */,
+				93AC19DE292E0C5F000FB3BC /* NearRequsetViewController.swift in Sources */,
 				9325E693291A471000E94098 /* CustomPageViewController.swift in Sources */,
 				938ADFFB2921FFE500ED799C /* ProfileViewController.swift in Sources */,
 				938ADFE2291CF99B00ED799C /* SignUpAndAuthView.swift in Sources */,
@@ -668,6 +687,7 @@
 				9325E690291A471000E94098 /* OnBoardingViewController.swift in Sources */,
 				937A1615291B839D00656882 /* UITextField+Extensions.swift in Sources */,
 				93E2164129223C560039A57A /* ProfileViewCell.swift in Sources */,
+				93AC19DA292E0113000FB3BC /* UnderlineSegmentedControl.swift in Sources */,
 				93E2164F29225BBF0039A57A /* BaseCollectionViewCell.swift in Sources */,
 				937104722924A61F0024DA4C /* LaunchScreenView.swift in Sources */,
 				9371046729247F8A0024DA4C /* WithdrawPopUpViewController.swift in Sources */,

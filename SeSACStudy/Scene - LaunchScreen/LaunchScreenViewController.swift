@@ -26,6 +26,7 @@ class LaunchScreenViewController: BaseViewController {
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 let vc = TabBarController()
+//                let vc = NearRequsetViewController()
                 sceneDelegate?.window?.rootViewController = vc
                 sceneDelegate?.window?.makeKeyAndVisible()
                 
