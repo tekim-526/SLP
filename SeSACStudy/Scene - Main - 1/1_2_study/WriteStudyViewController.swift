@@ -82,6 +82,7 @@ class WriteStudyViewController: BaseViewController {
                 supplementaryView.label.text = "내가 하고 싶은"
             }
         }
+        
         datasource.supplementaryViewProvider = .some({ collectionView, elementKind, indexPath in
             let header = collectionView.dequeueConfiguredReusableSupplementary(using: header, for: indexPath)
             return header
@@ -120,14 +121,24 @@ class WriteStudyViewController: BaseViewController {
     
     @objc func searchButtonTapped() {
         // Post Method Needed
+        var studylist: [String] = []
+        for item in datasource.snapshot(for: 1).items {
+            studylist.append(item.studyName)
+        }
         
-//        datasource.snapshot(for: 0).items[0].count
+        guard !studylist.isEmpty else {
+            Toast.makeToast(view: view, message: "내가 하고 싶은 스터디를 입력해주세요")
+            return
+        }
         TokenManager.shared.getIdToken { token in
-            QueueAPIManager.shared.searchNearPeopleWithMyStudy(idtoken: token, lat: self.lat, long: self.long, studylist: ["회", "고기"]) { statuscode in
+            QueueAPIManager.shared.searchNearPeopleWithMyStudy(idtoken: token, lat: self.lat, long: self.long, studylist: studylist) { statuscode in
+                let nearRequeestVC = NearRequsetViewController()
+                nearRequeestVC.peopleData = self.peopleData
+                self.navigationController?.pushViewController(nearRequeestVC, animated: true)
                 print(statuscode ?? 0)
             }
         }
-        self.navigationController?.pushViewController(NearUserViewController(), animated: true)
+        
     }
 }
 

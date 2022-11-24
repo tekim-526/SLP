@@ -8,6 +8,8 @@
 import UIKit
 
 class NearUserCell: BaseCollectionViewCell {
+    var isExpanded: Bool = false
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     
     lazy var image: UIImageView = {
         let image = UIImageView()
@@ -18,16 +20,19 @@ class NearUserCell: BaseCollectionViewCell {
         image.addSubview(button)
         return image
     }()
+    
     let characterImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "sesac_face_1")
         return image
     }()
+    
     let button: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "Property 1=propose"), for: .normal)
         return button
     }()
+    
     let label: UILabel = {
         let label = UILabel()
         label.text = UserDefaults.standard.string(forKey: "nick")
@@ -75,7 +80,14 @@ class NearUserCell: BaseCollectionViewCell {
     lazy var stackView3 = UIStackView().makeStackView(axis: .horizontal, skilButton, haveAGoodTimeButton)
     lazy var stackView4 = UIStackView().makeStackView(axis: .vertical, isHidden: false, stackView1, stackView2, stackView3)
     
-    lazy var stackView5 = UIStackView().makeStackView(axis: .vertical, isHidden: true, spacing: 16, distribution: .fillProportionally, sesacTitleLabel, stackView4, sesacReviewLabel, sesacTextField)
+    let studyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "하고 싶은 스터디"
+        label.font = UIFont(name: "NotoSansKR-Regular", size: 12)
+        label.isHidden = false
+        return label
+    }()
+    
     
     let sesacReviewLabel: UILabel = {
         let label = UILabel()
@@ -95,6 +107,9 @@ class NearUserCell: BaseCollectionViewCell {
     }()
     
     let clearView = UIView()
+
+    lazy var stackView5 = UIStackView().makeStackView(axis: .vertical, isHidden: true, spacing: 16, distribution: .fillProportionally, sesacTitleLabel, stackView4, studyLabel, collectionView, sesacReviewLabel, sesacTextField)
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,6 +125,9 @@ class NearUserCell: BaseCollectionViewCell {
             make.top.equalToSuperview().offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(194)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.height.equalTo(120)
         }
         characterImage.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -144,6 +162,20 @@ class NearUserCell: BaseCollectionViewCell {
             make.bottom.equalToSuperview()
         }
         
+    }
+    
+    func createLayout() -> UICollectionViewLayout {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(80), heightDimension: .absolute(32))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(128))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        
+        return layout
     }
     
 }

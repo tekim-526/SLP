@@ -68,17 +68,6 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
     func mapViewSetUp(center: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 300, longitudinalMeters: 300)
         mapView.map.setRegion(region, animated: false)
-        TokenManager.shared.getIdToken { id in
-            QueueAPIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] data ,statusCode  in
-                // 어노테이션 만들기
-                guard let vc = self, let data = data else { return }
-                vc.mapView.map.removeAnnotations(vc.mapView.map.annotations)
-                for i in data.fromQueueDB.indices {
-                    let location = CLLocationCoordinate2D(latitude: data.fromQueueDB[i].lat, longitude: data.fromQueueDB[i].long)
-                    vc.addCustomPin(sesac_image: data.fromQueueDB[i].sesac + 1, coordinate: location)
-                }
-            }
-        }
     }
     
     func mapViewRefresh(center: CLLocationCoordinate2D, completion: @escaping (GetNearPeopleData?, Int?) -> Void) {
@@ -154,6 +143,7 @@ extension MainViewController: MKMapViewDelegate {
 extension MainViewController {
     // 현재 위치
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("123123: didUpdateLocations")
         if let coordinate = locations.last?.coordinate {
             mapViewSetUp(center: coordinate)
         }

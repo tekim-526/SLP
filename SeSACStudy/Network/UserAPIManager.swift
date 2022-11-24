@@ -51,15 +51,17 @@ class UserAPIManager {
 
         let headers: HTTPHeaders = ["idtoken": idtoken, "Content-Type": "application/x-www-form-urlencoded"]
         
-        let json: [String: Any] = ["phoneNumber": UserDefaults.standard.string(forKey: "phoneNumber") ?? "",
-                                   "FCMtoken": UserDefaults.standard.string(forKey: "FCMtoken") ?? "",
-                                   "nick": UserDefaults.standard.string(forKey: "nick") ?? "",
-                                   "birth": UserDefaults.standard.string(forKey: "birth") ?? "",
-                                   "email": UserDefaults.standard.string(forKey: "email") ?? "",
-                                   "gender": UserDefaults.standard.integer(forKey: "gender") ]
 
+        let parameters = SignUp(
+            phoneNumber: UserDefaults.standard.string(forKey: "phoneNumber") ?? "",
+            FCMtoken: UserDefaults.standard.string(forKey: "FCMtoken") ?? "",
+            nick: UserDefaults.standard.string(forKey: "nick") ?? "",
+            birth: UserDefaults.standard.string(forKey: "birth") ?? "",
+            email: UserDefaults.standard.string(forKey: "email") ?? "",
+            gender: UserDefaults.standard.integer(forKey: "gender")
+        )
         guard let url = components?.url else { return }
-        AF.request(url, method: .post, parameters: json, headers: headers).validate().responseData { response in
+        AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseData { response in
             switch response.result {
             
             case .success(let data):
@@ -71,6 +73,8 @@ class UserAPIManager {
         }
     }
     
+  
+    
     func myPage(idtoken: String, searchable: Int = 0, ageMin: Int = 0, ageMax: Int = 0, gender: Int = 0, study: String?, completion: @escaping (Int?) -> Void) {
         
         let urlString = BaseURL.baseURL + "v1/user/mypage"
@@ -78,16 +82,10 @@ class UserAPIManager {
 
         let headers: HTTPHeaders = ["idtoken": idtoken, "Content-Type": "application/x-www-form-urlencoded"]
         
-        let json: [String: Any] = [
-            "searchable": searchable,
-            "ageMin": ageMin,
-            "ageMax": ageMax,
-            "gender": gender,
-            "study": study ?? ""
-        ]
-
+        let parameters = MyPage(searchable: searchable, ageMin: ageMin, ageMax: ageMax, gender: gender, study: study ?? "")
+        
         guard let url = components?.url else { return }
-        AF.request(url, method: .put, parameters: json, headers: headers).validate().responseData { response in
+        AF.request(url, method: .put, parameters: parameters, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(_):
 //                let json = JSON(data)

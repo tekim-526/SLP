@@ -17,10 +17,21 @@ class NearRequsetViewController: BaseViewController {
         return seg
     }()
     
-    private let vc1 = NearUserViewController()
+    var peopleData: GetNearPeopleData!
     
-    private let vc2 = ReceivedRequestViewController()
+    private lazy var vc1: NearUserViewController = {
+        let vc = NearUserViewController()
+        vc.peopleData = peopleData
+        return vc
+    }()
     
+    private lazy var vc2: ReceivedRequestViewController = {
+        let vc = ReceivedRequestViewController()
+        vc.peopleData = peopleData
+        return vc
+    }()
+    
+
     private lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         vc.setViewControllers([self.dataViewControllers[0]], direction: .forward, animated: true)

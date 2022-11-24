@@ -15,9 +15,8 @@ class ReceivedRequestViewController: NearUserViewController {
     
     }
     
-    
     override func setDatasource() {
-        let cellReg = UICollectionView.CellRegistration<NearUserCell, String> { cell, indexPath, itemIdentifier in
+        let cellReg = UICollectionView.CellRegistration<NearUserCell, UserInfoModel> { cell, indexPath, itemIdentifier in
             
         }
         datasource = UICollectionViewDiffableDataSource(collectionView: nearUserView.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
@@ -26,9 +25,9 @@ class ReceivedRequestViewController: NearUserViewController {
             cell.button.addTarget(self, action: #selector(self?.acceptButtonTapped), for: .touchUpInside)
             return cell
         }
-        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, UserInfoModel>()
         snapshot.appendSections([0])
-        snapshot.appendItems(["태수킴"])
+//        snapshot.appendItems([UserInfoModel(background: <#T##Int#>, reviews: <#T##[String]#>, nick: <#T##String#>, uid: <#T##String#>, studylist: <#T##[String]#>, sesac: <#T##Int#>, gender: <#T##Int#>)])
         datasource.apply(snapshot)
     }
     @objc func acceptButtonTapped() {

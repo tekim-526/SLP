@@ -135,6 +135,7 @@ class ManageInfoViewController: BaseViewController {
             UserAPIManager.shared.myPage(idtoken: id, searchable: vc.data.searchable, ageMin: vc.data.ageMin, ageMax: vc.data.ageMax, gender: vc.data.gender, study: vc.data.study) { responseCode in
                 switch responseCode {
                 case 200:
+                    print("성공")
                     vc.navigationController?.popViewController(animated: true)
                 default:
                     Toast.makeToast(view: vc.manageInfoView, message: "오류가 발생했습니다. 다시 시도해주세요")

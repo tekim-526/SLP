@@ -21,12 +21,11 @@ class QueueAPIManager {
 
         let headers: HTTPHeaders = ["idtoken": idtoken, "Content-Type": "application/x-www-form-urlencoded"]
         
-        let json: [String: Any] = ["lat": lat,
-                                   "long": long]
-
+        
+        let parameters = NearPeople(lat: lat, long: long)
         guard let url = components?.url else { return }
         
-        AF.request(url, method: .post, parameters: json, headers: headers).validate().responseData { response in
+        AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let decoder = JSONDecoder()
@@ -49,13 +48,15 @@ class QueueAPIManager {
         let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
         let encoder = URLEncoding(arrayEncoding: .noBrackets)
        
-        let json: [String: Any] = [
+        let parameters: [String: Any] = [
             "long": long,
             "lat": lat,
             "studylist": studylist
         ]
         
-        AF.request(url, method: .post, parameters: json, encoding: encoder, headers: headers).validate().response { response in
+//        let parameters = NearPeopleWithStudy(lat: long, long: lat, studylist: studylist)
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: encoder, headers: headers).validate().response { response in
             switch response.result {
             case .success(_):
                 completion(response.response?.statusCode)

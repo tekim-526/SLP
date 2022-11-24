@@ -16,7 +16,6 @@ class WriteStudyCell: BaseCollectionViewCell {
         configuration.imagePlacement = .trailing
         let button = UIButton()
         
-        button.titleLabel?.font = UIFont(name: "NotoSansKR-Light", size: 14)
         button.layer.cornerRadius = 8
         button.configuration = configuration
         button.isUserInteractionEnabled = false

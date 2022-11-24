@@ -17,6 +17,9 @@
 		9325E69B291A7A7F00E94098 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69A291A7A7F00E94098 /* RxCocoa */; };
 		9325E69D291A7A7F00E94098 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9325E69C291A7A7F00E94098 /* RxSwift */; };
 		9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9325E6A0291B487E00E94098 /* UIView+Extensions.swift */; };
+		93313194292F340C007AAEC5 /* UserAPIParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93313193292F340C007AAEC5 /* UserAPIParameters.swift */; };
+		93313196292F350D007AAEC5 /* QueueAPIParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93313195292F350D007AAEC5 /* QueueAPIParameters.swift */; };
+		93313199292F429F007AAEC5 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93313198292F429F007AAEC5 /* UserInfoModel.swift */; };
 		9371046729247F8A0024DA4C /* WithdrawPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371046629247F8A0024DA4C /* WithdrawPopUpViewController.swift */; };
 		9371046A292480290024DA4C /* WithdrawPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93710469292480290024DA4C /* WithdrawPopUpView.swift */; };
 		9371046D29249C110024DA4C /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 9371046C29249C110024DA4C /* MultiSlider */; };
@@ -105,6 +108,9 @@
 		9325E68E291A471000E94098 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
 		9325E68F291A471000E94098 /* CustomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPageViewController.swift; sourceTree = "<group>"; };
 		9325E6A0291B487E00E94098 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		93313193292F340C007AAEC5 /* UserAPIParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPIParameters.swift; sourceTree = "<group>"; };
+		93313195292F350D007AAEC5 /* QueueAPIParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueAPIParameters.swift; sourceTree = "<group>"; };
+		93313198292F429F007AAEC5 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		9371046629247F8A0024DA4C /* WithdrawPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawPopUpViewController.swift; sourceTree = "<group>"; };
 		93710469292480290024DA4C /* WithdrawPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawPopUpView.swift; sourceTree = "<group>"; };
 		9371046E2924A5D90024DA4C /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +225,14 @@
 			path = 1_2_study;
 			sourceTree = "<group>";
 		};
+		93313197292F4291007AAEC5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				93313198292F429F007AAEC5 /* UserInfoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		9371046829247F920024DA4C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,7 +289,9 @@
 				938ADFBD291CD0F200ED799C /* AuthManager.swift */,
 				938ADFC5291CEA0600ED799C /* TokenManager.swift */,
 				938ADFED291D031200ED799C /* UserAPIManager.swift */,
+				93313193292F340C007AAEC5 /* UserAPIParameters.swift */,
 				93AC19C529276CED000FB3BC /* QueueAPIManager.swift */,
+				93313195292F350D007AAEC5 /* QueueAPIParameters.swift */,
 				93AC19C729276D46000FB3BC /* BaseURL.swift */,
 			);
 			path = Network;
@@ -394,6 +410,7 @@
 		93AC19CD292B5BEC000FB3BC /* 1_3_near_user */ = {
 			isa = PBXGroup;
 			children = (
+				93313197292F4291007AAEC5 /* Model */,
 				93AC19D6292DF462000FB3BC /* Cell */,
 				93AC19CE292B5C48000FB3BC /* NearUserViewController.swift */,
 				93AC19DB292E0A9B000FB3BC /* ReceivedRequestViewController.swift */,
@@ -645,14 +662,17 @@
 				93CFB3622918AEAC0014908C /* TabBarController.swift in Sources */,
 				938ADFE6291CF99B00ED799C /* GenderViewController.swift in Sources */,
 				93CFB3752918B38E0014908C /* BaseViewController.swift in Sources */,
+				93313194292F340C007AAEC5 /* UserAPIParameters.swift in Sources */,
 				937104772924D1610024DA4C /* MainView.swift in Sources */,
 				93CFB3772918B3950014908C /* BaseView.swift in Sources */,
+				93313199292F429F007AAEC5 /* UserInfoModel.swift in Sources */,
 				9325E691291A471000E94098 /* OnBoardingView.swift in Sources */,
 				93931A982923C65000FAF099 /* PhoneNumberPermitCell.swift in Sources */,
 				93AC19C229276144000FB3BC /* StudyModel.swift in Sources */,
 				9325E6A1291B487E00E94098 /* UIView+Extensions.swift in Sources */,
 				9371046A292480290024DA4C /* WithdrawPopUpView.swift in Sources */,
 				93E2164329224F940039A57A /* ProfileHeaderView.swift in Sources */,
+				93313196292F350D007AAEC5 /* QueueAPIParameters.swift in Sources */,
 				938ADFDE291CF99B00ED799C /* LoginViewModel.swift in Sources */,
 				938ADFEE291D031200ED799C /* UserAPIManager.swift in Sources */,
 				938ADFFD2921FFEB00ED799C /* ProfileView.swift in Sources */,
