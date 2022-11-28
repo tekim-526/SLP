@@ -27,10 +27,12 @@ class WriteStudyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         writeView.collectionView.delegate = self
+        
         setDataSource()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+       
         self.tabBarController?.tabBar.isHidden = true
     }
     

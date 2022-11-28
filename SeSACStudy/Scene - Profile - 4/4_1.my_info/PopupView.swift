@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WithdrawPopUpView: BaseView {
+class PopupView: BaseView {
     let title: UILabel = {
         let label = UILabel()
         label.text = "정말 탈퇴하시겠습니까?"
@@ -19,6 +19,9 @@ class WithdrawPopUpView: BaseView {
         let label = UILabel()
         label.text = "탈퇴하시면 새싹 스터디를 이용할 수 없어요ㅠ"
         label.font = UIFont(name: "NotoSansKR-Regular", size: 14)
+        label.textColor = .gray7
+        label.numberOfLines = 2
+        label.textAlignment = .center
         return label
     }()
 
@@ -27,7 +30,6 @@ class WithdrawPopUpView: BaseView {
         button.setTitle("확인", for: .normal)
         button.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 14)
         button.backgroundColor = .brandGreen
-        button.tintColor = .white
         button.layer.cornerRadius = 8
         return button
     }()
@@ -37,7 +39,7 @@ class WithdrawPopUpView: BaseView {
         button.setTitle("취소", for: .normal)
         button.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 14)
         button.backgroundColor = .gray2
-        button.tintColor = .black
+        button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 8
         return button
     }()
@@ -64,10 +66,12 @@ class WithdrawPopUpView: BaseView {
         
         title.snp.makeConstraints { make in
             make.top.equalTo(safeArea).offset(16)
+            make.height.equalTo(32)
             make.centerX.equalTo(centerX)
         }
         subTitle.snp.makeConstraints { make in
             make.top.equalTo(title.snp.bottom).offset(8)
+            make.height.equalTo(48)
             make.centerX.equalTo(centerX)
         }
         okButton.snp.makeConstraints { make in

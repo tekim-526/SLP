@@ -18,7 +18,7 @@ class UserAPIManager {
     private init() {}
 
     
-    func login(idtoken: String, completion: @escaping (MyInFoData? ,Bool, AFError?) -> Void) {
+    func login(idtoken: String, completion: @escaping (Result<MyInFoData ,Error>) -> Void) {
         let headers: HTTPHeaders = ["idtoken": idtoken]
         let urlString = BaseURL.baseURL + "v1/user"
         
@@ -30,20 +30,48 @@ class UserAPIManager {
                 do {
                     let data = try decoder.decode(MyInFoData.self, from: data)
                     print("login")
-                    completion(data, true, nil)
+                    completion(.success(data))
                     dump(data)
                 } catch {
                     print(error)
                 }
-            
+                
                 print(response.response?.statusCode ?? 0)
             case .failure(let error):
-                print("login error", error)
-                completion(nil, false, error)
-                print(error.responseCode ?? 0)
+                guard let status = response.response?.statusCode else {return}
+                guard let error = NetworkStatusError(rawValue: status) else {return}
+                
+                completion(.failure(error))
             }
         }
     }
+    
+//    func login(idtoken: String, completion: @escaping (MyInFoData? ,Bool, AFError?) -> Void) {
+//        let headers: HTTPHeaders = ["idtoken": idtoken]
+//        let urlString = BaseURL.baseURL + "v1/user"
+//        
+//        AF.request(urlString, method: .get, headers: headers).validate().responseData { response in
+//            switch response.result {
+//            case .success(let data):
+//                
+//                let decoder = JSONDecoder()
+//                do {
+//                    let data = try decoder.decode(MyInFoData.self, from: data)
+//                    print("login")
+//                    completion(data, true, nil)
+//                    dump(data)
+//                } catch {
+//                    print(error)
+//                }
+//            
+//                print(response.response?.statusCode ?? 0)
+//            case .failure(let error):
+//                print("login error", error)
+//                completion(nil, false, error)
+//                print(error.responseCode ?? 0)
+//            }
+//        }
+//    }
     
     func signup(idtoken: String, completion: @escaping (Int?) -> Void) {
         let urlString = BaseURL.baseURL + "v1/user"

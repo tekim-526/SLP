@@ -17,3 +17,7 @@ struct NearPeopleWithStudy: Codable {
     let long: Double
     let studylist: [String]
 }
+
+struct RequestStudy: Codable {
+    let otheruid: String
+}

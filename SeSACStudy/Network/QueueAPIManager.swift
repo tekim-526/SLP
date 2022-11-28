@@ -10,6 +10,12 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+enum MyStudy: String {
+    case studyrequest
+    case studyaccept
+    case dodge
+}
+
 class QueueAPIManager {
    
     static let shared = QueueAPIManager()
@@ -54,8 +60,6 @@ class QueueAPIManager {
             "studylist": studylist
         ]
         
-//        let parameters = NearPeopleWithStudy(lat: long, long: lat, studylist: studylist)
-        
         AF.request(url, method: .post, parameters: parameters, encoding: encoder, headers: headers).validate().response { response in
             switch response.result {
             case .success(_):
@@ -65,6 +69,25 @@ class QueueAPIManager {
                 completion(response.response?.statusCode)
             }
             print("STATUS CODE :", response.response?.statusCode ?? -1)
+        }
+    }
+    
+    func myStudy(idtoken: String, method: MyStudy = .studyrequest, otheruid: String, completion: @escaping (Int?) -> Void) {
+        let url = BaseURL.baseURL + "v1/queue/\(method.rawValue)"
+        print("url :", url)
+        let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
+       
+        let parameters = RequestStudy(otheruid: otheruid)
+                
+        AF.request(url, method: .post, parameters: parameters, headers: headers).validate().response { response in
+            switch response.result {
+            case .success(_):
+                completion(response.response?.statusCode)
+             
+            case .failure(_):
+                completion(response.response?.statusCode)
+            }
+            print("REQUEST STUDY STATUS CODE :", response.response?.statusCode ?? -1)
         }
     }
 }

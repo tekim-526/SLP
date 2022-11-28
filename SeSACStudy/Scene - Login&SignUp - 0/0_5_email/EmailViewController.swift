@@ -15,6 +15,7 @@ class EmailViewController: BaseViewController, AttributeString {
     let emailView = SignUpAndAuthView()
     let disposeBag = DisposeBag()
     let genderView = GenderViewController()
+    let viewModel = LoginViewModel()
     override func loadView() {
         view = emailView
     }
@@ -27,7 +28,7 @@ class EmailViewController: BaseViewController, AttributeString {
     func bind() {
         emailView.textField.rx.text
             .orEmpty
-            .map { self.checkEmailValid(str: $0) }
+            .map { self.viewModel.checkEmailValid(str: $0) }
             .withUnretained(self)
             .bind { vc, bool in
                 print(bool)
@@ -60,8 +61,5 @@ class EmailViewController: BaseViewController, AttributeString {
         return attrStr
     }
     
-    func checkEmailValid(str: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-        return  NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: str)
-    }
+
 }

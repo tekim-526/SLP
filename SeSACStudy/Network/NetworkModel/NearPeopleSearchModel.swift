@@ -10,6 +10,7 @@ import Foundation
 struct GetNearPeopleData: Codable {
     let fromRecommend: [String]
     let fromQueueDB: [FromQueueDB]
+    let fromQueueDBRequested: [FromQueueDB]
 }
 
 // MARK: - FromQueueDB

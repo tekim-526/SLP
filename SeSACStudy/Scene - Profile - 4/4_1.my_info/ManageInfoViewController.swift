@@ -14,7 +14,7 @@ import RxSwift
 
 class ManageInfoViewController: BaseViewController {
     let manageInfoView = ManageInfoView()
-    let popupVC = WithdrawPopUpViewController()
+    let popupVC = PopupViewController()
     let disposeBag = DisposeBag()
     
     var datasource: UICollectionViewDiffableDataSource<Int, String>!

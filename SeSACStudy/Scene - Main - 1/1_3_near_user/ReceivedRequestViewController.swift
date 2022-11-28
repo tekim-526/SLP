@@ -7,30 +7,24 @@
 
 import UIKit
 
-class ReceivedRequestViewController: NearUserViewController {
+class ReceivedRequestViewController: BaseNearUserViewController {
         
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        print("peopleData.fromQueueDBRequested", peopleData.fromQueueDBRequested)
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkDataisEmpty(bool: peopleData.fromQueueDBRequested.isEmpty)
+        if peopleData.fromQueueDBRequested.isEmpty { return }
+        setDatasource(personData: peopleData.fromQueueDBRequested)
     }
     
-    override func setDatasource() {
-        let cellReg = UICollectionView.CellRegistration<NearUserCell, UserInfoModel> { cell, indexPath, itemIdentifier in
-            
-        }
-        datasource = UICollectionViewDiffableDataSource(collectionView: nearUserView.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellReg, for: indexPath, item: itemIdentifier)
-            cell.button.setImage(UIImage(named: "Property 1=accept"), for: .normal)
-            cell.button.addTarget(self, action: #selector(self?.acceptButtonTapped), for: .touchUpInside)
-            return cell
-        }
-        var snapshot = NSDiffableDataSourceSnapshot<Int, UserInfoModel>()
-        snapshot.appendSections([0])
-//        snapshot.appendItems([UserInfoModel(background: <#T##Int#>, reviews: <#T##[String]#>, nick: <#T##String#>, uid: <#T##String#>, studylist: <#T##[String]#>, sesac: <#T##Int#>, gender: <#T##Int#>)])
-        datasource.apply(snapshot)
+    override func insideImageButtonTapped(_ sender: UIButton) {
+        
     }
-    @objc func acceptButtonTapped() {
-        print("Accept Tapped!")
-    }
+    
 }

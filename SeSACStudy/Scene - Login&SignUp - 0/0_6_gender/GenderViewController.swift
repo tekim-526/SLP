@@ -98,6 +98,7 @@ class GenderViewController: BaseViewController, AttributeString {
                 UserDefaults.standard.set(vc.gender, forKey: "gender")
                 //POST Method Needed
                 UserAPIManager.shared.signup(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { statuscode in
+                    
                     guard let statuscode else { return }
                     switch statuscode {
                     case 200:

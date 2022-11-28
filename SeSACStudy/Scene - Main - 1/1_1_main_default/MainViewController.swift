@@ -135,7 +135,9 @@ extension MainViewController: MKMapViewDelegate {
                 Toast.makeToast(view: self?.view, message: "네크워크가 불안정합니다")
             }
         }
+        
         pinLocation = mapView.centerCoordinate
+        print(pinLocation)
         locationManager.stopUpdatingLocation()
     }
 }
@@ -143,7 +145,6 @@ extension MainViewController: MKMapViewDelegate {
 extension MainViewController {
     // 현재 위치
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("123123: didUpdateLocations")
         if let coordinate = locations.last?.coordinate {
             mapViewSetUp(center: coordinate)
         }

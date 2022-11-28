@@ -6,20 +6,25 @@
 //
 
 import UIKit
+
 import SnapKit
+
+import RxSwift
+import RxCocoa
 
 protocol SendOpacityProtocol {
     func sendOpacityAndColor(opacity: CGFloat)
 }
 
-class WithdrawPopUpViewController: BaseViewController {
-    let popUpView = WithdrawPopUpView()
+class PopupViewController: BaseViewController {
+    let popUpView = PopupView()
     var delegate: SendOpacityProtocol!
+    var disposebag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        popUpView.okButton.addTarget(self, action: #selector(okButtonTapped), for: .touchUpInside)
-        popUpView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        bind()
+    
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -38,20 +43,29 @@ class WithdrawPopUpViewController: BaseViewController {
             make.height.equalTo(view.snp.height).multipliedBy(0.1926)
         }
     }
-    @objc func okButtonTapped() {
-        guard let idtoken = UserDefaults.standard.string(forKey: "idtoken") else {
-            //못지우는 토스트
-            return
-        }
-        UserAPIManager.shared.withdraw(idtoken: idtoken) {
-            UserDefaults.standard.set(false, forKey: "OnboardingStartButtonTapped")
-            self.changeSceneToMain(vc: OnBoardingViewController())
-        }
-        // onboarding으로 이동하는 메서드 및 유저디폴트 초기화
+    
+    
+    func bind() {
+        popUpView.okButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                guard let idtoken = UserDefaults.standard.string(forKey: "idtoken") else { return }
+                UserAPIManager.shared.withdraw(idtoken: idtoken) {
+                    UserDefaults.standard.set(false, forKey: "OnboardingStartButtonTapped")
+                    self.changeSceneToMain(vc: OnBoardingViewController())
+                }
+            }.disposed(by: disposebag)
+        
+        popUpView.cancelButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.dismiss(animated: true)
+            }.disposed(by: disposebag)
     }
-    @objc func cancelButtonTapped() {
-        dismiss(animated: true)
-    }
+   
+    
+    
+  
     func changeSceneToMain(vc: UIViewController) {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
@@ -61,5 +75,8 @@ class WithdrawPopUpViewController: BaseViewController {
         
         sceneDelegate?.window?.rootViewController = nav
         sceneDelegate?.window?.makeKeyAndVisible()
+    }
+    deinit {
+        print("popupvc deinit")
     }
 }

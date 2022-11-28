@@ -8,7 +8,6 @@
 import UIKit
 
 class NearUserCell: BaseCollectionViewCell {
-    var isExpanded: Bool = false
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     
     lazy var image: UIImageView = {
@@ -69,15 +68,15 @@ class NearUserCell: BaseCollectionViewCell {
     let responseButton = UIButton().customButtonInMyInfo(title: "빠른 응답")
     let personalityButton = UIButton().customButtonInMyInfo(title: "친절한 성격")
     
-    let skilButton = UIButton().customButtonInMyInfo(title: "능숙한 실력")
+    let skillButton = UIButton().customButtonInMyInfo(title: "능숙한 실력")
     let haveAGoodTimeButton = UIButton().customButtonInMyInfo(title: "유익한 시간")
     
     lazy var buttons: [UIButton] = [mannerButton, timeButton, responseButton, personalityButton,
-    skilButton, haveAGoodTimeButton]
+    skillButton, haveAGoodTimeButton]
     
     lazy var stackView1 = UIStackView().makeStackView(axis: .horizontal, mannerButton, timeButton)
     lazy var stackView2 = UIStackView().makeStackView(axis: .horizontal, responseButton, personalityButton)
-    lazy var stackView3 = UIStackView().makeStackView(axis: .horizontal, skilButton, haveAGoodTimeButton)
+    lazy var stackView3 = UIStackView().makeStackView(axis: .horizontal, skillButton, haveAGoodTimeButton)
     lazy var stackView4 = UIStackView().makeStackView(axis: .vertical, isHidden: false, stackView1, stackView2, stackView3)
     
     let studyLabel: UILabel = {
@@ -85,6 +84,7 @@ class NearUserCell: BaseCollectionViewCell {
         label.text = "하고 싶은 스터디"
         label.font = UIFont(name: "NotoSansKR-Regular", size: 12)
         label.isHidden = false
+        
         return label
     }()
     
@@ -101,13 +101,14 @@ class NearUserCell: BaseCollectionViewCell {
         let tf = UITextField()
         tf.font = UIFont(name: "NotoSansKR-Regular", size: 14)
         tf.placeholder = "첫 리뷰를 기다리는 중이에요"
+        
         tf.isUserInteractionEnabled = false
         tf.isHidden = false
         return tf
     }()
     
     let clearView = UIView()
-
+   
     lazy var stackView5 = UIStackView().makeStackView(axis: .vertical, isHidden: true, spacing: 16, distribution: .fillProportionally, sesacTitleLabel, stackView4, studyLabel, collectionView, sesacReviewLabel, sesacTextField)
     
     
@@ -118,6 +119,7 @@ class NearUserCell: BaseCollectionViewCell {
   
     override func setupUI() {
         [image, button, clearView, label, foldButton, lineView, stackView5].forEach {self.contentView.addSubview($0)}
+        collectionView.isUserInteractionEnabled = false
     }
     
     override func makeConstraints() {
@@ -127,7 +129,7 @@ class NearUserCell: BaseCollectionViewCell {
             make.height.equalTo(194)
         }
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(120)
+            make.height.equalTo(40)
         }
         characterImage.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -162,19 +164,19 @@ class NearUserCell: BaseCollectionViewCell {
             make.bottom.equalToSuperview()
         }
         
+        
     }
     
     func createLayout() -> UICollectionViewLayout {
-        
+        let itemInset: CGFloat = 4
         let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(80), heightDimension: .absolute(32))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(128))
+        item.edgeSpacing = .init(leading: .fixed(itemInset), top: .fixed(8), trailing: .fixed(itemInset), bottom: .fixed(8))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(32))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
         let section = NSCollectionLayoutSection(group: group)
         let layout = UICollectionViewCompositionalLayout(section: section)
-        
+
         return layout
     }
     

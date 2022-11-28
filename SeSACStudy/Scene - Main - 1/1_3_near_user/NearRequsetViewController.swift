@@ -8,6 +8,7 @@
 import UIKit
 
 class NearRequsetViewController: BaseViewController {
+    var peopleData: GetNearPeopleData!
     
     private let segmentedControl: UISegmentedControl = {
         let seg = UnderlineSegmentedControl(items: ["주변 새싹", "받은 요청"])
@@ -17,16 +18,16 @@ class NearRequsetViewController: BaseViewController {
         return seg
     }()
     
-    var peopleData: GetNearPeopleData!
-    
     private lazy var vc1: NearUserViewController = {
         let vc = NearUserViewController()
+        vc.isRequest = false
         vc.peopleData = peopleData
         return vc
     }()
     
     private lazy var vc2: ReceivedRequestViewController = {
         let vc = ReceivedRequestViewController()
+        vc.isRequest = true
         vc.peopleData = peopleData
         return vc
     }()
@@ -39,6 +40,8 @@ class NearRequsetViewController: BaseViewController {
         vc.dataSource = self
         return vc
     }()
+    
+    
     
     var dataViewControllers: [UIViewController] {
         [self.vc1, self.vc2]
@@ -77,10 +80,10 @@ class NearRequsetViewController: BaseViewController {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
 
     }
     @objc private func changeValue(control: UISegmentedControl) {
-        // 코드로 값을 변경하면 해당 메소드 호출 x
         self.currentPage = control.selectedSegmentIndex
       }
     
