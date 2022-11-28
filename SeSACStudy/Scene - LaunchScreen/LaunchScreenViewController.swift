@@ -20,34 +20,35 @@ class LaunchScreenViewController: BaseViewController {
             changeSceneToMain(vc: OnBoardingViewController())
         }
         // 네트워크 통신
-        UserAPIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { [weak self] data, success, error in
-            if success { // 로그인 성공
-                print("login success", success)
+        guard let id = UserDefaults.standard.string(forKey: "idtoken") else { return }
+        UserAPIManager.shared.login(idtoken: id) { [weak self] result in
+            
+            switch result {
+            case .success(_):
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 let vc = TabBarController()
 //                let vc = NearRequsetViewController()
                 sceneDelegate?.window?.rootViewController = vc
                 sceneDelegate?.window?.makeKeyAndVisible()
-                
-            } else {
-                switch error?.responseCode {
-                case 401: // Firebase Token Error
+            case .failure(let error):
+                switch error {
+                case .unauthorized:
                     TokenManager.shared.getIdToken { id in
                         UserDefaults.standard.set(id, forKey: "idtoken")
                         self?.viewDidLoad()
                     }
-                case 406: // 미가입 회원
-                    // 회원가입 로직
+                case .notAcceptable:
                     self?.changeSceneToMain(vc: PhoneNumberValidViewController())
-                case 500: // Server Error
+                case .internalServerError:
                     Toast.makeToast(view: self?.view, message: "500 Server Error")
-                case 501: // Client Error
+                case .notImplemented:
                     Toast.makeToast(view: self?.view, message: "501 Client Error")
-                default:  // Undefied Error
-                    Toast.makeToast(view: self?.view, message: "Unidentified Error")
+                default:
+                    Toast.makeToast(view: self?.view, message: "\(error.localizedDescription)")
                 }
             }
+
         }
     }
     

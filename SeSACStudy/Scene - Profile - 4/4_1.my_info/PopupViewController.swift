@@ -49,10 +49,21 @@ class PopupViewController: BaseViewController {
         popUpView.okButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                guard let idtoken = UserDefaults.standard.string(forKey: "idtoken") else { return }
-                UserAPIManager.shared.withdraw(idtoken: idtoken) {
-                    UserDefaults.standard.set(false, forKey: "OnboardingStartButtonTapped")
-                    self.changeSceneToMain(vc: OnBoardingViewController())
+                guard let idtoken = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
+                UserAPIManager.shared.withdraw(idtoken: idtoken) { [weak self] status in
+                    switch status {
+                    case .ok, .notAcceptable:
+                        UserDefaults.standard.set(false, forKey: UserDefaultsKey.OnboardingStartButtonTapped.rawValue)
+                        self?.changeSceneToMain(vc: OnBoardingViewController())
+                    case .unauthorized:
+                        TokenManager.shared.getIdToken { id in
+                            UserDefaults.standard.set(id, forKey: UserDefaultsKey.idtoken.rawValue)
+                        }
+                    case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+                    case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+                    default: Toast.makeToast(view: self?.view, message: "\(status.localizedDescription)")
+                        
+                    }
                 }
             }.disposed(by: disposebag)
         

@@ -18,62 +18,29 @@ class UserAPIManager {
     private init() {}
 
     
-    func login(idtoken: String, completion: @escaping (Result<MyInFoData ,Error>) -> Void) {
+    func login(idtoken: String, completion: @escaping (Result<MyInFoData ,NetworkStatus>) -> Void) {
         let headers: HTTPHeaders = ["idtoken": idtoken]
         let urlString = BaseURL.baseURL + "v1/user"
         
         AF.request(urlString, method: .get, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
-                
                 let decoder = JSONDecoder()
                 do {
                     let data = try decoder.decode(MyInFoData.self, from: data)
-                    print("login")
                     completion(.success(data))
-                    dump(data)
                 } catch {
                     print(error)
-                }
-                
-                print(response.response?.statusCode ?? 0)
-            case .failure(let error):
+                }                
+            case .failure(_):
                 guard let status = response.response?.statusCode else {return}
-                guard let error = NetworkStatusError(rawValue: status) else {return}
-                
-                completion(.failure(error))
+                guard let status = NetworkStatus(rawValue: status) else {return}
+                completion(.failure(status))
             }
         }
     }
     
-//    func login(idtoken: String, completion: @escaping (MyInFoData? ,Bool, AFError?) -> Void) {
-//        let headers: HTTPHeaders = ["idtoken": idtoken]
-//        let urlString = BaseURL.baseURL + "v1/user"
-//        
-//        AF.request(urlString, method: .get, headers: headers).validate().responseData { response in
-//            switch response.result {
-//            case .success(let data):
-//                
-//                let decoder = JSONDecoder()
-//                do {
-//                    let data = try decoder.decode(MyInFoData.self, from: data)
-//                    print("login")
-//                    completion(data, true, nil)
-//                    dump(data)
-//                } catch {
-//                    print(error)
-//                }
-//            
-//                print(response.response?.statusCode ?? 0)
-//            case .failure(let error):
-//                print("login error", error)
-//                completion(nil, false, error)
-//                print(error.responseCode ?? 0)
-//            }
-//        }
-//    }
-    
-    func signup(idtoken: String, completion: @escaping (Int?) -> Void) {
+    func signup(idtoken: String, completion: @escaping (NetworkStatus) -> Void) {
         let urlString = BaseURL.baseURL + "v1/user"
         let components = URLComponents(string: urlString)
 
@@ -81,29 +48,25 @@ class UserAPIManager {
         
 
         let parameters = SignUp(
-            phoneNumber: UserDefaults.standard.string(forKey: "phoneNumber") ?? "",
-            FCMtoken: UserDefaults.standard.string(forKey: "FCMtoken") ?? "",
-            nick: UserDefaults.standard.string(forKey: "nick") ?? "",
-            birth: UserDefaults.standard.string(forKey: "birth") ?? "",
-            email: UserDefaults.standard.string(forKey: "email") ?? "",
-            gender: UserDefaults.standard.integer(forKey: "gender")
+            phoneNumber: UserDefaults.standard.string(forKey: UserDefaultsKey.phoneNumber.rawValue) ?? "",
+            FCMtoken: UserDefaults.standard.string(forKey: UserDefaultsKey.FCMtoken.rawValue) ?? "",
+            nick: UserDefaults.standard.string(forKey: UserDefaultsKey.nick.rawValue) ?? "",
+            birth: UserDefaults.standard.string(forKey: UserDefaultsKey.birth.rawValue) ?? "",
+            email: UserDefaults.standard.string(forKey: UserDefaultsKey.email.rawValue) ?? "",
+            gender: UserDefaults.standard.integer(forKey: UserDefaultsKey.gender.rawValue)
         )
+        
         guard let url = components?.url else { return }
         AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseData { response in
-            switch response.result {
-            
-            case .success(let data):
-                let json = JSON(data)
-                completion(response.response?.statusCode)
-            case .failure(_):
-                completion(response.response?.statusCode)
-            }
+            guard let statusCode = response.response?.statusCode else { return }
+            guard let status = NetworkStatus(rawValue: statusCode) else { return }
+            completion(status)
         }
     }
     
   
     
-    func myPage(idtoken: String, searchable: Int = 0, ageMin: Int = 0, ageMax: Int = 0, gender: Int = 0, study: String?, completion: @escaping (Int?) -> Void) {
+    func myPage(idtoken: String, searchable: Int = 0, ageMin: Int = 0, ageMax: Int = 0, gender: Int = 0, study: String?, completion: @escaping (NetworkStatus) -> Void) {
         
         let urlString = BaseURL.baseURL + "v1/user/mypage"
         let components = URLComponents(string: urlString)
@@ -114,17 +77,13 @@ class UserAPIManager {
         
         guard let url = components?.url else { return }
         AF.request(url, method: .put, parameters: parameters, headers: headers).validate().responseData { response in
-            switch response.result {
-            case .success(_):
-//                let json = JSON(data)
-                completion(response.response?.statusCode)
-            case .failure(_):
-                completion(response.response?.statusCode)
-            }
+            guard let statusCode = response.response?.statusCode else { return }
+            guard let status = NetworkStatus(rawValue: statusCode) else { return }
+            completion(status)
         }
     }
     
-    func withdraw(idtoken: String, completion: @escaping () -> Void) {
+    func withdraw(idtoken: String, completion: @escaping (NetworkStatus) -> Void) {
         let urlString = BaseURL.baseURL + "v1/user/withdraw"
         let components = URLComponents(string: urlString)
 
@@ -132,15 +91,9 @@ class UserAPIManager {
         guard let url = components?.url else { return }
         
         AF.request(url, method: .post, headers: headers).validate().responseData { response in
-            switch response.result {
-            case .success(_):
-                print("withdraw success")
-                completion()
-            case .failure(let error):
-                print("withdraw fail")
-                print("error", error)
-            }
-            print("withdraw outside closure")
+            guard let statusCode = response.response?.statusCode else { return }
+            guard let status = NetworkStatus(rawValue: statusCode) else { return }
+            completion(status)
         }
     }
   

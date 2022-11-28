@@ -48,7 +48,16 @@ class AuthNumberViewController: BaseViewController {
                 vc.authView.button.isEnabled = bool
             }
             .disposed(by: disposeBag)
-        
+        resendButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                guard let phoneNumber = UserDefaults.standard.string(forKey: UserDefaultsKey.phoneNumber.rawValue) else { return }
+            
+                AuthManager.shared.startAuth(phoneNumber: phoneNumber) { success in
+                    guard success else { return }
+                        
+                }
+            }.disposed(by: disposeBag)
         authView.button.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -62,18 +71,19 @@ class AuthNumberViewController: BaseViewController {
                     UserDefaults.standard.set(fcm, forKey: "FCMtoken")
                 }
                 
-                UserAPIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { data, success, error in
-                    if success { // 로그인 성공
-                        print("login success", success)
+                UserAPIManager.shared.login(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { result in
+                    switch result {
+                    case .success(_):
                         vc.verifySMS()
-                    } else {
-                        switch error?.responseCode {
-                        case 401: // Firebase Token Error
+                        print("login success")
+                    case .failure(let error):
+                        switch error {
+                        case .unauthorized: // Firebase Token Error
                             TokenManager.shared.getIdToken { id in
                                 UserDefaults.standard.set(id, forKey: "idtoken")
                                 vc.verifySMS()
                             }
-                        case 406: // 미가입 회원
+                        case .notAcceptable: // 미가입 회원
                             // 회원가입 로직
                             AuthManager.shared.verifySMS(sms: vc.authView.textField.text!) { success in
                                 guard success else { return }
@@ -81,17 +91,20 @@ class AuthNumberViewController: BaseViewController {
                                     vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
                                 }
                             }
-                        case 500: // Server Error
+                        case .internalServerError: // Server Error
                             Toast.makeToast(view: vc.authView, message: "500 Server Error")
-                        case 501: // Client Error
+                        case .notImplemented: // Client Error
                             Toast.makeToast(view: vc.authView, message: "501 Client Error")
                         default:  // Undefied Error
-                            Toast.makeToast(view: vc.authView, message: "Unidentified Error")
+                            Toast.makeToast(view: vc.authView, message: error.localizedDescription)
                         }
+                        
                     }
+                    
                 }
                 // 회원 아닐때 -> 홈 화면
             }.disposed(by: disposeBag)
+        
     }
     override func setupUI() {
         view.addSubview(resendButton)

@@ -1,5 +1,5 @@
 //
-//  NetworkStatusError.swift
+//  NetworkStatus.swift
 //  SeSACStudy
 //
 //  Created by Kim TaeSoo on 2022/11/28.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum NetworkStatusError: Int, Error {
+enum NetworkStatus: Int, Error {
     case `continue` = 100
     
     /// - switchingProtocols: The requester has asked the server to switch protocols and the server has agreed to do so.

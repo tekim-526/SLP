@@ -97,27 +97,26 @@ class GenderViewController: BaseViewController, AttributeString {
             .bind { vc, _ in
                 UserDefaults.standard.set(vc.gender, forKey: "gender")
                 //POST Method Needed
-                UserAPIManager.shared.signup(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { statuscode in
+                UserAPIManager.shared.signup(idtoken: UserDefaults.standard.string(forKey: "idtoken") ?? "") { status in
                     
-                    guard let statuscode else { return }
-                    switch statuscode {
-                    case 200:
+                    switch status {
+                    case .ok:
                         vc.navigationController?.pushViewController(TabBarController(), animated: true)
-                    case 201:
+                    case .created:
                         Toast.makeToast(view: vc.genderView, message: "이미 가입한 회원입니다")
-                    case 202: // 유효하지 않은 닉네임
+                    case .accepted: // 유효하지 않은 닉네임
                         Toast.makeToast(view: vc.genderView, message: "유효하지않은 닉네임 입니다.")
-                    case 401: // Firebase Token Error
+                    case .unauthorized: // Firebase Token Error
                         TokenManager.shared.getIdToken { id in
                             UserDefaults.standard.set(id, forKey: "idtoken")
                         }
                         Toast.makeToast(view: vc.genderView, message: "다시 시도해보세요.")
-                    case 500: // Server Error
+                    case .internalServerError: // Server Error
                         Toast.makeToast(view: vc.genderView, message: "500 Server Error")
-                    case 501: // Client Error
+                    case .notImplemented: // Client Error
                         Toast.makeToast(view: vc.genderView, message: "501 Client Error")
                     default:  // Undefied Error
-                        Toast.makeToast(view: vc.genderView, message: "Unidentified Error")
+                        Toast.makeToast(view: vc.genderView, message: status.localizedDescription)
                     }
                     
                 }

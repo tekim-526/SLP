@@ -28,7 +28,7 @@ class ManageInfoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setDatasource(reputation: data.reputation, gender: data.gender, searchable: data.searchable, study: data.study, ageMin: CGFloat(data.ageMin), ageMax: CGFloat(data.ageMax))
-
+        
         popupVC.delegate = self
         manageInfoView.collectionView.delegate = self
     }
@@ -117,7 +117,7 @@ class ManageInfoViewController: BaseViewController {
                 return cell
             }
         })
-                
+        
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
         
         snapshot.appendSections([0, 1, 2, 3, 4, 5])
@@ -130,20 +130,23 @@ class ManageInfoViewController: BaseViewController {
         datasource.apply(snapshot)
     }
     @objc func saveBarButtonTapped() {
-        TokenManager.shared.getIdToken { [weak self] id in
-            guard let vc = self else {return}
-            UserAPIManager.shared.myPage(idtoken: id, searchable: vc.data.searchable, ageMin: vc.data.ageMin, ageMax: vc.data.ageMax, gender: vc.data.gender, study: vc.data.study) { responseCode in
-                switch responseCode {
-                case 200:
-                    print("성공")
-                    vc.navigationController?.popViewController(animated: true)
-                default:
-                    Toast.makeToast(view: vc.manageInfoView, message: "오류가 발생했습니다. 다시 시도해주세요")
+        guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
+        UserAPIManager.shared.myPage(idtoken: id, searchable: data.searchable, ageMin: data.ageMin, ageMax: data.ageMax, gender: data.gender, study: data.study) { [weak self] status in
+            switch status {
+            case .ok:
+                self?.navigationController?.popViewController(animated: true)
+            case .unauthorized:
+                TokenManager.shared.getIdToken { id in
+                    UserDefaults.standard.set(id, forKey: "idtoken")
                 }
+                self?.saveBarButtonTapped()
+            case .notAcceptable: print() //가입되지 않은 회원입니다
+            case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+            case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+            default:  Toast.makeToast(view: self?.view, message: "\(status.localizedDescription)")
             }
         }
     }
-    
 }
 extension ManageInfoViewController: UICollectionViewDelegate, SendOpacityProtocol {
     func sendOpacityAndColor(opacity: CGFloat) {

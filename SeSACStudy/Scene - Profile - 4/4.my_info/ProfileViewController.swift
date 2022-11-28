@@ -10,6 +10,7 @@ import UIKit
 class ProfileViewController: BaseViewController {
     let profileView = ProfileView()
     var datasource: UICollectionViewDiffableDataSource<Int, MyInfoList>!
+    
     let list = [
         MyInfoList(title: "공지사항", image: UIImage(named: "notice")),
         MyInfoList(title: "자주 묻는 질문", image: UIImage(named: "faq")),
@@ -62,15 +63,34 @@ class ProfileViewController: BaseViewController {
         snapshot.appendItems(list)
         datasource.apply(snapshot, animatingDifferences: true)
     }
+    
     @objc func headerTapped() {
         let manageInfoVC = ManageInfoViewController()
         view.isUserInteractionEnabled = false
         TokenManager.shared.getIdToken { id in
-            UserAPIManager.shared.login(idtoken: id) { [weak self] data, bool, error in
-                guard let data = data else { return }
-                manageInfoVC.data = data
-                self?.navigationController?.pushViewController(manageInfoVC, animated: true)
-                self?.view.isUserInteractionEnabled = true
+            UserAPIManager.shared.login(idtoken: id) { [weak self] result in
+                switch result {
+                case .success(let data):
+                    manageInfoVC.data = data
+                    self?.navigationController?.pushViewController(manageInfoVC, animated: true)
+                    self?.view.isUserInteractionEnabled = true
+                case .failure(let error):
+                    switch error {
+                    case .unauthorized:
+                        TokenManager.shared.getIdToken { id in
+                            UserDefaults.standard.set(id, forKey: "idtoken")
+                            self?.viewDidLoad()
+                        }
+                    case .notAcceptable:
+                        Toast.makeToast(view: self?.view, message: "유효하지 않은 접근입니다")
+                    case .internalServerError:
+                        Toast.makeToast(view: self?.view, message: "500 Server Error")
+                    case .notImplemented:
+                        Toast.makeToast(view: self?.view, message: "501 Client Error")
+                    default:
+                        Toast.makeToast(view: self?.view, message: "\(error.localizedDescription)")
+                    }
+                }
             }
         }
     }
