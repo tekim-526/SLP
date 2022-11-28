@@ -34,4 +34,14 @@ class BaseViewController: UIViewController {
     @objc func backButtonTapped() {
         self.navigationController?.popToViewController(self, animated: true)
     }
+    func changeSceneToMain(vc: UIViewController) {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let vc = vc
+        let nav = UINavigationController(rootViewController: vc)
+        
+        sceneDelegate?.window?.rootViewController = nav
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
 }

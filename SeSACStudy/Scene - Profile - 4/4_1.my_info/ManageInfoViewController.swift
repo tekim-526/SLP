@@ -140,7 +140,7 @@ class ManageInfoViewController: BaseViewController {
                     UserDefaults.standard.set(id, forKey: "idtoken")
                 }
                 self?.saveBarButtonTapped()
-            case .notAcceptable: print() //가입되지 않은 회원입니다
+            case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
             case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
             case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
             default:  Toast.makeToast(view: self?.view, message: "\(status.localizedDescription)")

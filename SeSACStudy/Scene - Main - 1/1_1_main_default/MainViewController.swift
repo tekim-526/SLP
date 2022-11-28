@@ -70,17 +70,20 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         mapView.map.setRegion(region, animated: false)
     }
     
-    func mapViewRefresh(center: CLLocationCoordinate2D, completion: @escaping (GetNearPeopleData?, Int?) -> Void) {
-        TokenManager.shared.getIdToken { id in
-            QueueAPIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] data ,statusCode  in
-
-                guard let vc = self, let data = data else { return }
+    func mapViewRefresh(center: CLLocationCoordinate2D, completion: @escaping (GetNearPeopleData?, NetworkStatus?) -> Void) {
+        guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
+        QueueAPIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] result  in
+            guard let vc = self else { return }
+            switch result {
+            case .success(let data):
                 vc.mapView.map.removeAnnotations(vc.mapView.map.annotations)
                 for i in data.fromQueueDB.indices {
                     let location = CLLocationCoordinate2D(latitude: data.fromQueueDB[i].lat, longitude: data.fromQueueDB[i].long)
                     vc.addCustomPin(sesac_image: data.fromQueueDB[i].sesac + 1, coordinate: location)
                 }
-                completion(data, statusCode)
+                completion(data, nil)
+            case .failure(let error):
+                completion(nil, error)
             }
         }
     }
@@ -131,13 +134,26 @@ extension MainViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         mapViewRefresh(center: mapView.centerCoordinate) { [weak self] data, status in
             guard let status else { return }
-            if status != 200 {
-                Toast.makeToast(view: self?.view, message: "네크워크가 불안정합니다")
+            switch status {
+            case .ok:
+                print("break")
+                break
+            case .unauthorized:
+                TokenManager.shared.getIdToken { [weak self] id in
+                    UserDefaults.standard.set(id, forKey: UserDefaultsKey.idtoken.rawValue)
+                    self?.mapView(mapView, regionDidChangeAnimated: animated)
+                }
+            case .notAcceptable:
+                self?.changeSceneToMain(vc: OnBoardingViewController())
+            case .internalServerError:
+                Toast.makeToast(view: self?.view, message: "500 Server Error")
+            case .notImplemented:
+                Toast.makeToast(view: self?.view, message: "501 Client Error")
+            default:
+                Toast.makeToast(view: self?.view, message: status.localizedDescription)
             }
         }
-        
         pinLocation = mapView.centerCoordinate
-        print(pinLocation)
         locationManager.stopUpdatingLocation()
     }
 }

@@ -82,6 +82,7 @@ class ProfileViewController: BaseViewController {
                             self?.viewDidLoad()
                         }
                     case .notAcceptable:
+                        self?.changeSceneToMain(vc: OnBoardingViewController())
                         Toast.makeToast(view: self?.view, message: "유효하지 않은 접근입니다")
                     case .internalServerError:
                         Toast.makeToast(view: self?.view, message: "500 Server Error")
