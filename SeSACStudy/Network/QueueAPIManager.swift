@@ -19,9 +19,13 @@ enum MyStudy: String {
 class QueueAPIManager {
    
     static let shared = QueueAPIManager()
-    private init() {}
+    private let idtoken: String
+    private init() {
+        let idtoken = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) ?? ""
+        self.idtoken = idtoken
+    }
     
-    func searchNearPeople(idtoken: String, lat: Double, long: Double, completion: @escaping (Result<GetNearPeopleData, NetworkStatus>) -> Void) {
+    func searchNearPeople(lat: Double, long: Double, completion: @escaping (Result<GetNearPeopleData, NetworkStatus>) -> Void) {
         let urlString = BaseURL.baseURL + "v1/queue/search"
         let components = URLComponents(string: urlString)
 
@@ -48,10 +52,11 @@ class QueueAPIManager {
         }
     }
     
-    func searchNearPeopleWithMyStudy(idtoken: String, lat: Double, long: Double, studylist: [String], completion: @escaping (NetworkStatus) -> Void) {
+    func searchNearPeopleWithMyStudy(lat: Double, long: Double, studylist: [String], completion: @escaping (NetworkStatus) -> Void) {
         let url = BaseURL.baseURL + "v1/queue"
 
         let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
+
         let encoder = URLEncoding(arrayEncoding: .noBrackets)
        
         let parameters: [String: Any] = [
@@ -67,9 +72,31 @@ class QueueAPIManager {
         }
     }
     
+    func myQueueState(completion: @escaping (Result<MyQueueState, NetworkStatus>) -> Void) {
+        let url = BaseURL.baseURL + "v1/queue/myQueueState"
+        let headers: HTTPHeaders = ["idtoken": idtoken]
+        AF.request(url, method: .get, headers: headers).response { response in
+            switch response.result {
+            case .success(let result):
+                guard let result else {return}
+                let decoder = JSONDecoder()
+                do {
+                    let data = try decoder.decode(MyQueueState.self, from: result)
+                    completion(.success(data))
+                } catch {
+                    print(error)
+                }
+            case .failure(_):
+                guard let statusCode = response.response?.statusCode else { return }
+                guard let status = NetworkStatus(rawValue: statusCode) else { return }
+                completion(.failure(status))
+            }
+            
+        }
+    }
+    
     func myStudy(idtoken: String, method: MyStudy = .studyrequest, otheruid: String, completion: @escaping (NetworkStatus) -> Void) {
         let url = BaseURL.baseURL + "v1/queue/\(method.rawValue)"
-        print("url :", url)
         let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
        
         let parameters = RequestStudy(otheruid: otheruid)

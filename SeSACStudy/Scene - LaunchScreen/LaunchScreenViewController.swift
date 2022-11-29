@@ -24,11 +24,12 @@ class LaunchScreenViewController: BaseViewController {
         UserAPIManager.shared.login(idtoken: id) { [weak self] result in
             
             switch result {
-            case .success(_):
+            case .success(let data):
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 let vc = TabBarController()
-//                let vc = NearRequsetViewController()
+//                let vc = ChatViewController()
+                print("😀My uid", data.uid)
                 sceneDelegate?.window?.rootViewController = vc
                 sceneDelegate?.window?.makeKeyAndVisible()
             case .failure(let error):

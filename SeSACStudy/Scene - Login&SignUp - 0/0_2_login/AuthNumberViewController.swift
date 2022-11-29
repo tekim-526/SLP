@@ -91,12 +91,9 @@ class AuthNumberViewController: BaseViewController {
                                     vc.navigationController?.pushViewController(vc.nickNameVC, animated: true)
                                 }
                             }
-                        case .internalServerError: // Server Error
-                            Toast.makeToast(view: vc.authView, message: "500 Server Error")
-                        case .notImplemented: // Client Error
-                            Toast.makeToast(view: vc.authView, message: "501 Client Error")
-                        default:  // Undefied Error
-                            Toast.makeToast(view: vc.authView, message: error.localizedDescription)
+                        case .internalServerError:  Toast.makeToast(view: vc.authView, message: "500 Server Error")
+                        case .notImplemented: Toast.makeToast(view: vc.authView, message: "501 Client Error")
+                        default: Toast.makeToast(view: vc.authView, message: error.localizedDescription)
                         }
                         
                     }

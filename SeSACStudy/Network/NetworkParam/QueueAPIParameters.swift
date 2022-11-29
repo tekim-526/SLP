@@ -21,3 +21,4 @@ struct NearPeopleWithStudy: Codable {
 struct RequestStudy: Codable {
     let otheruid: String
 }
+

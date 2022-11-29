@@ -38,7 +38,6 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
-        mapView.button.isUserInteractionEnabled = true
     }
     
     @objc func buttonTapped() {
@@ -47,17 +46,26 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         
         guard let pinLocation else { return }
         
-        mapViewRefresh(center: pinLocation) { [weak self] data, status in
-            guard let data = data else {
-                Toast.makeToast(view: self?.view, message: "데이터가 비어있어요")
-                return
+        mapViewRefresh(center: pinLocation) { [weak self] response in
+            switch response {
+            case .success(let data):
+                writeStudyVC.peopleData = data
+                writeStudyVC.long = pinLocation.longitude
+                writeStudyVC.lat = pinLocation.latitude
+                self?.mapView.button.isUserInteractionEnabled = false
+                Toast.makeToast(view: self?.view, message: "데이터를 받아오는중이에요")
+                self?.navigationController?.pushViewController(writeStudyVC, animated: true)
+            case .failure(let status):
+                switch status {
+                case .unauthorized: TokenManager.shared.getIdToken { _ in self?.buttonTapped() }
+                    
+                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
+                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+                default: Toast.makeToast(view: self?.view, message: "다시 시도 해보세요")
+                }
             }
-            writeStudyVC.peopleData = data
-            writeStudyVC.long = pinLocation.longitude
-            writeStudyVC.lat = pinLocation.latitude
-            self?.mapView.button.isUserInteractionEnabled = false
-            Toast.makeToast(view: self?.view, message: "데이터를 받아오는중이에요")
-            self?.navigationController?.pushViewController(writeStudyVC, animated: true)
+            self?.mapView.button.isUserInteractionEnabled = true
         }
     }
     
@@ -70,20 +78,20 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         mapView.map.setRegion(region, animated: false)
     }
     
-    func mapViewRefresh(center: CLLocationCoordinate2D, completion: @escaping (GetNearPeopleData?, NetworkStatus?) -> Void) {
-        guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
-        QueueAPIManager.shared.searchNearPeople(idtoken: id, lat: center.latitude, long: center.longitude) { [weak self] result  in
+    func mapViewRefresh(center: CLLocationCoordinate2D, completion: @escaping (Result<GetNearPeopleData, NetworkStatus>) -> Void) {
+        QueueAPIManager.shared.searchNearPeople(lat: center.latitude, long: center.longitude) { [weak self] result  in
             guard let vc = self else { return }
             switch result {
             case .success(let data):
                 vc.mapView.map.removeAnnotations(vc.mapView.map.annotations)
+                dump(data.fromQueueDB)
                 for i in data.fromQueueDB.indices {
                     let location = CLLocationCoordinate2D(latitude: data.fromQueueDB[i].lat, longitude: data.fromQueueDB[i].long)
                     vc.addCustomPin(sesac_image: data.fromQueueDB[i].sesac + 1, coordinate: location)
                 }
-                completion(data, nil)
-            case .failure(let error):
-                completion(nil, error)
+                completion(.success(data))
+            case .failure(let status):
+                completion(.failure(status))
             }
         }
     }
@@ -132,25 +140,23 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
 
 extension MainViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        mapViewRefresh(center: mapView.centerCoordinate) { [weak self] data, status in
-            guard let status else { return }
-            switch status {
-            case .ok:
+        mapViewRefresh(center: mapView.centerCoordinate) { [weak self] response in
+            switch response {
+            case .success(_):
                 print("break")
                 break
-            case .unauthorized:
-                TokenManager.shared.getIdToken { [weak self] id in
-                    UserDefaults.standard.set(id, forKey: UserDefaultsKey.idtoken.rawValue)
-                    self?.mapView(mapView, regionDidChangeAnimated: animated)
+            case .failure(let status):
+                switch status {
+                case .unauthorized:
+                    TokenManager.shared.getIdToken { [weak self] id in
+                        UserDefaults.standard.set(id, forKey: UserDefaultsKey.idtoken.rawValue)
+                        self?.mapView(mapView, regionDidChangeAnimated: animated)
+                    }
+                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
+                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+                default: Toast.makeToast(view: self?.view, message: status.localizedDescription)
                 }
-            case .notAcceptable:
-                self?.changeSceneToMain(vc: OnBoardingViewController())
-            case .internalServerError:
-                Toast.makeToast(view: self?.view, message: "500 Server Error")
-            case .notImplemented:
-                Toast.makeToast(view: self?.view, message: "501 Client Error")
-            default:
-                Toast.makeToast(view: self?.view, message: status.localizedDescription)
             }
         }
         pinLocation = mapView.centerCoordinate

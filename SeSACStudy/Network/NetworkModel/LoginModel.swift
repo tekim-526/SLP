@@ -19,6 +19,7 @@ struct MyInFoData: Codable {
     var searchable: Int
     var ageMin: Int
     var ageMax: Int
+    var uid: String
 }
 
 

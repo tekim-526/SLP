@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NearRequsetViewController: BaseViewController {
+class RequsetAndAcceptViewController: BaseViewController {
     var peopleData: GetNearPeopleData!
     
     private let segmentedControl: UISegmentedControl = {
@@ -18,15 +18,15 @@ class NearRequsetViewController: BaseViewController {
         return seg
     }()
     
-    private lazy var vc1: NearUserViewController = {
-        let vc = NearUserViewController()
+    private lazy var vc1: RequestViewController = {
+        let vc = RequestViewController()
         vc.isRequest = false
         vc.peopleData = peopleData
         return vc
     }()
     
-    private lazy var vc2: ReceivedRequestViewController = {
-        let vc = ReceivedRequestViewController()
+    private lazy var vc2: AcceptViewController = {
+        let vc = AcceptViewController()
         vc.isRequest = true
         vc.peopleData = peopleData
         return vc
@@ -90,7 +90,7 @@ class NearRequsetViewController: BaseViewController {
 
 }
 
-extension NearRequsetViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+extension RequsetAndAcceptViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard
             let index = self.dataViewControllers.firstIndex(of: viewController),

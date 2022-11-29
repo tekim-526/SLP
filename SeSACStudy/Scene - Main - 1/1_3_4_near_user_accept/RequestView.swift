@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class NearUserView: BaseView {
+class RequestView: BaseView {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     let imageView: UIImageView = {

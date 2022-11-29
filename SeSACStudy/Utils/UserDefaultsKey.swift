@@ -17,4 +17,6 @@ enum UserDefaultsKey: String {
     case email
     case gender
     case OnboardingStartButtonTapped
+    
+    case uid
 }

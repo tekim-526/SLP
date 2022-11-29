@@ -133,11 +133,26 @@ class WriteStudyViewController: BaseViewController {
             return
         }
         TokenManager.shared.getIdToken { token in
-            QueueAPIManager.shared.searchNearPeopleWithMyStudy(idtoken: token, lat: self.lat, long: self.long, studylist: studylist) { statuscode in
-                let nearRequeestVC = NearRequsetViewController()
-                nearRequeestVC.peopleData = self.peopleData
-                self.navigationController?.pushViewController(nearRequeestVC, animated: true)
-                print(statuscode ?? 0)
+            QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.long, studylist: studylist) { [weak self] statuscode in
+                
+                switch statuscode {
+                case .ok:
+                    let nearRequeestVC = RequsetAndAcceptViewController()
+                    nearRequeestVC.peopleData = self?.peopleData
+                    self?.navigationController?.pushViewController(nearRequeestVC, animated: true)
+                case .created: Toast.makeToast(view: self?.view, message: "신고가 누적되어 이용하실 수 없습니다")
+                case .nonAuthoritativeInformation: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다")
+                case .noContent: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다")
+                case .resetContent: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다")
+                case .unauthorized: TokenManager.shared.getIdToken { _ in Toast.makeToast(view: self?.view, message: "다시 시도 해주세요")}
+                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
+                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+                default: Toast.makeToast(view: self?.view, message: "다시 시도 해보세요")
+                }
+                
+                
+                
             }
         }
         

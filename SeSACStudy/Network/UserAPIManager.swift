@@ -25,9 +25,11 @@ class UserAPIManager {
         AF.request(urlString, method: .get, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
+                
                 let decoder = JSONDecoder()
                 do {
                     let data = try decoder.decode(MyInFoData.self, from: data)
+                    UserDefaults.standard.set(data.uid, forKey: UserDefaultsKey.uid.rawValue)
                     completion(.success(data))
                 } catch {
                     print(error)

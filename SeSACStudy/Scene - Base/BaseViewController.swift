@@ -29,7 +29,6 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .gray3
         navigationItem.rightBarButtonItem = rightBarButtonItem
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        
     }
     @objc func backButtonTapped() {
         self.navigationController?.popToViewController(self, animated: true)

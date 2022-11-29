@@ -7,10 +7,10 @@
 
 import UIKit
 
-class BaseNearUserViewController: BaseViewController {
+class BaseRequestAndAccpetViewController: BaseViewController {
    
     var isRequest: Bool!
-    let nearUserView = NearUserView()
+    let nearUserView = RequestView()
     
     var peopleData: GetNearPeopleData!
     
@@ -87,9 +87,9 @@ class BaseNearUserViewController: BaseViewController {
     }
     
     func setInsideCellCollectionViewDatasource(cell: NearUserCell, item: Int) {
-        let cellReg = UICollectionView.CellRegistration<WriteStudyCell, String> {  cell, indexPath, itemIdentifier in
+        let cellReg = UICollectionView.CellRegistration<WriteStudyCell, String> { cell, indexPath, itemIdentifier in
         }
-        self.cellDatasource = UICollectionViewDiffableDataSource(collectionView: cell.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
+        cellDatasource = UICollectionViewDiffableDataSource(collectionView: cell.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellReg, for: indexPath, item: itemIdentifier)
             cell.button.setAttributedTitle(self?.makeAttributeTitle(title: itemIdentifier), for: .normal)
             cell.button.layer.borderColor = UIColor.gray2.cgColor
@@ -130,7 +130,7 @@ class BaseNearUserViewController: BaseViewController {
     
 }
 
-extension BaseNearUserViewController: UICollectionViewDelegate, SendOpacityProtocol {
+extension BaseRequestAndAccpetViewController: UICollectionViewDelegate, SendOpacityProtocol {
     func sendOpacityAndColor(opacity: CGFloat) {
         nearUserView.alpha = opacity
     }
