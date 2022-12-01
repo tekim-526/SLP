@@ -139,9 +139,8 @@ class AuthNumberViewController: BaseViewController {
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         
         let vc = TabBarController()
-        let nav = UINavigationController(rootViewController: vc)
         
-        sceneDelegate?.window?.rootViewController = nav
+        sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKeyAndVisible()
     }
     

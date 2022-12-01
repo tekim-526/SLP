@@ -54,6 +54,7 @@ class WriteStudyView: BaseView {
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                       heightDimension: .absolute(60.0))
+        
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "header", alignment: .top)
         
         let section = NSCollectionLayoutSection(group: group)

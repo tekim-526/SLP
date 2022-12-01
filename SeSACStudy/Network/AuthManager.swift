@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseAuth
 
+// 리뷰 : - 싱글톤 패턴으로만 구성하는게 적합할까? 싱글톤 패턴의 목적에 대해서 생각해보자
+
 class AuthManager {
     static let shared = AuthManager()
     private init() {}

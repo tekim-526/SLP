@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class WriteStudyViewController: BaseViewController {
     let writeView = WriteStudyView()
     
@@ -32,10 +31,10 @@ class WriteStudyViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       
+        
         self.tabBarController?.tabBar.isHidden = true
     }
-    
+   
     override func setupUI() {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 28, height: 0))
         let keyboardHeaderView = KeyboardHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 48))
@@ -44,7 +43,6 @@ class WriteStudyViewController: BaseViewController {
         searchBar.delegate = self
         keyboardHeaderView.button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         writeView.button.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
-        // MARK: - searchBar 키보드 상단에 버튼 추가 해야함
     
         makeNavigationUI(rightBarButtonItem: UIBarButtonItem(customView: searchBar))
         navigationController?.navigationBar.isHidden = false
@@ -137,7 +135,7 @@ class WriteStudyViewController: BaseViewController {
                 
                 switch statuscode {
                 case .ok:
-                    let nearRequeestVC = RequsetAndAcceptViewController()
+                    let nearRequeestVC = RequestAndAcceptViewController()
                     nearRequeestVC.peopleData = self?.peopleData
                     self?.navigationController?.pushViewController(nearRequeestVC, animated: true)
                 case .created: Toast.makeToast(view: self?.view, message: "신고가 누적되어 이용하실 수 없습니다")

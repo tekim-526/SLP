@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RequsetAndAcceptViewController: BaseViewController {
+class RequestAndAcceptViewController: BaseViewController {
     var peopleData: GetNearPeopleData!
     
     private let segmentedControl: UISegmentedControl = {
@@ -61,7 +61,8 @@ class RequsetAndAcceptViewController: BaseViewController {
         self.segmentedControl.selectedSegmentIndex = 0
         self.segmentedControl.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
         self.changeValue(control: self.segmentedControl)
-
+        let stopFindBarButton = UIBarButtonItem(title: "찾기 중단", style: .plain, target: self, action: #selector(stopFindBarButtonTapped))
+        makeNavigationUI(title: "새싹 찾기", rightBarButtonItem: stopFindBarButton)
 
     }
     override func setupUI() {
@@ -87,10 +88,25 @@ class RequsetAndAcceptViewController: BaseViewController {
         self.currentPage = control.selectedSegmentIndex
       }
     
+    @objc func stopFindBarButtonTapped() {
+        QueueAPIManager.shared.stopFind { [weak self] status in
+            switch status {
+            case .ok: self?.changeSceneToMain(vc: TabBarController(), isNav: false)
+            case .created:
+                Toast.makeToast(view: self?.view, message: "누군가와 스터디를 함께하기로 약속하셨어요!")
+                //mark move to chat
+            case .unauthorized: TokenManager.shared.getIdToken { _ in self?.stopFindBarButtonTapped()}
+            case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
+            case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+            case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+            default: Toast.makeToast(view: self?.view, message: status.localizedDescription)
+            }
+        }
+    }
 
 }
 
-extension RequsetAndAcceptViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+extension RequestAndAcceptViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard
             let index = self.dataViewControllers.firstIndex(of: viewController),

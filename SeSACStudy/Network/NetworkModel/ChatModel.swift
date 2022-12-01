@@ -13,7 +13,7 @@ struct ChatData: Codable {
 }
 
 // MARK: - Payload
-struct Payload: Codable {
+struct Payload: Codable, Hashable {
     let id: String
     let to, from, chat: String
     let createdAt: String

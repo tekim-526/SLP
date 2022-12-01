@@ -53,11 +53,9 @@ class ChatAPIManager {
                 guard let result else { return }
                 do {
                     let data = try decoder.decode(ChatData.self, from: result)
-                    print(data)
-                    SocketIOManager.shared.establishConnection()
                     completion(.success(data))
                 } catch {
-                    print(error.localizedDescription)
+                    print("chat decoding fail :", error.localizedDescription)
                 }
             case .failure(_):
                 guard let statusCode = response.response?.statusCode else { return }

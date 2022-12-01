@@ -34,7 +34,7 @@ class QueueAPIManager {
         let parameters = NearPeople(lat: lat, long: long)
         guard let url = components?.url else { return }
         
-        AF.request(url, method: .post, parameters: parameters, headers: headers).validate().responseData { response in
+        AF.request(url, method: .post, parameters: parameters, headers: headers).responseData { response in
             switch response.result {
             case .success(let data):
                 let decoder = JSONDecoder()
@@ -48,14 +48,16 @@ class QueueAPIManager {
                 guard let statusCode = response.response?.statusCode else { return }
                 guard let status = NetworkStatus(rawValue: statusCode) else { return }
                 completion(.failure(status))
+                
             }
         }
+        
     }
     
     func searchNearPeopleWithMyStudy(lat: Double, long: Double, studylist: [String], completion: @escaping (NetworkStatus) -> Void) {
         let url = BaseURL.baseURL + "v1/queue"
 
-        let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
+        let headers: HTTPHeaders = ["idtoken": idtoken]
 
         let encoder = URLEncoding(arrayEncoding: .noBrackets)
        
@@ -72,10 +74,21 @@ class QueueAPIManager {
         }
     }
     
+    func stopFind(completion: @escaping (NetworkStatus) -> Void) {
+        let url = BaseURL.baseURL + "v1/queue"
+
+        let headers: HTTPHeaders = ["idtoken": idtoken]
+        AF.request(url, method: .delete, headers: headers).validate().response { response in
+            guard let statusCode = response.response?.statusCode else { return }
+            guard let status = NetworkStatus(rawValue: statusCode) else { return }
+            completion(status)
+        }
+    }
+    
     func myQueueState(completion: @escaping (Result<MyQueueState, NetworkStatus>) -> Void) {
         let url = BaseURL.baseURL + "v1/queue/myQueueState"
         let headers: HTTPHeaders = ["idtoken": idtoken]
-        AF.request(url, method: .get, headers: headers).response { response in
+        AF.request(url, method: .get, headers: headers).validate(statusCode: 200...200).response { response in
             switch response.result {
             case .success(let result):
                 guard let result else {return}
@@ -84,6 +97,7 @@ class QueueAPIManager {
                     let data = try decoder.decode(MyQueueState.self, from: result)
                     completion(.success(data))
                 } catch {
+                    print("errorCatched")
                     print(error)
                 }
             case .failure(_):
@@ -95,9 +109,9 @@ class QueueAPIManager {
         }
     }
     
-    func myStudy(idtoken: String, method: MyStudy = .studyrequest, otheruid: String, completion: @escaping (NetworkStatus) -> Void) {
+    func myStudy(idtoken: String = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) ?? "", method: MyStudy = .studyrequest, otheruid: String, completion: @escaping (NetworkStatus) -> Void) {
         let url = BaseURL.baseURL + "v1/queue/\(method.rawValue)"
-        let headers: HTTPHeaders = ["accept": "application/json", "idtoken": idtoken]
+        let headers: HTTPHeaders = ["idtoken": idtoken]
        
         let parameters = RequestStudy(otheruid: otheruid)
                 

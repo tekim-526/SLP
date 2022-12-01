@@ -24,12 +24,12 @@ class LaunchScreenViewController: BaseViewController {
         UserAPIManager.shared.login(idtoken: id) { [weak self] result in
             
             switch result {
-            case .success(let data):
+            case .success(_):
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 let vc = TabBarController()
 //                let vc = ChatViewController()
-                print("😀My uid", data.uid)
+//                vc.otheruid = "I8926rjKaTTzkqCE8PSXZ34YKjP2"
                 sceneDelegate?.window?.rootViewController = vc
                 sceneDelegate?.window?.makeKeyAndVisible()
             case .failure(let error):
@@ -49,7 +49,6 @@ class LaunchScreenViewController: BaseViewController {
                     Toast.makeToast(view: self?.view, message: "\(error.localizedDescription)")
                 }
             }
-
         }
     }
     

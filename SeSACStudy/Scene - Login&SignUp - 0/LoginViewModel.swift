@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 class LoginViewModel {
     func phoneValid(number: String) -> Bool {
         let pattern = "^01([0-9])-?([0-9]{3,4})-?([0-9]{4})$"

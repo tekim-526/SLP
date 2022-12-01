@@ -8,26 +8,13 @@
 import UIKit
 
 class AcceptViewController: BaseRequestAndAccpetViewController {
-    let button: UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .black
-        
-        return button
-    }()
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(100)
-        }
-        print("peopleData.fromQueueDBRequested", peopleData.fromQueueDBRequested)
-        button.addTarget(self, action: #selector(insideImageButtonTapped), for: .touchUpInside)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(#function)
         checkDataisEmpty(bool: peopleData.fromQueueDBRequested.isEmpty)
         if peopleData.fromQueueDBRequested.isEmpty { return }
         setDatasource(personData: peopleData.fromQueueDBRequested)
@@ -36,13 +23,30 @@ class AcceptViewController: BaseRequestAndAccpetViewController {
     override func insideImageButtonTapped(_ sender: UIButton) {
         guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
         print("sender.tag :", sender.tag)
-//        let otheruid = peopleData.fromQueueDBRequested[sender.tag].uid
-        QueueAPIManager.shared.myStudy(idtoken: id, method: .studyaccept, otheruid: "I8926rjKaTTzkqCE8PSXZ34YKjP2") { status in
-            print("status :", status.rawValue, status.localizedDescription)
+        let otheruid = peopleData.fromQueueDBRequested[sender.tag].uid
+        QueueAPIManager.shared.myStudy(idtoken: id, method: .studyaccept, otheruid: otheruid) { [weak self] status in
+            switch status {
+            case .ok: // 채팅창으로 이동 원래는 팝업띄우고 해야함
+                self?.presentChatView()
+            case .created: Toast.makeToast(view: self?.view, message: "상대방이 이미 다른 새싹과 스터디를 함께 하는 중입니다")
+            case .accepted: Toast.makeToast(view: self?.view, message: "상대방이 스터디 찾기를 그만두었습니다")
+            case .nonAuthoritativeInformation: Toast.makeToast(view: self?.view, message: "앗! 누군가가 나의 스터디를 수락하였어요!")
+            default:
+                self?.handleError(status: status)
+                
+            }
         }
-        let vc = ChatViewController()
-        vc.otheruid = "I8926rjKaTTzkqCE8PSXZ34YKjP2"
-        present(vc, animated: true)
     }
-    
+    func presentChatView() {
+        QueueAPIManager.shared.myQueueState { [weak self] response in
+            switch response {
+            case .success(let success):
+                let vc = ChatViewController()
+                vc.myQueueState = success
+                self?.present(vc, animated: true)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
 }

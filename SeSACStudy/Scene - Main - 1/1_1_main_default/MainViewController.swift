@@ -11,43 +11,69 @@ import CoreLocation
 import MapKit
 import SnapKit
 
+// 리뷰 : - 로케이션 관리하는 매니저로 만들어보자 - APIManager 처럼
+
 class MainViewController: BaseViewController, CLLocationManagerDelegate {
     var mapView = MainView()
     
-    var locationManager = CLLocationManager()
-    var authStatus: CLAuthorizationStatus!
-    
     var pinLocation: CLLocationCoordinate2D?
+    
+    var locationManager = LocationManager()
+    var myQueueState: MyQueueState!
+    var matchedNick: String!
+    var timer: Timer!
     override func loadView() {
         view = mapView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mapView.map.delegate = self
-        locationManager.delegate = self
+        locationManager.locationManager.delegate = self
+
+        locationManager.checkDeviceLocationAuth {
+            self.showAlert(title: "기기 위치권한 설정이 되어있지 않습니다.", message: "설정 -> 개인정보 보호 및 보안 -> 위치서비스로 가셔서 권한을 허용해 주세요.")
+        }
         
-        checkDeviceLocationAuth()
-        mapView.button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
+        mapView.button.addTarget(self, action: #selector(stableButtonTapped), for: .touchUpInside)
+        mapView.locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
         mapView.map.showsUserLocation = true
         mapView.map.setUserTrackingMode(.follow, animated: true)
         mapView.map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
+        makeNavigationUI()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
+        checkMyState()
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
+        mapView.button.isUserInteractionEnabled = true
     }
     
-    @objc func buttonTapped() {
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer.invalidate()
+        navigationController?.navigationBar.isHidden = false
+    }
+    
+    @objc func stateCheck() {
+        checkMyState()
+    }
+    
+    @objc func locationButtonTapped() {
+        let vc = ChatViewController()
+//        vc.otheruid =
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func stableButtonTapped() {
         let writeStudyVC = WriteStudyViewController()
-        
         guard let pinLocation else { return }
         
-        mapViewRefresh(center: pinLocation) { [weak self] response in
-            switch response {
+        QueueAPIManager.shared.searchNearPeople(lat: pinLocation.latitude, long: pinLocation.longitude) { [weak self] result  in
+            switch result {
             case .success(let data):
                 writeStudyVC.peopleData = data
                 writeStudyVC.long = pinLocation.longitude
@@ -57,22 +83,92 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
                 self?.navigationController?.pushViewController(writeStudyVC, animated: true)
             case .failure(let status):
                 switch status {
-                case .unauthorized: TokenManager.shared.getIdToken { _ in self?.buttonTapped() }
-                    
-                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
-                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
-                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
-                default: Toast.makeToast(view: self?.view, message: "다시 시도 해보세요")
+                case .unauthorized: TokenManager.shared.getIdToken { _ in self?.stableButtonTapped() }
+                default:
+                    self?.handleError(status: status)
+                }
+            }
+            
+        }
+    }
+
+    @objc func matchingButtonTapped() {
+        let vc = RequestAndAcceptViewController()
+        
+        guard let pinLocation else { return }
+        
+        QueueAPIManager.shared.searchNearPeople(lat: pinLocation.latitude, long: pinLocation.longitude) { [weak self] result  in
+            switch result {
+            case .success(let data):
+                vc.peopleData = data
+                self?.mapView.button.isUserInteractionEnabled = false
+                Toast.makeToast(view: self?.view, message: "데이터를 받아오는중이에요")
+                self?.navigationController?.pushViewController(vc, animated: true)
+            case .failure(let status):
+                switch status {
+                case .unauthorized: TokenManager.shared.getIdToken { _ in self?.stableButtonTapped() }
+                default:
+                    self?.handleError(status: status)
                 }
             }
             self?.mapView.button.isUserInteractionEnabled = true
         }
     }
+    @objc func matchedButtonTapped() {
+        let vc = ChatViewController()
+        guard myQueueState != nil else { return }
+        vc.myQueueState = myQueueState
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
+    func checkMyState() {
+        QueueAPIManager.shared.myQueueState { [weak self] response in
+            switch response {
+            case .success(let data):
+                
+                self?.setButton(myStatus: MyQueueStatus(rawValue: data.matched) ?? .stable)
+                self?.myQueueState = data
+                
+                switch data.matched {
+                case MyQueueStatus.matched.rawValue:
+                    switch data.dodged {
+                    case MyQueueStatus.matched.rawValue:
+                        QueueAPIManager.shared.myStudy(method: .dodge, otheruid: data.matchedUid) { status in }
+                    default:
+                        Toast.makeToast(view: self?.view, message: "\(data.matchedNick)님과 매칭되셨습니다.")
+                    }
+                default:
+                    break
+                }
+            case .failure(let status):
+                switch status {
+                case .created:
+                    self?.mapView.button.setImage(UIImage(named: "Property 1=default"), for: .normal)
+                    self?.setButton(myStatus: .stable)
+                case .unauthorized: TokenManager.shared.getIdToken { _ in self?.checkMyState()}
+                default:
+                    self?.handleError(status: status)
+                }
+            }
+        }
+    }
     
+    func setButton(myStatus: MyQueueStatus) {
+        let buttonImage = myStatus == .stable ? UIImage(named: "Property 1=default") : myStatus == .matched ? UIImage(named: "Property 1=matched") : UIImage(named: "Property 1=matching")
+        mapView.button.removeTarget(nil, action: nil, for: .allEvents)
+        switch myStatus {
+        case .stable:
+            mapView.button.addTarget(self, action: #selector(stableButtonTapped), for: .touchUpInside)
+        case .matched:
+            mapView.button.addTarget(self, action: #selector(matchedButtonTapped), for: .touchUpInside)
+        case .matching:
+            mapView.button.addTarget(self, action: #selector(matchingButtonTapped), for: .touchUpInside)
+        }
+        
+        mapView.button.setImage(buttonImage, for: .normal)
+    }
     
     // MARK: - Methods
-    
     func mapViewSetUp(center: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 300, longitudinalMeters: 300)
         mapView.map.setRegion(region, animated: false)
@@ -84,7 +180,6 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
             switch result {
             case .success(let data):
                 vc.mapView.map.removeAnnotations(vc.mapView.map.annotations)
-                dump(data.fromQueueDB)
                 for i in data.fromQueueDB.indices {
                     let location = CLLocationCoordinate2D(latitude: data.fromQueueDB[i].lat, longitude: data.fromQueueDB[i].long)
                     vc.addCustomPin(sesac_image: data.fromQueueDB[i].sesac + 1, coordinate: location)
@@ -95,46 +190,12 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
             }
         }
     }
-    
-    
+
     func addCustomPin(sesac_image: Int, coordinate: CLLocationCoordinate2D) {
        let pin = CustomAnnotation(sesac_image: sesac_image, coordinate: coordinate)
         mapView.map.addAnnotation(pin)
     }
     
-    func checkDeviceLocationAuth() {
-        DispatchQueue.global().async {
-            if CLLocationManager.locationServicesEnabled() {
-                if #available(iOS 14.0, *) {
-                    self.authStatus = self.locationManager.authorizationStatus
-                } else {
-                    self.authStatus = CLLocationManager.authorizationStatus()
-                }
-                self.checkAppLocationAuth(authStatus: self.authStatus)
-            } else {
-                self.showAlert(title: "기기 위치권한 설정이 되어있지 않습니다.", message: "설정 -> 개인정보 보호 및 보안 -> 위치서비스로 가셔서 권한을 허용해 주세요.")
-            }
-        }
-    }
-
-    func checkAppLocationAuth(authStatus: CLAuthorizationStatus) {
-        switch authStatus {
-        case .notDetermined:
-            DispatchQueue.main.async {
-                self.locationManager.requestWhenInUseAuthorization()
-                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                self.locationManager.startUpdatingLocation()
-            }
-        case .restricted, .denied:
-            // 아이폰 설정으로 유도
-            print("denied")
-        case .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-        default: print("DEFAULT")
-        }
-    }
-    
-  
     
 }
 
@@ -143,7 +204,6 @@ extension MainViewController: MKMapViewDelegate {
         mapViewRefresh(center: mapView.centerCoordinate) { [weak self] response in
             switch response {
             case .success(_):
-                print("break")
                 break
             case .failure(let status):
                 switch status {
@@ -152,29 +212,13 @@ extension MainViewController: MKMapViewDelegate {
                         UserDefaults.standard.set(id, forKey: UserDefaultsKey.idtoken.rawValue)
                         self?.mapView(mapView, regionDidChangeAnimated: animated)
                     }
-                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
-                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
-                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
-                default: Toast.makeToast(view: self?.view, message: status.localizedDescription)
+                default:
+                    self?.handleError(status: status)
                 }
             }
         }
         pinLocation = mapView.centerCoordinate
-        locationManager.stopUpdatingLocation()
-    }
-}
-
-extension MainViewController {
-    // 현재 위치
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let coordinate = locations.last?.coordinate {
-            mapViewSetUp(center: coordinate)
-        }
-        locationManager.stopUpdatingLocation()
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkDeviceLocationAuth()
+        locationManager.locationManager.stopUpdatingLocation()
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -215,8 +259,24 @@ extension MainViewController {
         annotationView?.image = resizedImage
         
         return annotationView
+    }
+}
 
+extension MainViewController {
+    // 현재 위치
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let coordinate = locations.last?.coordinate {
+            mapViewSetUp(center: coordinate)
+        }
+        locationManager.locationManager.stopUpdatingLocation()
     }
     
-   
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        locationManager.checkDeviceLocationAuth {
+            self.showAlert(title: "기기 위치권한 설정이 되어있지 않습니다.", message: "설정 -> 개인정보 보호 및 보안 -> 위치서비스로 가셔서 권한을 허용해 주세요.")
+        }
+    }
+    
+    
+
 }
