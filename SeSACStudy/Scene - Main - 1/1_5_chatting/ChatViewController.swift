@@ -11,7 +11,6 @@ class ChatViewController: BaseViewController {
     var payloads: [Payload] = []
     let chatView = ChatView()
     var myQueueState: MyQueueState!
-
     var datasource: UICollectionViewDiffableDataSource<Int, Payload>!
     override func loadView() {
         view = chatView
@@ -21,16 +20,14 @@ class ChatViewController: BaseViewController {
         super.viewDidLoad()
         
         fetchChat()
+        setDatasource()
         
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage), name: NSNotification.Name("getMessage"), object: nil)
-        
         chatView.sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-
-        setDatasource()
+        
         let rightButton = UIBarButtonItem(title: "닷지", style: .plain, target: self, action: #selector(dodgeButtonTapped))
         
-//        makeNavigationUI(title: myQueueState.matchedNick, rightBarButtonItem: rightButton)
-        
+        makeNavigationUI(title: myQueueState.matchedNick, rightBarButtonItem: rightButton)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -101,11 +98,11 @@ class ChatViewController: BaseViewController {
         let myCellReg = UICollectionView.CellRegistration<MyChatCell ,Payload> { cell, indexPath, itemIdentifier in  }
         let otherCellReg = UICollectionView.CellRegistration<OtherChatCell ,Payload> { cell, indexPath, itemIdentifier in  }
        
-        datasource = UICollectionViewDiffableDataSource(collectionView: chatView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        datasource = UICollectionViewDiffableDataSource(collectionView: chatView.collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
             let foramtter = DateFormatter()
             foramtter.dateFormat = "H:mm"
             
-            if itemIdentifier.from == "self?.myQueueState.matchedUid" {
+            if itemIdentifier.from == self?.myQueueState.matchedUid {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: otherCellReg, for: indexPath, item: itemIdentifier)
                 cell.chatLabel.text = itemIdentifier.chat
                 //시간 보여주기 해야함
@@ -162,20 +159,20 @@ class ChatViewController: BaseViewController {
         datasource.apply(snapshot)
         chatView.collectionView.scrollToItem(at: [0, datasource.snapshot(for: 0).items.count - 1], at: .bottom, animated: false)
     }
-    
+        
 }
 
 extension ChatViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        if chatView.textView.text.isEmpty {
-            chatView.textView.text = "메시지를 입력하세요."
-            chatView.textView.textColor = .gray7
+        if textView.text.isEmpty {
+            textView.text = "메시지를 입력하세요."
+            textView.textColor = .gray7
         }
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if !chatView.textView.text.isEmpty {
-            chatView.textView.text = nil
-            chatView.textView.textColor = .black
+        if !textView.text.isEmpty {
+            textView.text = nil
+            textView.textColor = .black
         }
     }
  
@@ -186,6 +183,14 @@ extension ChatViewController: UITextViewDelegate {
             height = 72
         } else if height < 20 {
             height = 24
+        }
+        
+        if textView.text.count > 0 {
+            chatView.sendButton.setImage(UIImage(named: "SendButton.fill"), for: .normal)
+            chatView.sendButton.isUserInteractionEnabled = true
+        } else {
+            chatView.sendButton.setImage(UIImage(named: "SendButton"), for: .normal)
+            chatView.sendButton.isUserInteractionEnabled = false
         }
 
         textView.snp.remakeConstraints { make in

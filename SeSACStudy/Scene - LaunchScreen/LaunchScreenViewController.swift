@@ -27,8 +27,8 @@ class LaunchScreenViewController: BaseViewController {
             case .success(_):
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//                let vc = TabBarController()
-                let vc = ChatViewController()
+                let vc = TabBarController()
+//                let vc = ChatViewController()
 //                vc.myQueueState = "I8926rjKaTTzkqCE8PSXZ34YKjP2"
                 sceneDelegate?.window?.rootViewController = vc
                 sceneDelegate?.window?.makeKeyAndVisible()
