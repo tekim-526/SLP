@@ -22,6 +22,8 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
     var myQueueState: MyQueueState!
     var matchedNick: String!
     var timer: Timer!
+    
+    
     override func loadView() {
         view = mapView
     }
@@ -31,16 +33,19 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         
         mapView.map.delegate = self
         locationManager.locationManager.delegate = self
-
+        
         locationManager.checkDeviceLocationAuth {
             self.showAlert(title: "기기 위치권한 설정이 되어있지 않습니다.", message: "설정 -> 개인정보 보호 및 보안 -> 위치서비스로 가셔서 권한을 허용해 주세요.")
         }
         
         mapView.button.addTarget(self, action: #selector(stableButtonTapped), for: .touchUpInside)
         mapView.locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
-        mapView.map.showsUserLocation = true
+                
         mapView.map.setUserTrackingMode(.follow, animated: true)
         mapView.map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
+    
+        mapView.map.showsUserLocation = false
+        
         makeNavigationUI()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +55,7 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         checkMyState()
         timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
         mapView.button.isUserInteractionEnabled = true
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,9 +69,12 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     @objc func locationButtonTapped() {
-        let vc = ChatViewController()
-//        vc.otheruid =
-        navigationController?.pushViewController(vc, animated: true)
+        guard let coordinate = locationManager.locationManager.location?.coordinate else {
+            Toast.makeToast(view: view, message: "위치를 불러올 수 없습니다.")
+            return
+        }
+        
+        mapViewSetUp(center: coordinate)
     }
     
     @objc func stableButtonTapped() {
@@ -221,9 +230,6 @@ extension MainViewController: MKMapViewDelegate {
         locationManager.locationManager.stopUpdatingLocation()
     }
     
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        self.mapView.map.reloadInputViews()
-    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? CustomAnnotation else {
