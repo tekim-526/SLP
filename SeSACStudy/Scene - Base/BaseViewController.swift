@@ -11,6 +11,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         setupUI()
         makeConstraints()
+        tabBarController?.tabBar.isHidden = true
     }
     func setupUI() { }
     func makeConstraints() { }

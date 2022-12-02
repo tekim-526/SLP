@@ -8,7 +8,6 @@
 import UIKit
 
 class AcceptViewController: BaseRequestAndAccpetViewController {
- 
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -19,7 +19,6 @@ class ChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        chatView.textView.delegate = self
         
         fetchChat()
         
@@ -29,7 +28,9 @@ class ChatViewController: BaseViewController {
 
         setDatasource()
         let rightButton = UIBarButtonItem(title: "닷지", style: .plain, target: self, action: #selector(dodgeButtonTapped))
-        makeNavigationUI(title: myQueueState.matchedNick, rightBarButtonItem: rightButton)
+        
+//        makeNavigationUI(title: myQueueState.matchedNick, rightBarButtonItem: rightButton)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,7 +43,6 @@ class ChatViewController: BaseViewController {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("getMessage"), object: nil)
-
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         
@@ -52,11 +52,9 @@ class ChatViewController: BaseViewController {
     @objc func dodgeButtonTapped() {
         guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
         QueueAPIManager.shared.myStudy(idtoken: id, method: .dodge, otheruid: myQueueState.matchedUid) { [weak self] status in
-            print("dodgeStatus :", status)
             switch status {
             case .ok: self?.changeSceneToMain(vc: TabBarController(), isNav: false)
-            default:
-                self?.handleError(status: status)
+            default: self?.handleError(status: status)
             }
         }
     }
@@ -94,22 +92,20 @@ class ChatViewController: BaseViewController {
             }
         }
     }
+    
     @objc func keyboardDown() {
         view.transform = .identity
     }
     
     func setDatasource() {
-        let myCellReg = UICollectionView.CellRegistration<MyChatCell ,Payload> { cell, indexPath, itemIdentifier in
-            
-        }
-        let otherCellReg = UICollectionView.CellRegistration<OtherChatCell ,Payload> { cell, indexPath, itemIdentifier in
-            
-        }
-        datasource = UICollectionViewDiffableDataSource(collectionView: chatView.collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
+        let myCellReg = UICollectionView.CellRegistration<MyChatCell ,Payload> { cell, indexPath, itemIdentifier in  }
+        let otherCellReg = UICollectionView.CellRegistration<OtherChatCell ,Payload> { cell, indexPath, itemIdentifier in  }
+       
+        datasource = UICollectionViewDiffableDataSource(collectionView: chatView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let foramtter = DateFormatter()
             foramtter.dateFormat = "H:mm"
             
-            if itemIdentifier.from == self?.myQueueState.matchedUid {
+            if itemIdentifier.from == "self?.myQueueState.matchedUid" {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: otherCellReg, for: indexPath, item: itemIdentifier)
                 cell.chatLabel.text = itemIdentifier.chat
                 //시간 보여주기 해야함
@@ -122,9 +118,7 @@ class ChatViewController: BaseViewController {
             }
         })
         
-        let header = UICollectionView.SupplementaryRegistration<ChatHeaderView>(elementKind: "chatHeader") { supplementaryView, elementKind, indexPath in
-            
-        }
+        let header = UICollectionView.SupplementaryRegistration<ChatHeaderView>(elementKind: "chatHeader") { supplementaryView, elementKind, indexPath in  }
         
         datasource.supplementaryViewProvider = .some({ collectionView, elementKind, indexPath in
             let header = collectionView.dequeueConfiguredReusableSupplementary(using: header, for: indexPath)
@@ -184,5 +178,24 @@ extension ChatViewController: UITextViewDelegate {
             chatView.textView.textColor = .black
         }
     }
-    
+ 
+    func textViewDidChange(_ textView: UITextView) {
+        var height = textView.contentSize.height
+
+        if height > 60 {
+            height = 72
+        } else if height < 20 {
+            height = 24
+        }
+
+        textView.snp.remakeConstraints { make in
+            make.leading.equalTo(chatView.sendView.safeAreaLayoutGuide).offset(12)
+            make.top.equalTo(chatView.sendView.snp.top).offset(8)
+            make.height.greaterThanOrEqualTo(height)
+            make.bottom.equalTo(chatView.sendView.snp.bottom).offset(-8)
+            make.trailing.equalTo(chatView.sendButton.snp.leading).offset(-12)
+        }
+        
+        self.view.layoutIfNeeded()
+    }
 }

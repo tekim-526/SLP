@@ -18,7 +18,7 @@ class BaseRequestAndAccpetViewController: BaseViewController {
     var cellDatasource: UICollectionViewDiffableDataSource<Int, String>!
     
     var popupVC = RequestPopupViewController()
-    
+    var timer: Timer!
     override func loadView() {
         view = nearUserView
     }
@@ -27,7 +27,15 @@ class BaseRequestAndAccpetViewController: BaseViewController {
         super.viewDidLoad()
         popupVC.delegate = self
         nearUserView.collectionView.delegate = self
-        
+        checkMyState()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer.invalidate()
     }
    
     func setDatasource(personData: [FromQueueDB]) {
@@ -126,6 +134,32 @@ class BaseRequestAndAccpetViewController: BaseViewController {
         popupVC.fromQueueDB = peopleData.fromQueueDB[sender.tag]
         present(popupVC, animated: true)
     }
+    
+    @objc func stateCheck() {
+        checkMyState()
+    }
+
+    func checkMyState() {
+        
+        QueueAPIManager.shared.myQueueState { [weak self] response in
+//            print("request")
+            switch response {
+            case .success(let data):
+                if data.matched == MyQueueStatus.matched.rawValue {
+                    Toast.makeToast(view: self?.view, message: "\(data.matchedNick)님과 매칭되셨습니다.")
+                }
+            case .failure(let status):
+                switch status {
+                case .unauthorized: TokenManager.shared.getIdToken { _ in self?.checkMyState()}
+                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
+                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
+                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
+                default: Toast.makeToast(view: self?.view, message: status.localizedDescription)
+                }
+            }
+        }
+    }
+   
     
     
 }

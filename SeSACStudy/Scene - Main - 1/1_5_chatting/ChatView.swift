@@ -54,6 +54,7 @@ class ChatView: BaseView {
             make.leading.equalTo(sendView.safeAreaLayoutGuide).offset(12)
             make.top.equalTo(sendView.snp.top).offset(8)
             make.height.greaterThanOrEqualTo(28)
+            
             make.trailing.equalTo(sendButton.snp.leading).offset(-12)
         }
         
