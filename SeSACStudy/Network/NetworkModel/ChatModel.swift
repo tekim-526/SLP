@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - ChatData
-struct ChatData: Codable {
+struct ChatData: Hashable, Codable {
     let payload: [Payload]
 }
 

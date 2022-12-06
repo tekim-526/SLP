@@ -134,7 +134,6 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
         QueueAPIManager.shared.myQueueState { [weak self] response in
             switch response {
             case .success(let data):
-                
                 self?.setButton(myStatus: MyQueueStatus(rawValue: data.matched) ?? .stable)
                 self?.myQueueState = data
                 
@@ -282,7 +281,4 @@ extension MainViewController {
             self.showAlert(title: "기기 위치권한 설정이 되어있지 않습니다.", message: "설정 -> 개인정보 보호 및 보안 -> 위치서비스로 가셔서 권한을 허용해 주세요.")
         }
     }
-    
-    
-
 }

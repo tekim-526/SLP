@@ -140,7 +140,6 @@ class BaseRequestAndAccpetViewController: BaseViewController {
     }
 
     func checkMyState() {
-        
         QueueAPIManager.shared.myQueueState { [weak self] response in
 //            print("request")
             switch response {
@@ -156,7 +155,9 @@ class BaseRequestAndAccpetViewController: BaseViewController {
                 case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
                 default: Toast.makeToast(view: self?.view, message: status.localizedDescription)
                 }
+                print(status)
             }
+            
         }
     }
    

@@ -12,7 +12,8 @@ class ChatViewController: BaseViewController {
     var payloads: [Payload] = []
     let chatView = ChatView()
     var myQueueState: MyQueueState!
-    var datasource: UICollectionViewDiffableDataSource<Int, Payload>!
+    var datasource: UICollectionViewDiffableDataSource<Int, ChatTable>!
+    var chatViewModel = ChatViewModel()
     
     private var chatCRUD = ChatCRUD()
     
@@ -24,7 +25,6 @@ class ChatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tasks = chatCRUD.fetchRoom(id: myQueueState.matchedUid).last
         guard tasks != nil else {
             chatCRUD.addRoom(room: RoomTable(otheruid: myQueueState.matchedUid, chatArray: [])) {
@@ -32,28 +32,22 @@ class ChatViewController: BaseViewController {
             }
             return
         }
-        // lastChatDate  "2000-01-01T00:00:00.000Z"  , "2022-12-05T04:17:05.228Z"
 
         setDatasource()
-       
-        fetchChat(lastchatDate: tasks?.chatArray.last?.createdAt ?? "2000-01-01T00:00:00.000Z")
-      
-        
-        
+        guard let lastchatDate = tasks?.chatData.last?.createdAt.isEmpty ?? true ? "2000-01-01T00:00:00.000Z" : tasks?.chatData.last?.createdAt else {return}
+        fetchChat(lastchatDate: lastchatDate)
         chatView.sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         
         let rightButton = UIBarButtonItem(title: "닷지", style: .plain, target: self, action: #selector(dodgeButtonTapped))
-        
         makeNavigationUI(title: myQueueState.matchedNick, rightBarButtonItem: rightButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setTextView()
-
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage), name: NSNotification.Name("getMessage"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(chatViewModel.keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -65,9 +59,7 @@ class ChatViewController: BaseViewController {
         
         SocketIOManager.shared.closeConnection()
     }
-    
-    
-    
+        
     @objc func dodgeButtonTapped() {
         guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
         QueueAPIManager.shared.myStudy(idtoken: id, method: .dodge, otheruid: myQueueState.matchedUid) { [weak self] status in
@@ -80,22 +72,18 @@ class ChatViewController: BaseViewController {
     
     @objc func sendButtonTapped() {
         ChatAPIManager.shared.sendChat(to: myQueueState.matchedUid, chat: chatView.textView.text) { [weak self] response in
+            guard let vc = self else { return }
             switch response {
             case .success(let data):
-                print("🌟Send Success🌟")
-                
-                self?.addChat(createdAt: data.createdAt, id: data.id, to: data.to, from: data.from)
-                self?.refreshSnapshot(payload: data)
-                self?.chatView.textView.text = nil
-                
+                vc.addChat(id: data.id, to: data.to, from: data.from, chat: data.chat, createdAt: data.createdAt)
+                vc.refreshSnapshot(datasource: vc.datasource, chatTable: ChatTable(id: data.id, to: data.to, from: data.from, chat: data.chat, createdAt: data.createdAt))
+                vc.chatView.textView.text = nil
             case .failure(let status): print("inside closure and status \(status.rawValue)\n \(status.localizedDescription)")
             }
         }
     }
     
     @objc func getMessage(notification: NSNotification) {
-        print("😀",#function)
-        print("😀", notification.userInfo!)
         guard let userInfo = notification.userInfo else { return }
         guard let id = userInfo["_id"] as? String else { return }
         guard let to = userInfo["to"] as? String else { return }
@@ -103,10 +91,8 @@ class ChatViewController: BaseViewController {
         guard let chat = userInfo["chat"] as? String else { return }
         guard let createdAt = userInfo["createdAt"] as? String else { return }
         
-        addChat(createdAt: createdAt, id: id, to: to, from: from)
-        
-        refreshSnapshot(payload: Payload(id: id, to: to, from: from, chat: chat, createdAt: createdAt))
-        
+        addChat(id: id, to: to, from: from, chat: chat, createdAt: createdAt)
+        refreshSnapshot(datasource: datasource, chatTable: ChatTable(id: id, to: to, from: from, chat: chat, createdAt: createdAt))
     }
     
     @objc func keyboardUp(notification: Notification) {
@@ -118,22 +104,19 @@ class ChatViewController: BaseViewController {
     }
     
     func setDatasource() {
-        let myCellReg = UICollectionView.CellRegistration<MyChatCell ,Payload> { cell, indexPath, itemIdentifier in  }
-        let otherCellReg = UICollectionView.CellRegistration<OtherChatCell ,Payload> { cell, indexPath, itemIdentifier in  }
+        let myCellReg = UICollectionView.CellRegistration<MyChatCell ,ChatTable> { cell, indexPath, itemIdentifier in  }
+        let otherCellReg = UICollectionView.CellRegistration<OtherChatCell ,ChatTable> { cell, indexPath, itemIdentifier in  }
        
         datasource = UICollectionViewDiffableDataSource(collectionView: chatView.collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
-            let foramtter = DateFormatter()
-            foramtter.dateFormat = "H:mm"
-            
             if itemIdentifier.from == self?.myQueueState.matchedUid {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: otherCellReg, for: indexPath, item: itemIdentifier)
                 cell.chatLabel.text = itemIdentifier.chat
-                //시간 보여주기 해야함
+                cell.timeLabel.text = self?.chatViewModel.iso8601ToTimeAndMinute(dateString: itemIdentifier.createdAt)
                 return cell
             } else {
                 let cell = collectionView.dequeueConfiguredReusableCell(using: myCellReg, for: indexPath, item: itemIdentifier)
                 cell.chatLabel.text = itemIdentifier.chat
-                //시간 보여주기 해야함
+                cell.timeLabel.text = self?.chatViewModel.iso8601ToTimeAndMinute(dateString: itemIdentifier.createdAt)
                 return cell
             }
         })
@@ -148,7 +131,7 @@ class ChatViewController: BaseViewController {
             header.dateLabel.text = dateFormatter.string(from: Date())
             return header
         })
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Payload>()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, ChatTable>()
         snapshot.appendSections([0])
         datasource.apply(snapshot)
     }
@@ -165,48 +148,43 @@ class ChatViewController: BaseViewController {
             switch response {
             case .success(let data):
                 vc.payloads = data.payload
-                print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-                
-                let chatArray = vc.payloadToChatArray(payload: data.payload)
-                print("👏tasks")
-                print(vc.tasks)
-                
-                print(vc.payloadToChatArray(payload: data.payload))
-                vc.chatCRUD.updateChatArray(room: vc.tasks!, chatArray: chatArray) {
-                    Toast.makeToast(view: vc.view, message: "채팅을 불러오는데 실패 했습니다")
+                guard let tasks = vc.tasks else {
+                    return
                 }
-               
-                
+                let chatArray = vc.chatViewModel.payloadToChatArray(payload: data.payload)
+                switch tasks.chatData.isEmpty {
+                case true:
+                    vc.chatCRUD.updateChatArray(room: tasks, chatArray: chatArray) {
+                        Toast.makeToast(view: vc.view, message: "채팅을 불러오는데 실패 했습니다")
+                    }
+                case false:
+                    vc.chatCRUD.addChats(room: tasks, chats: chatArray) {
+                        Toast.makeToast(view: vc.view, message: "채팅을 불러오는데 실패 했습니다")
+                    }
+                }
                 var snapshot = vc.datasource.snapshot()
-                snapshot.appendItems(vc.payloads)
+                snapshot.appendItems(tasks.chatArray)
                 vc.datasource.apply(snapshot)
-                vc.chatView.collectionView.scrollToItem(at: [0, vc.payloads.count - 1], at: .bottom, animated: false)
+                vc.chatView.collectionView.scrollToItem(at: [0, tasks.chatArray.count - 1], at: .bottom, animated: false)
                 SocketIOManager.shared.establishConnection()
-                
             case .failure(let status):
                 print("FetchFailed : \(status.localizedDescription)")
             }
         }
     }
     
-    func refreshSnapshot(payload: Payload) {
+    func refreshSnapshot(datasource: UICollectionViewDiffableDataSource<Int, ChatTable>, chatTable: ChatTable) {
         var snapshot = datasource.snapshot()
-        snapshot.appendItems([payload])
-        
+        snapshot.appendItems([chatTable])
         datasource.apply(snapshot)
         chatView.collectionView.scrollToItem(at: [0, datasource.snapshot(for: 0).items.count - 1], at: .bottom, animated: false)
     }
-    func addChat(createdAt: String, id: String, to: String, from: String) {
-        chatCRUD.addChat(chat: ChatTable(createdAt: createdAt, id: id, to: to, from: from)) {
+    
+    func addChat(id: String, to: String, from: String, chat: String, createdAt: String) {
+        guard let tasks else {return}
+        chatCRUD.addChats(room: tasks, chats: [ChatTable(id: id, to: to, from: from, chat: chat, createdAt: createdAt)]) {
             Toast.makeToast(view: view, message: "채팅 불러오기 실패")
         }
-    }
-    func payloadToChatArray(payload: [Payload]) -> [ChatTable] {
-        var chatTable = [ChatTable]()
-        for item in payload {
-            chatTable.append(ChatTable(createdAt: item.createdAt, id: item.id, to: item.to, from: item.from))
-        }
-        return chatTable
     }
 }
 
@@ -226,13 +204,12 @@ extension ChatViewController: UITextViewDelegate {
  
     func textViewDidChange(_ textView: UITextView) {
         var height = textView.contentSize.height
-
         if height > 60 {
             height = 72
         } else if height < 20 {
             height = 24
         }
-        
+        print(height)
         if textView.text.count > 0 {
             chatView.sendButton.setImage(UIImage(named: "SendButton.fill"), for: .normal)
             chatView.sendButton.isUserInteractionEnabled = true

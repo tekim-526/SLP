@@ -8,6 +8,7 @@
 import UIKit
 
 class AcceptViewController: BaseRequestAndAccpetViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -17,6 +18,7 @@ class AcceptViewController: BaseRequestAndAccpetViewController {
         checkDataisEmpty(bool: peopleData.fromQueueDBRequested.isEmpty)
         if peopleData.fromQueueDBRequested.isEmpty { return }
         setDatasource(personData: peopleData.fromQueueDBRequested)
+        
     }
     
     override func insideImageButtonTapped(_ sender: UIButton) {
@@ -42,7 +44,8 @@ class AcceptViewController: BaseRequestAndAccpetViewController {
             case .success(let success):
                 let vc = ChatViewController()
                 vc.myQueueState = success
-                self?.present(vc, animated: true)
+                self?.navigationController?.pushViewController(vc, animated: true)
+//                self?.present(vc, animated: true)
             case .failure(let failure):
                 print(failure)
             }

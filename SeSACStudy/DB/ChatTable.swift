@@ -14,10 +14,11 @@ class RoomTable: Object {
     
     var chatArray: [ChatTable] {
         get {
-            return chatData.map {$0 }
+            return chatData.map { $0 }
         } set {
             chatData.removeAll()
             chatData.append(objectsIn: newValue)
+            
         }
     }
     convenience init(otheruid: String, chatArray: [ChatTable]) {
@@ -28,17 +29,18 @@ class RoomTable: Object {
 }
 
 class ChatTable: Object {
-    @Persisted(primaryKey: true) var createdAt: String
+    @Persisted var createdAt: String
     
     @Persisted var id: String
     @Persisted var to: String
     @Persisted var from: String
-    
-    convenience init(createdAt: String, id: String, to: String, from: String) {
+    @Persisted var chat: String
+    convenience init(id: String, to: String, from: String,  chat: String, createdAt: String) {
         self.init()
         self.createdAt = createdAt
         self.id = id
         self.to = to
+        self.chat = chat
         self.from = from
     }
 }

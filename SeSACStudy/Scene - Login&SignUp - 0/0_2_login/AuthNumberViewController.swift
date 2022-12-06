@@ -75,7 +75,6 @@ class AuthNumberViewController: BaseViewController {
                     switch result {
                     case .success(_):
                         vc.verifySMS()
-                        print("login success")
                     case .failure(let error):
                         switch error {
                         case .unauthorized: // Firebase Token Error

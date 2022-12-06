@@ -135,9 +135,9 @@ class WriteStudyViewController: BaseViewController {
                 
                 switch statuscode {
                 case .ok:
-                    let nearRequeestVC = RequestAndAcceptViewController()
-                    nearRequeestVC.peopleData = self?.peopleData
-                    self?.navigationController?.pushViewController(nearRequeestVC, animated: true)
+                    let nearRequestVC = RequestAndAcceptViewController()
+                    nearRequestVC.peopleData = self?.peopleData
+                    self?.navigationController?.pushViewController(nearRequestVC, animated: true)
                 case .created: Toast.makeToast(view: self?.view, message: "신고가 누적되어 이용하실 수 없습니다")
                 case .nonAuthoritativeInformation: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다")
                 case .noContent: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다")

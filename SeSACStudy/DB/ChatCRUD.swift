@@ -25,10 +25,12 @@ class ChatCRUD {
         }
     }
     
-    func addChat(chat: ChatTable, completion: () -> Void) {
+ 
+    
+    func addChats(room: RoomTable, chats: [ChatTable], completion: () -> Void) {
         do {
             try localRealm.write {
-                localRealm.add(chat)
+                room.chatArray.append(contentsOf: chats)
             }
         } catch {
             completion()
@@ -52,5 +54,15 @@ class ChatCRUD {
     }
     func fetchChat() {
         
+    }
+    
+    func delete<T: ObjectBase>(table: T, completion: () ->Void) {
+        do {
+            try localRealm.write {
+                localRealm.delete(table)
+            }
+        } catch {
+            completion()
+        }
     }
 }

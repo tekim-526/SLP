@@ -44,7 +44,7 @@ class ChatView: BaseView {
             
             make.top.equalTo(self.safeAreaLayoutGuide)
             make.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-            make.bottom.equalTo(sendView.snp.top)
+            make.bottom.equalTo(sendView.snp.top).offset(-8)
         }
         
         sendView.snp.makeConstraints { make in

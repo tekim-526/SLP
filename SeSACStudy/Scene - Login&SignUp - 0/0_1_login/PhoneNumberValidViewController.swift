@@ -94,7 +94,6 @@ class PhoneNumberValidViewController: BaseViewController {
                     let realPhoneNumber = "+82\(removeDash)"
                     AuthManager.shared.startAuth(phoneNumber: realPhoneNumber) { success in
                         guard success else { return }
-                        print("success")
                         DispatchQueue.main.async {
                             UserDefaults.standard.set(realPhoneNumber, forKey: UserDefaultsKey.phoneNumber.rawValue)
                             vc.navigationController?.pushViewController(vc.authVC, animated: true)

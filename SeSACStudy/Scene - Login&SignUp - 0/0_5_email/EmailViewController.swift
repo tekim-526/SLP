@@ -31,7 +31,6 @@ class EmailViewController: BaseViewController, AttributeString {
             .map { self.viewModel.checkEmailValid(str: $0) }
             .withUnretained(self)
             .bind { vc, bool in
-                print(bool)
                 vc.emailView.button.isEnabled = bool
                 vc.emailView.button.backgroundColor = bool ? .brandGreen : .gray6
                 vc.emailView.button.tintColor = bool ? .white : .gray3
