@@ -19,9 +19,9 @@ class ChatView: BaseView {
     let sendButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "SendButton"), for: .normal)
-        
         return button
     }()
+
     lazy var sendView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 8
@@ -34,11 +34,14 @@ class ChatView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
+    
     override func setupUI() {
         [collectionView, sendView].forEach { addSubview($0) }
     }
+    
     override func makeConstraints() {
         collectionView.snp.makeConstraints { make in
+            
             make.top.equalTo(self.safeAreaLayoutGuide)
             make.leading.trailing.equalTo(self.safeAreaLayoutGuide)
             make.bottom.equalTo(sendView.snp.top)
@@ -46,7 +49,7 @@ class ChatView: BaseView {
         
         sendView.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(52)
-            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-16)
+            make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
         

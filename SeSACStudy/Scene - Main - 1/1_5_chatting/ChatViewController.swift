@@ -6,12 +6,18 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ChatViewController: BaseViewController {
     var payloads: [Payload] = []
     let chatView = ChatView()
     var myQueueState: MyQueueState!
     var datasource: UICollectionViewDiffableDataSource<Int, Payload>!
+    
+    private var chatCRUD = ChatCRUD()
+    
+    private var tasks: RoomTable?
+    
     override func loadView() {
         view = chatView
     }
@@ -19,19 +25,33 @@ class ChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchChat()
+        tasks = chatCRUD.fetchRoom(id: myQueueState.matchedUid).last
+        guard tasks != nil else {
+            chatCRUD.addRoom(room: RoomTable(otheruid: myQueueState.matchedUid, chatArray: [])) {
+                Toast.makeToast(view: self.view, message: "채팅방을 만드는데 실패했습니다.")
+            }
+            return
+        }
+        // lastChatDate  "2000-01-01T00:00:00.000Z"  , "2022-12-05T04:17:05.228Z"
+
         setDatasource()
+       
+        fetchChat(lastchatDate: tasks?.chatArray.last?.createdAt ?? "2000-01-01T00:00:00.000Z")
+      
         
-        NotificationCenter.default.addObserver(self, selector: #selector(getMessage), name: NSNotification.Name("getMessage"), object: nil)
+        
         chatView.sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         
         let rightButton = UIBarButtonItem(title: "닷지", style: .plain, target: self, action: #selector(dodgeButtonTapped))
         
         makeNavigationUI(title: myQueueState.matchedNick, rightBarButtonItem: rightButton)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setTextView()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(getMessage), name: NSNotification.Name("getMessage"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -45,6 +65,8 @@ class ChatViewController: BaseViewController {
         
         SocketIOManager.shared.closeConnection()
     }
+    
+    
     
     @objc func dodgeButtonTapped() {
         guard let id = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) else { return }
@@ -60,9 +82,12 @@ class ChatViewController: BaseViewController {
         ChatAPIManager.shared.sendChat(to: myQueueState.matchedUid, chat: chatView.textView.text) { [weak self] response in
             switch response {
             case .success(let data):
+                print("🌟Send Success🌟")
+                
+                self?.addChat(createdAt: data.createdAt, id: data.id, to: data.to, from: data.from)
                 self?.refreshSnapshot(payload: data)
                 self?.chatView.textView.text = nil
-//                self?.chatView.textView.resignFirstResponder()
+                
             case .failure(let status): print("inside closure and status \(status.rawValue)\n \(status.localizedDescription)")
             }
         }
@@ -78,20 +103,18 @@ class ChatViewController: BaseViewController {
         guard let chat = userInfo["chat"] as? String else { return }
         guard let createdAt = userInfo["createdAt"] as? String else { return }
         
+        addChat(createdAt: createdAt, id: id, to: to, from: from)
+        
         refreshSnapshot(payload: Payload(id: id, to: to, from: from, chat: chat, createdAt: createdAt))
         
     }
+    
     @objc func keyboardUp(notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            UIView.animate(withDuration: 0.3) {
-                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height )
-            }
-        }
+        chatView.collectionView.scrollToItem(at: [0, datasource.snapshot(for: 0).items.count - 1], at: .bottom, animated: false)
     }
     
     @objc func keyboardDown() {
-        view.transform = .identity
+        chatView.collectionView.scrollToItem(at: [0, datasource.snapshot(for: 0).items.count - 1], at: .bottom, animated: false)
     }
     
     func setDatasource() {
@@ -125,6 +148,9 @@ class ChatViewController: BaseViewController {
             header.dateLabel.text = dateFormatter.string(from: Date())
             return header
         })
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Payload>()
+        snapshot.appendSections([0])
+        datasource.apply(snapshot)
     }
     
     func setTextView() {
@@ -133,16 +159,26 @@ class ChatViewController: BaseViewController {
         chatView.textView.textColor = .gray7
     }
     
-    func fetchChat() {
-        ChatAPIManager.shared.fetchChat(otheruid: myQueueState.matchedUid, lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] response in
+    func fetchChat(lastchatDate: String) {
+        ChatAPIManager.shared.fetchChat(otheruid: myQueueState.matchedUid, lastchatDate: lastchatDate) { [weak self] response in
             guard let vc = self else {return}
             switch response {
             case .success(let data):
                 vc.payloads = data.payload
+                print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
                 
-                var snapshot = NSDiffableDataSourceSnapshot<Int, Payload>()
-                snapshot.appendSections([0])
-                snapshot.appendItems(vc.payloads, toSection: 0)
+                let chatArray = vc.payloadToChatArray(payload: data.payload)
+                print("👏tasks")
+                print(vc.tasks)
+                
+                print(vc.payloadToChatArray(payload: data.payload))
+                vc.chatCRUD.updateChatArray(room: vc.tasks!, chatArray: chatArray) {
+                    Toast.makeToast(view: vc.view, message: "채팅을 불러오는데 실패 했습니다")
+                }
+               
+                
+                var snapshot = vc.datasource.snapshot()
+                snapshot.appendItems(vc.payloads)
                 vc.datasource.apply(snapshot)
                 vc.chatView.collectionView.scrollToItem(at: [0, vc.payloads.count - 1], at: .bottom, animated: false)
                 SocketIOManager.shared.establishConnection()
@@ -156,10 +192,22 @@ class ChatViewController: BaseViewController {
     func refreshSnapshot(payload: Payload) {
         var snapshot = datasource.snapshot()
         snapshot.appendItems([payload])
+        
         datasource.apply(snapshot)
         chatView.collectionView.scrollToItem(at: [0, datasource.snapshot(for: 0).items.count - 1], at: .bottom, animated: false)
     }
-        
+    func addChat(createdAt: String, id: String, to: String, from: String) {
+        chatCRUD.addChat(chat: ChatTable(createdAt: createdAt, id: id, to: to, from: from)) {
+            Toast.makeToast(view: view, message: "채팅 불러오기 실패")
+        }
+    }
+    func payloadToChatArray(payload: [Payload]) -> [ChatTable] {
+        var chatTable = [ChatTable]()
+        for item in payload {
+            chatTable.append(ChatTable(createdAt: item.createdAt, id: item.id, to: item.to, from: item.from))
+        }
+        return chatTable
+    }
 }
 
 extension ChatViewController: UITextViewDelegate {
@@ -204,3 +252,4 @@ extension ChatViewController: UITextViewDelegate {
         self.view.layoutIfNeeded()
     }
 }
+

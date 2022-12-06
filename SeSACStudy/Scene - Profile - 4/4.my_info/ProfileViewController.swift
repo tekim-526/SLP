@@ -31,6 +31,10 @@ class ProfileViewController: BaseViewController {
         setDataSource()
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
     
     private func setDataSource() {
         let cellRegisteration = UICollectionView.CellRegistration<ProfileViewCell, MyInfoList> { cell, indexPath, item in
