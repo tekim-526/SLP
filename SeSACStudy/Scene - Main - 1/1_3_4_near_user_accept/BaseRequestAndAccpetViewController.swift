@@ -8,12 +8,14 @@
 import UIKit
 
 class BaseRequestAndAccpetViewController: BaseViewController {
-   
+    var superVC: UIViewController!
+    
     var isRequest: Bool!
     let nearUserView = RequestView()
     
     var peopleData: GetNearPeopleData!
-    
+    var pinLocation: (long: Double, lat: Double)!
+   
     var datasource: UICollectionViewDiffableDataSource<Int, UserInfoModel>!
     var cellDatasource: UICollectionViewDiffableDataSource<Int, String>!
     
@@ -28,6 +30,8 @@ class BaseRequestAndAccpetViewController: BaseViewController {
         popupVC.delegate = self
         nearUserView.collectionView.delegate = self
         checkMyState()
+        nearUserView.changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
+        nearUserView.refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -115,7 +119,6 @@ class BaseRequestAndAccpetViewController: BaseViewController {
         
     }
     
- 
     
     func makeAttributeTitle(title: String) -> NSAttributedString {
         let attr = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont(name: "NotoSansKR-Regular", size: 14)!])
@@ -127,18 +130,6 @@ class BaseRequestAndAccpetViewController: BaseViewController {
         nearUserView.imageView.isHidden = !bool
         nearUserView.bottomStackView.isHidden = !bool
     }
-    
-    @objc func insideImageButtonTapped(_ sender: UIButton) {
-        popupVC.popUpView.title.text = "스터디를 요청할게요!"
-        popupVC.popUpView.subTitle.text = "상대방이 요청을 수락하면\n채팅창에서 대화를 나눌 수 있어요"
-        popupVC.fromQueueDB = peopleData.fromQueueDB[sender.tag]
-        present(popupVC, animated: true)
-    }
-    
-    @objc func stateCheck() {
-        checkMyState()
-    }
-
     func checkMyState() {
         QueueAPIManager.shared.myQueueState { [weak self] response in
 //            print("request")
@@ -155,14 +146,36 @@ class BaseRequestAndAccpetViewController: BaseViewController {
                 case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
                 default: Toast.makeToast(view: self?.view, message: status.localizedDescription)
                 }
-                print(status)
             }
-            
         }
     }
-   
+    @objc func insideImageButtonTapped(_ sender: UIButton) {
+        popupVC.popUpView.title.text = "스터디를 요청할게요!"
+        popupVC.popUpView.subTitle.text = "상대방이 요청을 수락하면\n채팅창에서 대화를 나눌 수 있어요"
+        popupVC.fromQueueDB = peopleData.fromQueueDB[sender.tag]
+        present(popupVC, animated: true)
+    }
+    @objc func refreshButtonTapped() {
+        print("RefreshButton Tapped!")
+        QueueAPIManager.shared.searchNearPeople(lat: pinLocation.lat, long: pinLocation.long) { [weak self] response in
+            guard let vc = self else {return}
+            switch response {
+            case .success(let data):
+                vc.peopleData = data
+                vc.setDatasource(personData: data.fromQueueDBRequested)
+            case .failure(_):
+                Toast.makeToast(view: vc.view, message: "데이터를 불러오는데 실패했습니다")
+            }
+        }
+    }
+    @objc func stateCheck() {
+        checkMyState()
+    }
     
-    
+    @objc func changeButtonTapped() {
+        superVC.navigationController?.popViewController(animated: true)
+    }
+        
 }
 
 extension BaseRequestAndAccpetViewController: UICollectionViewDelegate, SendOpacityProtocol {

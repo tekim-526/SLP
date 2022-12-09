@@ -9,6 +9,7 @@ import UIKit
 
 class RequestAndAcceptViewController: BaseViewController {
     var peopleData: GetNearPeopleData!
+    var pinLocation: (long: Double, lat: Double)!
     
     private let segmentedControl: UISegmentedControl = {
         let seg = UnderlineSegmentedControl(items: ["주변 새싹", "받은 요청"])
@@ -18,17 +19,20 @@ class RequestAndAcceptViewController: BaseViewController {
         return seg
     }()
     
-    private lazy var vc1: RequestViewController = {
+    private lazy var vc1: BaseRequestAndAccpetViewController = {
         let vc = RequestViewController()
         vc.isRequest = false
         vc.peopleData = peopleData
+        vc.pinLocation = pinLocation
         return vc
     }()
     
-    private lazy var vc2: AcceptViewController = {
+    private lazy var vc2: BaseRequestAndAccpetViewController = {
         let vc = AcceptViewController()
         vc.isRequest = true
         vc.peopleData = peopleData
+        vc.pinLocation = pinLocation
+        vc.superVC = self
         return vc
     }()
     
@@ -56,7 +60,7 @@ class RequestAndAcceptViewController: BaseViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         view.backgroundColor = .systemBackground
         self.segmentedControl.selectedSegmentIndex = 0
         self.segmentedControl.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
@@ -103,7 +107,7 @@ class RequestAndAcceptViewController: BaseViewController {
             }
         }
     }
-
+    
 }
 
 extension RequestAndAcceptViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {

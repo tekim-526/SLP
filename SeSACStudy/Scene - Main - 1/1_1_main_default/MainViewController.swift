@@ -110,6 +110,7 @@ class MainViewController: BaseViewController, CLLocationManagerDelegate {
             switch result {
             case .success(let data):
                 vc.peopleData = data
+                vc.pinLocation = (pinLocation.latitude, pinLocation.longitude)
                 self?.mapView.button.isUserInteractionEnabled = false
                 Toast.makeToast(view: self?.view, message: "데이터를 받아오는중이에요")
                 self?.navigationController?.pushViewController(vc, animated: true)

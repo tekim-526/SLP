@@ -44,11 +44,11 @@ class AcceptViewController: BaseRequestAndAccpetViewController {
             case .success(let success):
                 let vc = ChatViewController()
                 vc.myQueueState = success
-                self?.navigationController?.pushViewController(vc, animated: true)
-//                self?.present(vc, animated: true)
+                self?.superVC.navigationController?.pushViewController(vc, animated: true)
             case .failure(let failure):
                 print(failure)
             }
         }
     }
+    
 }

@@ -9,6 +9,7 @@ import UIKit
 
 class WriteStudyViewController: BaseViewController {
     let writeView = WriteStudyView()
+    let keyboardHeaderView = KeyboardHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 48))
     
     var datasource: UICollectionViewDiffableDataSource<Int, StudyModel>!
     var snapshot = NSDiffableDataSourceSnapshot<Int, StudyModel>()
@@ -33,11 +34,12 @@ class WriteStudyViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         self.tabBarController?.tabBar.isHidden = true
+        writeView.button.isUserInteractionEnabled = true
+        keyboardHeaderView.button.isUserInteractionEnabled = true
     }
    
     override func setupUI() {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 28, height: 0))
-        let keyboardHeaderView = KeyboardHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 48))
         searchBar.inputAccessoryView = keyboardHeaderView
         searchBar.placeholder = "띄어쓰기로 복수 입력이 가능해요"
         searchBar.delegate = self
@@ -119,8 +121,9 @@ class WriteStudyViewController: BaseViewController {
         return [recommands, studyLists]
     }
     
-    @objc func searchButtonTapped() {
+    @objc func searchButtonTapped(sender: UIButton) {
         // Post Method Needed
+        sender.isUserInteractionEnabled = false
         var studylist: [String] = []
         for item in datasource.snapshot(for: 1).items {
             studylist.append(item.studyName)
@@ -132,25 +135,23 @@ class WriteStudyViewController: BaseViewController {
         }
         TokenManager.shared.getIdToken { token in
             QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.long, studylist: studylist) { [weak self] statuscode in
-                
+                guard let vc = self else { return }
                 switch statuscode {
                 case .ok:
                     let nearRequestVC = RequestAndAcceptViewController()
-                    nearRequestVC.peopleData = self?.peopleData
+                    nearRequestVC.peopleData = vc.peopleData
+                    nearRequestVC.pinLocation = (vc.lat, vc.long)
                     self?.navigationController?.pushViewController(nearRequestVC, animated: true)
-                case .created: Toast.makeToast(view: self?.view, message: "신고가 누적되어 이용하실 수 없습니다")
-                case .nonAuthoritativeInformation: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다")
-                case .noContent: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다")
-                case .resetContent: Toast.makeToast(view: self?.view, message: "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다")
-                case .unauthorized: TokenManager.shared.getIdToken { _ in Toast.makeToast(view: self?.view, message: "다시 시도 해주세요")}
-                case .notAcceptable: self?.changeSceneToMain(vc: OnBoardingViewController())
-                case .internalServerError: Toast.makeToast(view: self?.view, message: "500 Server Error")
-                case .notImplemented: Toast.makeToast(view: self?.view, message: "501 Client Error")
-                default: Toast.makeToast(view: self?.view, message: "다시 시도 해보세요")
+                case .created: Toast.makeToast(view: vc.view, message: "신고가 누적되어 이용하실 수 없습니다")
+                case .nonAuthoritativeInformation: Toast.makeToast(view: vc.view, message: "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다")
+                case .noContent: Toast.makeToast(view: vc.view, message: "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다")
+                case .resetContent: Toast.makeToast(view: vc.view, message: "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다")
+                case .unauthorized: TokenManager.shared.getIdToken { _ in Toast.makeToast(view: vc.view, message: "다시 시도 해주세요")}
+                case .notAcceptable: vc.changeSceneToMain(vc: OnBoardingViewController())
+                case .internalServerError: Toast.makeToast(view: vc.view, message: "500 Server Error")
+                case .notImplemented: Toast.makeToast(view: vc.view, message: "501 Client Error")
+                default: Toast.makeToast(view: vc.view, message: "다시 시도 해보세요")
                 }
-                
-                
-                
             }
         }
         
@@ -219,6 +220,4 @@ extension WriteStudyViewController: UICollectionViewDelegate {
             datasource.apply(snapshot)
         }
     }
-    
-
 }

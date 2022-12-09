@@ -8,7 +8,6 @@
 import Foundation
 
 import Alamofire
-import SwiftyJSON
 
 class ChatAPIManager {
     static let shared = ChatAPIManager()

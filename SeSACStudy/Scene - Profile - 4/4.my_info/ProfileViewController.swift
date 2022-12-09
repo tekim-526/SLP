@@ -52,6 +52,7 @@ class ProfileViewController: BaseViewController {
         
         let header = UICollectionView.SupplementaryRegistration<ProfileHeaderView>(elementKind: "header") { [weak self] supplementaryView, elementKind, indexPath in
             supplementaryView.label.text = UserDefaults.standard.string(forKey: "nick")
+            print("my Nick :",  UserDefaults.standard.string(forKey: "nick"))
             supplementaryView.imageView.image = UIImage(named: "sesac_face_1-1")
             supplementaryView.button.addTarget(self, action: #selector(self?.headerTapped), for: .touchUpInside)
         }
