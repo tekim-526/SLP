@@ -24,7 +24,7 @@ class LaunchScreenViewController: BaseViewController {
         UserAPIManager.shared.login(idtoken: id) { [weak self] result in
             
             switch result {
-            case .success(_):
+            case .success(let data):
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 let vc = TabBarController()

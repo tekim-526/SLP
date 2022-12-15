@@ -190,13 +190,11 @@ extension BaseRequestAndAccpetViewController: UICollectionViewDelegate, SendOpac
         if cell.stackView5.isHidden {
             
             cell.stackView5.isHidden = false
-            
             cell.stackView5.snp.remakeConstraints { make in
                 make.top.equalTo(cell.clearView.snp.bottom)
                 make.horizontalEdges.equalToSuperview().inset(32)
                 make.bottom.equalToSuperview().inset(16)
             }
-            
         } else {
             cell.stackView5.isHidden = true
             
