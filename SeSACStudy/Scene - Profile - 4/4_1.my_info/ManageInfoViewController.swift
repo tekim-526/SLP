@@ -174,7 +174,6 @@ extension ManageInfoViewController: UICollectionViewDelegate, SendOpacityProtoco
                     cell.sesacTextField.isHidden = false
                 }
                 cell.foldButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-
             }
             isExpanded.toggle()
         } else if indexPath == [5, 0] {
