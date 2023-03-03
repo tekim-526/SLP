@@ -12,7 +12,7 @@
 - 매칭을 요청 및 수락 및 중단기능
 - 가입할때 입력한 내 정보 확인 및 수정
 - 상대방 정보 확인 기능
-- MapKit의 Annotation울 통한 지도를 통한 주변 사람 시각화
+- MapKit의 Annotation 통한 지도를 통한 주변 사람 시각화
 - 서치바와 Modern Collection View Layout을 통한 스터디 입력 기능
 
 ## **UI**
