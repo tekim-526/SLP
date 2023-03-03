@@ -7,7 +7,7 @@
 <img src="https://user-images.githubusercontent.com/81205931/222644312-05eb7d88-416e-4c4f-b886-850f5998539c.png">
 
 
-### 📱 **담당한 부분** 
+## 📱 **기능 요약** 
 - SocektIO를 이용한 스터디 매칭 및 매칭된 사람과의 채팅 기능
 - RxSwift, RxCocoa를 이용한 회원가입 로직 및 기능
 - 매칭을 요청 및 수락 및 중단기능
@@ -16,11 +16,11 @@
 - MapKit의 Annotation울 통한 지도를 통한 주변 사람 시각화
 - 서치바와 Modern Collection View Layout을 통한 스터디 입력 기능
 - 회원탈퇴 기능
-### **Architecture**
+## **Architecture**
 - ### ```MVC```, ```MVVM``` 
-###  **Framework & Library**
+##  **Framework & Library**
 - ### ```UIKit```, ```MapKit```, ```CoreLocation```
-- ### ```RxSwift```, ```RxCocoa```, ```Alamofire```, ```SocketIO```, ```Firebase Auth```, ```Realm```, ```SnapKit```, ```Toast```, ```MultiSlider``` 
+- ### ```RxSwift```, ```RxCocoa```, ```Alamofire```, ```SocketIO```,  ```Realm```, ```Firebase Auth```, ```SnapKit```, ```Toast```, ```MultiSlider``` 
 
 ## **Trouble Shooting**
 ### Firebase Auth를 활용한 SMS인증
