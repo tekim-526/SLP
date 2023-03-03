@@ -14,6 +14,8 @@
 - MapKit의 Annotation울 통한 지도를 통한 주변 사람 시각화
 - 서치바와 Modern Collection View Layout을 통한 스터디 입력 기능
 - 회원탈퇴 기능
+## **UI**
+- ### ```CodeBaseUI```
 ## **Architecture**
 - ### ```MVC```, ```MVVM``` 
 ##  **Framework & Library**
@@ -103,7 +105,7 @@ QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.lon
 ```swift
 timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
 ```
-### **Expandable Cell 구현방법 2가지**
+### **Expandable Cell 구현**
 ``` swift
 // 첫번째 방법 setCollectionViewLayout(_:animated:completion:)메서드 활용해서 UICollectionView의 레이아웃을 새로 지정해주는 방식
 func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
