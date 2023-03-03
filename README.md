@@ -61,6 +61,19 @@ class AuthManager {
     }
 }
 ```
+### **정규식을 사용한 휴대폰번호 유효성 검사**
+- 정규식의 존재를 몰랐기 때문에 String의 extension을 만들어서 유효성 검사하려 했으나, 30분만에 정규식의 존재를 알게되고 만든 휴대폰 번호 유효성 검사 함수
+``` swift
+func phoneValid(number: String) -> Bool {
+    let pattern = "^01([0-9])-?([0-9]{3,4})-?([0-9]{4})$"
+    let regex = try? NSRegularExpression(pattern: pattern)
+    if let _ = regex?.firstMatch(in: number, options: [], range: NSRange(location: 0, length: number.count)) {
+        return true
+    } else {
+        return false
+    }
+}
+```
 ### **열거형의 원시값을 활용한 네트워크 통신 분기처리**
 - 기존 url에서 path가 중복이 되고 baseurl이 같다면 중복되는 내용의 코드를 줄일 수 있을것 같다고 생각했고, 열거형의 원시값을 통해 해결했다.
 
