@@ -9,6 +9,7 @@ import Foundation
 
 import Alamofire
 
+@frozen
 enum MyStudy: String {
     case studyrequest
     case studyaccept
@@ -16,7 +17,7 @@ enum MyStudy: String {
 }
 
 class QueueAPIManager {
-   
+    
     static let shared = QueueAPIManager()
     private let idtoken: String
     private init() {
@@ -75,7 +76,7 @@ class QueueAPIManager {
     
     func stopFind(completion: @escaping (NetworkStatus) -> Void) {
         let url = BaseURL.baseURL + "v1/queue"
-
+        
         let headers: HTTPHeaders = ["idtoken": idtoken]
         AF.request(url, method: .delete, headers: headers).validate().response { response in
             guard let statusCode = response.response?.statusCode else { return }

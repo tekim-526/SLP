@@ -77,7 +77,7 @@ class AuthNumberViewController: BaseViewController {
                         vc.verifySMS()
                     case .failure(let error):
                         switch error {
-                        case .unauthorized: // Firebase Token Error
+                        case .unauthorized:
                             TokenManager.shared.getIdToken { id in
                                 UserDefaults.standard.set(id, forKey: "idtoken")
                                 vc.verifySMS()
@@ -94,11 +94,10 @@ class AuthNumberViewController: BaseViewController {
                         case .notImplemented: Toast.makeToast(view: vc.authView, message: "501 Client Error")
                         default: Toast.makeToast(view: vc.authView, message: error.localizedDescription)
                         }
-                        
                     }
                     
                 }
-                // 회원 아닐때 -> 홈 화면
+             
             }.disposed(by: disposeBag)
         
     }

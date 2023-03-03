@@ -12,7 +12,9 @@ class BaseViewController: UIViewController {
         setupUI()
         makeConstraints()
         tabBarController?.tabBar.isHidden = true
+        
     }
+    var a = NSObject()
     func setupUI() { }
     func makeConstraints() { }
     func showAlert(title: String?, message: String?) {

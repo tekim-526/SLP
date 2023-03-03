@@ -34,8 +34,6 @@ class ChatViewController: BaseViewController {
         }
 
         setDatasource()
-        guard let lastchatDate = tasks?.chatData.last?.createdAt.isEmpty ?? true ? "2000-01-01T00:00:00.000Z" : tasks?.chatData.last?.createdAt else {return}
-        fetchChat(lastchatDate: lastchatDate)
         chatView.sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         
         let rightButton = UIBarButtonItem(title: "닷지", style: .plain, target: self, action: #selector(dodgeButtonTapped))
@@ -45,6 +43,8 @@ class ChatViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setTextView()
+        guard let lastchatDate = tasks?.chatData.last?.createdAt.isEmpty ?? true ? "2000-01-01T00:00:00.000Z" : tasks?.chatData.last?.createdAt else { return }
+        fetchChat(lastchatDate: lastchatDate)
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage), name: NSNotification.Name("getMessage"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(chatViewModel.keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)

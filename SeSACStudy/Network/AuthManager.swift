@@ -12,9 +12,11 @@ import FirebaseAuth
 
 class AuthManager {
     static let shared = AuthManager()
-    private init() {}
-    private let auth = Auth.auth()
     
+    private init() {}
+
+    private let auth = Auth.auth()
+
     private var verificationId: String?
     
     func startAuth(phoneNumber: String, completion: @escaping (Bool) -> Void) {
@@ -40,6 +42,4 @@ class AuthManager {
             completion(true)
         }
     }
-    
-    
 }

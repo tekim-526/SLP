@@ -37,7 +37,6 @@ final class LocationManager {
                 self.locationManager.startUpdatingLocation()
             }
         case .restricted, .denied:
-            // 아이폰 설정으로 유도
             print("denied")
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()

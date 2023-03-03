@@ -1,57 +1,113 @@
 ## ‘SLP’ - 2022.11.07 ~
 
-☘️새싹들을 위한 스터디 매칭 어플리케이션
+☘️새싹들을 위한 스터디 매칭하고 1:1채팅을 하는 서비스
+ 
+     
+ 
+<img src="https://user-images.githubusercontent.com/81205931/222644312-05eb7d88-416e-4c4f-b886-850f5998539c.png">
+
 
 ### 📱 **담당한 부분** 
-- 스터디 매칭된 사람과의 채팅 기능
-- 매칭을 위한 요청 및 수락 기능
-- 매칭 중단 기능
+- SocektIO를 이용한 스터디 매칭 및 매칭된 사람과의 채팅 기능
+- RxSwift, RxCocoa를 이용한 회원가입 로직 및 기능
+- 매칭을 요청 및 수락 및 중단기능
 - 가입할때 입력한 내 정보 확인 및 수정
 - 상대방 정보 확인 기능
-- 지도를 통한 주변 사람 찾기 기능
-- 서치바를 통한 스터디 입력 기능
+- MapKit의 Annotation울 통한 지도를 통한 주변 사람 시각화
+- 서치바와 Modern Collection View Layout을 통한 스터디 입력 기능
 - 회원탈퇴 기능
+### **Architecture**
+- ### ```MVC```, ```MVVM``` 
+###  **Framework & Library**
+- ### ```UIKit```, ```MapKit```, ```CoreLocation```
+- ### ```RxSwift```, ```RxCocoa```, ```Alamofire```, ```SocketIO```, ```Firebase Auth```, ```Realm```, ```SnapKit```, ```Toast```, ```MultiSlider``` 
 
-### 📌 **사용한 기술**
-- UIKit
-- MapKit
-- CoreLocation
-- RxSwift
-- RxCocoa
-- Alamofire
-- Firebase
-- SocketIO
-- Realm
-- SnapKit
-- Toast
-- MultiSlider
-
-### 📝 **회고**
-
-Confluence, Swagger, Figma를 통한 개발 명세가 세세하고 위의 툴들을 처음 사용해봐서 어색함이 많았지만 사용하면 할수록 재밌었고 많은걸 배워갔던 것 같다.
-
-소켓통신과 Modern CollectionView Layout을 프로젝트에 적용시켜본게 처음이었는데 시행착오도 많았지만 결과적으로 원하는 방향으로 동작하게 되어서 만족스러웠던 프로젝트 였다
-
-### ___어려웠던 점___
-
-첫번째로 소켓통신을 사용할때 하단의 코드에서 .forceWebsockets(true) 부분 때문에 애먹었었는데 알아본 바로는 config에 .forceWebsockets(true)를 주는 이유는 서버 로직에 따라서도 다를 수 있는데, 클라이언트는 일반적으로 웹소켓 기반으로 통신하기 때문에 다른 통신이 아닌 웹소켓으로 통신하게끔 처리해야하기 때문에 처리를 해줘야 한다고한다.
+## **Trouble Shooting**
+### Firebase Auth를 활용한 SMS인증
 ``` swift
-class SocketIOManager {
-	// 중략
-    var manager: SocketManager!
-	// 중략
-    manager = SocketManager(socketURL: URL(string: BaseURL)!, config: compress, .forceWebsockets(true)])
-	// 중략
+class AuthManager {
+    static let shared = AuthManager()
+    
+    private init() {}
+
+    private let auth = Auth.auth()
+
+    private var verificationId: String?
+    
+    func startAuth(phoneNumber: String, completion: @escaping (Bool) -> Void) {
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationId, error in
+            guard let verificationId = verificationId, error == nil else { return }
+            self?.verificationId = verificationId
+            completion(true)
+        }
+    }
+    
+    func verifySMS(sms: String, completion: @escaping (Bool) -> Void) {
+        guard let verificationId = verificationId else {
+            completion(false)
+            return
+        }
+        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationId, verificationCode: sms)
+        auth.languageCode = "kr"
+        auth.signIn(with: credential) { result, error in
+            guard result != nil, error == nil else {
+                completion(false)
+                return
+            }
+            completion(true)
+        }
+    }
 }
-``` 
-
-두번째로 UICollectionView의 Cell을 Expandable Cell로 만드는 부분이었는데 다이나믹한 뷰를 그릴때 layout을 확실하게 지정해야겠다고 깨닳은 부분이었다. 
-
-해결방법은 두가지였는데 첫번째 방법은 컬렉션뷰를 탭할때 레이아웃을 새롭게 지정해주는 방식이었고, 두번째 방법은 Cell내부에 있는 뷰 객체들을 UIStackView로 묶어서 높이를 리터럴 값으로 지정해주는 방식이었다.
-
-두가지 해결책을 다른곳에 사용해 보면서 나에게 더 맞은 방식이라고 생각했던 부분은 애니메이션 효과와 같이 결과물을 보았을 때 뷰가 더 부드럽게 움직인다는 느낌을 받았던 부분은 첫번째방법이었다. 또한 첫번째 방식은 BaseView가 되는 클래스에서 사용한 createLayout 메서드를 재사용할 수 있다는 점에서 더 좋은 방식이라고 생각이 들었다.
+```
+### **열거형의 원시값을 활용한 네트워크 통신 분기처리**
 ``` swift
-// 첫번째 방법 ↓ UICollectionView의 레이아웃을 새로 지정해주는 방식
+@frozen
+enum MyStudy: String {
+    case studyrequest
+    case studyaccept
+    case dodge
+}
+
+func myStudy(idtoken: String = UserDefaults.standard.string(forKey: UserDefaultsKey.idtoken.rawValue) ?? "", method: MyStudy = .studyrequest, otheruid: String, completion: @escaping (NetworkStatus) -> Void) {
+    let url = BaseURL.baseURL + "v1/queue/\(method.rawValue)"
+    let headers: HTTPHeaders = ["idtoken": idtoken]   
+    let parameters = RequestStudy(otheruid: otheruid)
+                
+    AF.request(url, method: .post, parameters: parameters, headers: headers).validate().response { response in
+        guard let statusCode = response.response?.statusCode else { return }
+        guard let status = NetworkStatus(rawValue: statusCode) else { return }
+        completion(status)
+    }
+}
+
+// 추가 - 열거형을 통한 네트워크 상태처리
+QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.long, studylist: studylist) { [weak self] statuscode in
+        guard let vc = self else { return }
+        switch statuscode {
+        case .ok:
+            let nearRequestVC = RequestAndAcceptViewController()
+            nearRequestVC.peopleData = vc.peopleData
+            nearRequestVC.pinLocation = (vc.lat, vc.long)
+            self?.navigationController?.pushViewController(nearRequestVC, animated: true)
+        case .created: Toast.makeToast(view: vc.view, message: "신고가 누적되어 이용하실 수 없습니다")
+        case .nonAuthoritativeInformation: Toast.makeToast(view: vc.view, message: "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다")
+        case .noContent: Toast.makeToast(view: vc.view, message: "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다")
+        case .resetContent: Toast.makeToast(view: vc.view, message: "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다")
+        case .unauthorized: TokenManager.shared.getIdToken { _ in Toast.makeToast(view: vc.view, message: "다시 시도 해주세요")}
+        case .notAcceptable: vc.changeSceneToMain(vc: OnBoardingViewController())
+        case .internalServerError: Toast.makeToast(view: vc.view, message: "500 Server Error")
+        case .notImplemented: Toast.makeToast(view: vc.view, message: "501 Client Error")
+        default: Toast.makeToast(view: vc.view, message: "다시 시도 해보세요")
+    }
+}
+```
+### **Timer를 활용해서 5초마다 상태체크 메서드 실행**
+```swift
+timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
+```
+### **Expandable Cell 구현방법 2가지**
+``` swift
+// 첫번째 방법 setCollectionViewLayout(_:animated:completion:)메서드 활용해서 UICollectionView의 레이아웃을 새로 지정해주는 방식
 func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 	guard let cell = collectionView.cellForItem(at: [0, 0]) as? ExpandableCell else { return }
     switch isExpanded {
@@ -72,7 +128,7 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
 	isExpanded.toggle()
 }
 
-// 두번째 방법 ↓ cell의 레이아웃을 수정하는 방식
+// 두번째 방법 cell의 레이아웃을 remake하는 방식
 func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? NearUserCell else { return }
     setInsideCellCollectionViewDatasource(cell: cell, item: indexPath.item)
@@ -96,6 +152,17 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
     }
 }
 ``` 
+
+
+### 📝 **회고**
+
+Confluence, Swagger, Figma를 통한 개발 명세가 세세하고 위의 툴들을 처음 사용해봐서 어색함이 많았지만 사용하면 할수록 재밌었고 많은걸 배워갔던 것 같다.
+
+소켓통신과 Modern CollectionView Layout을 프로젝트에 적용시켜본게 처음이었는데 시행착오도 많았지만 결과적으로 원하는 방향으로 동작하게 되어서 만족스러웠던 프로젝트 였다
+
+
+
+
 
 ### ___아쉬웠던 점___
 코드를 작성함에 있어 MVVM패턴과 Rx를 제한적으로 적용했던 점이 아쉬웠고 두 부분에 대해서 공부가 충분하지 않았고 많이 부족함을 느꼈던 것 같다. 또한, 상단의 코드에서도 나오는 부분인데 literal값을 바로 사용했던 것 같이 리팩토링을 고려하지 않은 부분이 많았던 것 같다. 이러한 부분을 열거형의 원시값으로 처리했다면 어땠을까 하는 생각이 든다. literal값을 줄이는 수정을 빠른시일내에 해야겠다는 생각이 든다.
