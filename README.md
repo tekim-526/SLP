@@ -8,12 +8,13 @@
 ## 📱 **기능 요약** 
 - SocektIO를 이용한 스터디 매칭 및 매칭된 사람과의 채팅 기능
 - RxSwift, RxCocoa를 이용한 회원가입 로직 및 기능
+- jwt token기반 회원인증로직 구현 (회원가입 / 로그인 / 회원탈퇴)
 - 매칭을 요청 및 수락 및 중단기능
 - 가입할때 입력한 내 정보 확인 및 수정
 - 상대방 정보 확인 기능
 - MapKit의 Annotation울 통한 지도를 통한 주변 사람 시각화
 - 서치바와 Modern Collection View Layout을 통한 스터디 입력 기능
-- 회원탈퇴 기능
+
 ## **UI**
 - ### ```CodeBaseUI```
 ## **Architecture**
@@ -23,7 +24,8 @@
 - ### ```RxSwift```, ```RxCocoa```, ```Alamofire```, ```SocketIO```,  ```Realm```, ```Firebase Auth```, ```SnapKit```, ```Toast```, ```MultiSlider``` 
 
 ## **Trouble Shooting**
-### Firebase Auth를 활용한 SMS인증
+### Firebase Auth를 활용한 SMS인증 
+- 처음에 Firebase문서를 보지 않았던 내 자신을 후회합니다...
 ``` swift
 class AuthManager {
     static let shared = AuthManager()
@@ -60,6 +62,8 @@ class AuthManager {
 }
 ```
 ### **열거형의 원시값을 활용한 네트워크 통신 분기처리**
+- 기존 url에서 path가 중복이 되고 baseurl이 같다면 중복되는 내용의 코드를 줄일 수 있을것 같다고 생각했고, 열거형의 원시값을 통해 해결했다.
+
 ``` swift
 @frozen
 enum MyStudy: String {
@@ -80,7 +84,7 @@ func myStudy(idtoken: String = UserDefaults.standard.string(forKey: UserDefaults
     }
 }
 
-// 추가 - 열거형을 통한 네트워크 상태처리
+// 추가 - 열거형을 통한 네트워크 Status Code처리
 QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.long, studylist: studylist) { [weak self] statuscode in
         guard let vc = self else { return }
         switch statuscode {
@@ -102,10 +106,12 @@ QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.lon
 }
 ```
 ### **Timer를 활용해서 5초마다 상태체크 메서드 실행**
+- 5초마다 상태를 체크해야하기 때문에 스케쥴링과 관련해서 반복적으로 수행될 객체 메서드등이 필요했고 처음에는 DispatchQueue에 시간관련한 메서드들이 구현되어 있는것을 보고 반복문을 돌리려고 한 스스로를 반성합니다..
 ```swift
 timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
 ```
 ### **Expandable Cell 구현**
+- 이부분 때문에 tableView로 구현을 하면 더 쉬울까 생각을 했지만 deprecate될 예정이라고 알고있어서 사용하고 싶지 않았고 Autolayout 관련해서 여러가지 시행착오들을 겪었다. 
 ``` swift
 // 첫번째 방법 setCollectionViewLayout(_:animated:completion:)메서드 활용해서 UICollectionView의 레이아웃을 새로 지정해주는 방식
 func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -156,13 +162,10 @@ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPat
 
 ### 📝 **회고**
 
-Confluence, Swagger, Figma를 통한 개발 명세가 세세하고 위의 툴들을 처음 사용해봐서 어색함이 많았지만 사용하면 할수록 재밌었고 많은걸 배워갔던 것 같다.
+Confluence, Swagger, Figma를 통한 개발 명세가 세세하고 위의 툴들을 처음 사용해봐서 어색함이 많았지만 사용하면 할수록 재밌었고 많은걸 배워갔던 것같다.
 
-소켓통신과 Modern CollectionView Layout을 프로젝트에 적용시켜본게 처음이었는데 시행착오도 많았지만 결과적으로 원하는 방향으로 동작하게 되어서 만족스러웠던 프로젝트 였다
-
-
-
+소켓통신과 Modern CollectionView Layout을 프로젝트에 적용시켜본게 처음이었는데 시행착오도 많았지만 결과적으로 원하는 방향으로 동작하게 되어서 만족스러웠던 프로젝트였다
 
 
 ### ___아쉬웠던 점___
-코드를 작성함에 있어 MVVM패턴과 Rx를 제한적으로 적용했던 점이 아쉬웠고 두 부분에 대해서 공부가 충분하지 않았고 많이 부족함을 느꼈던 것 같다. 또한, 상단의 코드에서도 나오는 부분인데 literal값을 바로 사용했던 것 같이 리팩토링을 고려하지 않은 부분이 많았던 것 같다. 이러한 부분을 열거형의 원시값으로 처리했다면 어땠을까 하는 생각이 든다. literal값을 줄이는 수정을 빠른시일내에 해야겠다는 생각이 든다. 또한 반복되는 코드들이 많은데 제네릭과 enum의 케이스를 더 적극적으로 사용했다면 조금 더 효율적으로 코드를 작성해볼수 있었을것같아서 아쉬움이 남는다
+코드를 작성함에 있어 MVVM패턴과 Rx를 제한적으로 적용했던 점이 아쉬웠고 두 부분에 대해서 공부가 충분하지 않았고 많이 부족함을 느꼈던 것 같다. 또한, 상단의 코드에서도 나오는 부분인데 literal값을 바로 사용했던 것 같이 리팩토링을 고려하지 않은 부분이 많았던 것 같다. 이러한 부분을 열거형의 원시값으로 처리했다면 어땠을까 하는 생각이 든다. literal값을 줄이는 수정을 빠른시일내에 해야겠다는 생각이 든다. 또한 반복되는 코드들이 많은데 제네릭과 enum의 케이스를 더 적극적으로 사용했다면 조금 더 효율적으로 코드를 작성해볼수 있었을것같아서 아쉬움이 남는다.
