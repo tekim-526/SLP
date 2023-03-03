@@ -2,7 +2,7 @@
 
 ☘️새싹들을 위한 스터디 매칭하고 1:1채팅을 하는 서비스
  
-<img src="https://user-images.githubusercontent.com/81205931/222644312-05eb7d88-416e-4c4f-b886-850f5998539c.png">
+<img src="https://user-images.githubusercontent.com/81205931/222653020-dcd84527-c90f-490f-b4d7-2ff79beeb621.png">
 
 
 ## 📱 **기능 요약** 
