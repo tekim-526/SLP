@@ -119,7 +119,7 @@ QueueAPIManager.shared.searchNearPeopleWithMyStudy(lat: self.lat, long: self.lon
 }
 ```
 ### **Timer를 활용해서 5초마다 상태체크 메서드 실행**
-- 5초마다 상태를 체크해야하기 때문에 스케쥴링과 관련해서 반복적으로 수행될 객체 메서드등이 필요했고 Timer로 해결 처음에는 DispatchQueue에 시간관련한 메서드들을  
+- 처음에는 DispatchQueue에 시간관련한 메서드들을 사용하려했지만 5초마다 상태를 체크해야하기 때문에 스케쥴링과 관련해서 반복적으로 수행될 객체 메서드등이 필요했고 Timer로 해결. 
 ```swift
 timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(stateCheck), userInfo: nil, repeats: true)
 ```
